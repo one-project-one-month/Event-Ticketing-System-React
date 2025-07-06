@@ -1,4 +1,5 @@
 import React from "react";
+import { useQrUpload } from "@/components/QR/QrUploadContext";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,6 +18,7 @@ interface MainNavigationProps {
 }
 
 const MainNavigation = ({ items }: MainNavigationProps) => {
+  const { open } = useQrUpload();
   return (
     <div className="hidden gap-6 lg:flex">
       <Link to="/" className="flex items-center space-x-2">
@@ -27,15 +29,27 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
       <NavigationMenu>
         <NavigationMenuList>
           {items?.[0]?.menu &&
-            items[0].menu.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                <Link to={String(item.href)}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {item.title}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
+            items[0].menu.map((item) => {
+              const isQR = item.title === "Check QR";
+
+              return (
+                <NavigationMenuItem key={item.title}>
+                  <Link
+                    to={isQR ? "#" : String(item.href)}
+                    onClick={(e) => {
+                      if (isQR) {
+                        e.preventDefault(); 
+                        open(); 
+                      }
+                    }}
+                  >
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      {item.title}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              );
+            })}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

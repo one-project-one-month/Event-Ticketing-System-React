@@ -5,7 +5,6 @@ import EventPage from "./pages/Events/Event";
 import VenuePage from "./pages/Venues/Venue";
 import EventRootLayout from "./pages/Events/EventRootLayout";
 import VenueRootLayout from "./pages/Venues/VenueRootLayout";
-import CheckQRPage from "./pages/CheckQR";
 import EventInfoPage from "./pages/Events/EventInfo";
 import TicketDetailPage from "./pages/Events/TicketDetail";
 import VenueDetailsPage from "./pages/Venues/VenueDetails";
@@ -33,7 +32,6 @@ export const router = createBrowserRouter([
           { path: "venuedetails", Component: VenueDetailsPage },
         ],
       },
-      { path: "checkqr", Component: CheckQRPage },
     ],
   },
 ]);
