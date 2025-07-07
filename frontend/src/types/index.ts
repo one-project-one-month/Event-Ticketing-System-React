@@ -16,3 +16,7 @@ export interface QRInfo {
   event: string;
 }
 
+export interface ITotalCount {
+  count: number;
+  label: string;
+}
