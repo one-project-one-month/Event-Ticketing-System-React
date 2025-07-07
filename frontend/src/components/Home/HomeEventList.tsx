@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import EventCard from "@/components/Events/EventCard";
 
 export default function HomeEventList() {
   return (
@@ -15,13 +16,9 @@ export default function HomeEventList() {
       {/* Event List */}
       <div className="flex flex-row items-center justify-between">
         {Array.from({ length: 3 }).map((_, index) => (
-          <DummyEvent key={index} />
+          <EventCard key={index} />
         ))}
       </div>
     </section>
   );
-}
-
-function DummyEvent() {
-  return <div className="h-96 w-80 bg-slate-500"></div>;
 }
