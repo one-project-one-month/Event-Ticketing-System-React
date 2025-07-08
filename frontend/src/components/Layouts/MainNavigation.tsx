@@ -12,6 +12,7 @@ import { Icons } from "../Icons";
 import { siteConfig } from "@/config/site";
 import type { MainNavItem } from "@/types";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "../mode-toggle";
 
 interface MainNavigationProps {
   items?: MainNavItem[];
@@ -20,38 +21,41 @@ interface MainNavigationProps {
 const MainNavigation = ({ items }: MainNavigationProps) => {
   const { open } = useQrUpload();
   return (
-    <div className="hidden gap-6 lg:flex">
-      <Link to="/" className="flex items-center space-x-2">
+    <div className="hidden w-full items-center justify-between gap-6 lg:flex">
+      <Link to="/" className="ml-5 flex items-center space-x-4">
         <Icons.logo className="size-7" aria-hidden="true" />
         <span className="inline-block font-bold">{siteConfig.name}</span>
         <span className="sr-only">Home</span>
       </Link>
       <NavigationMenu>
-        <NavigationMenuList>
-          {items?.[0]?.menu &&
-            items[0].menu.map((item) => {
-              const isQR = item.title === "Check QR";
+        <NavigationMenuList className="flex flex-row items-center justify-center gap-4">
+          {items?.map((item) => {
+            const isQR = item.title === "Check QR";
 
-              return (
-                <NavigationMenuItem key={item.title}>
-                  <Link
-                    to={isQR ? "#" : String(item.href)}
-                    onClick={(e) => {
-                      if (isQR) {
-                        e.preventDefault(); 
-                        open(); 
-                      }
-                    }}
-                  >
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      {item.title}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              );
-            })}
+            return (
+              <NavigationMenuItem key={item.title}>
+                <Link
+                  to={isQR ? "#" : String(item.href)}
+                  onClick={(e) => {
+                    if (isQR) {
+                      e.preventDefault();
+                      open();
+                    }
+                  }}
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {item.title}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            );
+          })}
         </NavigationMenuList>
       </NavigationMenu>
+
+      <div className="mr-5">
+        <ModeToggle />
+      </div>
     </div>
   );
 };
