@@ -23,6 +23,7 @@ export const siteConfig = {
       },
       {
         title: "Check QR",
+        href: "checkqr",
       },
     ],
   },

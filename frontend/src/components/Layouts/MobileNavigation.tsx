@@ -13,8 +13,6 @@ import { Icons } from "../Icons";
 import { siteConfig } from "@/config/site";
 import type { MainNavItem } from "@/types";
 import { ModeToggle } from "../mode-toggle";
-import { useQrUpload } from "@/components/QR/QrUploadContext";
-
 interface MainNavigationProps {
   items?: MainNavItem[];
 }
@@ -37,8 +35,6 @@ export default function MobileNavigation({ items }: MainNavigationProps) {
   if (isDesktop) {
     return null;
   }
-
-  const { open } = useQrUpload();
 
   return (
     <div className="lg:hidden">
