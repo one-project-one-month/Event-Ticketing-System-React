@@ -1,16 +1,17 @@
-import React from "react";
-import fileExport from "@/assets/fileexport.svg";
-import fileIcon from "@/assets/foldericon.svg";
+import React, { useState, useCallback } from "react";
+import fileExport from "@/assets/icons/QR/fileexport.svg";
+import fileIcon from "@/assets/icons/QR/foldericon.svg";
 import { Button } from "@/components/ui/button";
-import { useState, useCallback } from "react";
 
 interface DropzoneProps {
   onFileSelect: (file: File) => void;
   onUpload: () => void;
   onCancel: () => void;
+  file?: File | null; 
+  error?: string | null; 
 }
 
-const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel }) => {
+const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel, file, error }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -38,22 +39,21 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
   }, [onFileSelect]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) onFileSelect(file);
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) onFileSelect(selectedFile);
   };
 
   return (
     <div className="w-full min-h-[85vh] flex flex-col justify-between px-6 py-8">
-
       {/* Left-aligned heading */}
-     <div className="mb-6 w-full" style={{ textAlign: "left" }}>
+      <div className="mb-6 w-full" style={{ textAlign: "left" }}>
         <h1 className="text-2xl font-bold text-[#233b75ff]">Upload QR Code</h1>
         <p className="text-muted-foreground">
           Select or drag and drop your QR code image for your ticket information.
         </p>
       </div>
 
-      {/*Dotted Box */}
+      {/* Dotted Box */}
       <div
         className={`flex-grow flex items-center justify-center
           border-2 border-dashed rounded-lg
@@ -64,36 +64,52 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
           }
           w-full max-w-screen-xl h-[360px] px-4
         `}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onDragOver={!file ? handleDragOver : undefined}
+        onDragLeave={!file ? handleDragLeave : undefined}
+        onDrop={!file ? handleDrop : undefined}
       >
-        <div className="flex flex-col justify-center items-center gap-4">
-          <img src={fileExport} alt="Upload" className="w-12 h-12 opacity-70" />
-          <div className="text-3xl font-bold text-[#233b75ff]">
-            Drop your QR code here
-          </div>
-          <div className="text-sm text-muted-foreground text-[#233b75ff]">or use the button below to browse</div>
+        {file ? (
+          <img
+            src={URL.createObjectURL(file)}
+            alt="Uploaded QR"
+            className="max-h-full max-w-full object-contain rounded-lg"/>
+        ) : (
+          <div className="flex flex-col justify-center items-center gap-4">
+            <img src={fileExport} alt="Upload" className="w-12 h-12 opacity-70" />
+            <div className="text-3xl font-bold text-[#233b75ff]">
+              Drop your QR code here
+            </div>
+            <div className="text-sm text-muted-foreground text-[#233b75ff]">
+              or use the button below to browse
+            </div>
 
-          <div className="mt-4">
-            <label
-              htmlFor="qr-upload"
-              className="inline-flex items-center gap-2 bg-[#233b75ff] text-white px-4 py-2 rounded-[4px] hover:bg-primary/90 transition cursor-pointer"
-              onClick={e => e.stopPropagation()} 
-            >
-              <img src={fileIcon} alt="File" className="w-4 h-4" />
-              <span>Browse Files</span>
-            </label>
-            <input
-              id="qr-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleChange}
-              className="hidden"
-            />
+            <div className="mt-4">
+              <label
+                htmlFor="qr-upload"
+                className="inline-flex items-center gap-2 bg-[#233b75ff] text-white px-4 py-2 rounded-[4px] hover:bg-primary/90 transition cursor-pointer"
+                onClick={e => e.stopPropagation()}
+              >
+                <img src={fileIcon} alt="File" className="w-4 h-4" />
+                <span>Browse Files</span>
+              </label>
+              <input
+                id="qr-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+                className="hidden"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
+
+      {/* Error message */}
+      {error && (
+        <p className="text-red-500 text-sm mt-2 text-center">
+          {error}
+        </p>
+      )}
 
       {/* Supported format info */}
       <div className="text-center text-lg text-muted-foreground mt-2">
@@ -105,13 +121,15 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
         <Button
           variant="outline"
           onClick={onCancel}
-          className="border border-black text-black rounded-[4px] px-6 min-w-[120px] hover:bg-muted transition cursor-pointer">
+          className="border border-black text-black rounded-[4px] px-6 min-w-[120px] hover:bg-muted transition cursor-pointer"
+        >
           Cancel
         </Button>
 
         <Button
           onClick={onUpload}
-          className="bg-[#233b75ff] hover:bg-[#1d3265] text-white rounded-[4px] px-6 min-w-[120px] hover:bg-primary/90 transition cursor-pointer">
+          className="bg-[#233b75ff] hover:bg-[#1d3265] text-white rounded-[4px] px-6 min-w-[120px] hover:bg-primary/90 transition cursor-pointer"
+        >
           Upload
         </Button>
       </div>
@@ -120,7 +138,6 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
 };
 
 export default Dropzone;
-
 
 
 
