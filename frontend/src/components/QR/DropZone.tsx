@@ -47,7 +47,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
 
       {/* Left-aligned heading */}
      <div className="mb-6 w-full" style={{ textAlign: "left" }}>
-        <h1 className="text-2xl font-bold text-primary">Upload QR Code</h1>
+        <h1 className="text-2xl font-bold text-[#233b75ff]">Upload QR Code</h1>
         <p className="text-muted-foreground">
           Select or drag and drop your QR code image for your ticket information.
         </p>
@@ -59,8 +59,8 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
           border-2 border-dashed rounded-lg
           ${
             isDragging
-              ? "border-blue-600 bg-[#d9d9d9]"
-              : "border-blue-400 bg-[#e6e6e6]"
+              ? "border-black bg-[#d9d9d9]"
+              : "border-black bg-[#e6e6e6]"
           }
           w-full max-w-screen-xl h-[360px] px-4
         `}
@@ -70,15 +70,15 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
       >
         <div className="flex flex-col justify-center items-center gap-4">
           <img src={fileExport} alt="Upload" className="w-12 h-12 opacity-70" />
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold text-[#233b75ff]">
             Drop your QR code here
           </div>
-          <div className="text-sm text-gray-500">or use the button below to browse</div>
+          <div className="text-sm text-muted-foreground text-[#233b75ff]">or use the button below to browse</div>
 
           <div className="mt-4">
             <label
               htmlFor="qr-upload"
-              className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#233b75ff] text-white px-4 py-2 rounded-[4px] hover:bg-primary/90 transition cursor-pointer"
               onClick={e => e.stopPropagation()} 
             >
               <img src={fileIcon} alt="File" className="w-4 h-4" />
@@ -101,11 +101,19 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, onUpload, onCancel })
       </div>
 
       {/* Centered buttons always visible */}
-      <div className="flex justify-center gap-4 mt-6">
-        <Button variant="outline" onClick={onCancel}>
+      <div className="flex justify-center gap-20 mt-6">
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          className="border border-black text-black rounded-[4px] px-6 min-w-[120px] hover:bg-muted transition cursor-pointer">
           Cancel
         </Button>
-        <Button onClick={onUpload}>Upload</Button>
+
+        <Button
+          onClick={onUpload}
+          className="bg-[#233b75ff] hover:bg-[#1d3265] text-white rounded-[4px] px-6 min-w-[120px] hover:bg-primary/90 transition cursor-pointer">
+          Upload
+        </Button>
       </div>
     </div>
   );
