@@ -19,7 +19,7 @@ interface QrResultProps {
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
   <div className="flex justify-between text-sm">
     <span className="font-medium text-black/50 text-left">{label}</span>
-    <span className="text-right font-semibold">{value}</span>
+    <span className="text-right text-[#233b75ff] font-semibold">{value}</span>
   </div>
 );
 
@@ -53,13 +53,13 @@ export default function QrResult({ onClose, info }: QrResultProps) {
         <div className="flex gap-2 mt-1">
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 border px-4 py-2 rounded-md shadow-sm hover:shadow-md text-sm font-medium"
+            className="flex items-center gap-2 border px-4 py-2 text-[#233b75ff] rounded-md shadow-sm hover:shadow-md text-sm font-medium cursor-pointer"
           >
             <img src={downloadIcon} alt="Download" className="w-4 h-4" /> Download
           </button>
           <button
             onClick={onClose}
-            className="flex items-center gap-2 border px-4 py-2 rounded-md shadow-sm hover:shadow-md text-sm font-medium text-red-600"
+            className="flex items-center gap-2 border px-4 py-2 rounded-md shadow-sm hover:shadow-md cursor-pointer text-sm font-medium text-red-600"
           >
             Close
           </button>
@@ -90,7 +90,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
         <div className="grid grid-cols-2 gap-6 p-6">
           {/* Date & Time */}
           <div className="bg-[#f4f6fb] rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-medium">
+            <div className="flex items-center gap-2 font-medium text-[#233b75ff]">
               <img src={clockIcon} alt="clock" className="w-4 h-4" /> Date & Time
             </div>
             <div className="space-y-1">
@@ -102,7 +102,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
 
           {/* Ticket Details */}
           <div className="bg-[#f4f6fb] rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-medium">
+            <div className="flex items-center gap-2 font-medium text-[#233b75ff]">
               <img src={feTicketIcon} alt="ticket details" className="w-4 h-4" /> Ticket Details
             </div>
             <div className="space-y-1">
@@ -114,7 +114,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
 
           {/* Personal Info */}
           <div className="bg-[#f4f6fb] rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-medium">
+            <div className="flex items-center gap-2 font-medium text-[#233b75ff]">
               <img src={personalIcon} alt="personal info" className="w-4 h-4" /> Personal Information
             </div>
             <div className="space-y-1">
@@ -125,7 +125,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
 
           {/* Event Location */}
           <div className="bg-[#f4f6fb] rounded-xl p-4 space-y-2">
-            <div className="flex items-center gap-2 font-medium">
+            <div className="flex items-center gap-2 font-medium text-[#233b75ff]">
               <img src={locationIcon} alt="location" className="w-4 h-4" /> Event Information
             </div>
             <div className="space-y-1">
