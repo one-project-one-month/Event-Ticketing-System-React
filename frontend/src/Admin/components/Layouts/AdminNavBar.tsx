@@ -1,4 +1,3 @@
-// src/Admin/components/Layouts/AdminTopBar.tsx
 import { BellIcon } from "lucide-react"; 
 
 export default function AdminNavBar() {

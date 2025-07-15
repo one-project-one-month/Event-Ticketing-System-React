@@ -1,4 +1,3 @@
-// src/shared/hooks/useAdminAuth.ts
 import { useEffect, useState } from "react";
 
 export function useAdminAuth() {

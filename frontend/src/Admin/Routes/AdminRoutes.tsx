@@ -1,4 +1,3 @@
-// src/Admin/Routes/adminRoutes.tsx
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAdminRoute } from "@/Admin/Routes/ProtectedAdminRoute";
 import AdminLayout from "@/Admin/components/Layouts/AdminLayout";
