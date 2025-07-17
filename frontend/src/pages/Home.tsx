@@ -1,21 +1,18 @@
-import { CarouselSlide } from "@/components/Home/CarouselSlide";
-import HomeEventList from "@/components/Home/HomeEventList";
-import HomeVenueList from "@/components/Home/HomeVenueList";
+import HeroSection from "@/components/Home/HeroSection";
+import OverviewList from "@/components/Home/OverviewList";
 import TotalCountContainer from "@/components/Home/TotalCountContainer";
 
 const Home = () => {
   return (
     <div>
-      {/* Carousel Slide */}
-      <div className="mb-20">
-        <CarouselSlide />
-      </div>
+      <HeroSection />
+      <div className="h-[90vh] w-screen"></div>
       {/* Event List */}
-      <HomeEventList />
+      <OverviewList title="Event" viewLink="/events" fetchLink="#" type="E" />
       {/* Total Details */}
       <TotalCountContainer />
       {/* Venue List */}
-      <HomeVenueList />
+      <OverviewList title="Venue" viewLink="/venue" fetchLink="#" type="V" />
     </div>
   );
 };
