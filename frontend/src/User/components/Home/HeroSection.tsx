@@ -1,5 +1,5 @@
-import BackgroundBanner from "@/assets/homepage/herobg.png";
-import HeroImg from "@/assets/homepage/heroimg.png";
+import BackgroundBanner from "@/User/assets/homepage/herobg.png";
+import HeroImg from "@/User/assets/homepage/heroimg.png";
 
 export default function HeroSection() {
   return (

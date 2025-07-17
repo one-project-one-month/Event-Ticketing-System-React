@@ -1,7 +1,7 @@
-import { CarouselSlide } from "@/User/components/Home/CarouselSlide";
-import HomeEventList from "@/User/components/Home/HomeEventList";
-import HomeVenueList from "@/User/components/Home/HomeVenueList";
+import HeroSection from "@/User/components/Home/HeroSection";
+import OverviewList from "@/User/components/Home/OverviewList";
 import TotalCountContainer from "@/User/components/Home/TotalCountContainer";
+
 
 const Home = () => {
   return (

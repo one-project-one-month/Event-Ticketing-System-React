@@ -1,4 +1,4 @@
-import ThankYouDialog from "@/components/Events/ThankYouDialog";
+//import ThankYouDialog from "@/User/components/Events/ThankYouDialog";
 import VerifyDialog from "@/User/components/Events/VerifyDialog";
 import { Button } from "@/User/components/ui/button";
 import { Minus, Plus } from "lucide-react";

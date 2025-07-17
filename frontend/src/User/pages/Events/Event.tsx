@@ -1,4 +1,3 @@
-import EventPostList from "@/components/Events/EventPostList";
 import { NavLink, useSearchParams } from "react-router-dom";
 import EventPostList from "@/User/components/Events/EventPostList";
 
