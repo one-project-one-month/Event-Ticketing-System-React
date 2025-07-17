@@ -6,16 +6,14 @@ import TotalCountContainer from "@/User/components/Home/TotalCountContainer";
 const Home = () => {
   return (
     <div>
-      {/* Carousel Slide */}
-      <div className="mb-20">
-        <CarouselSlide />
-      </div>
+      <HeroSection />
+      <div className="h-[90vh] w-screen"></div>
       {/* Event List */}
-      <HomeEventList />
+      <OverviewList title="Event" viewLink="/events" fetchLink="#" type="E" />
       {/* Total Details */}
       <TotalCountContainer />
       {/* Venue List */}
-      <HomeVenueList />
+      <OverviewList title="Venue" viewLink="/venue" fetchLink="#" type="V" />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -129,4 +130,11 @@
   .no-spinner {
     -moz-appearance: textfield;
   }
+  .input-radio {
+    @apply h-5 w-5 appearance-none rounded-full border-2 border-black text-[#071739] transition-all duration-200 ease-in-out checked:border-[#14409F00] checked:bg-[#071739] focus:ring-[#14409F00] focus:outline-none;
+  }
+}
+
+.figtreef {
+  font-family: "Figtree", sans-serif;
 }

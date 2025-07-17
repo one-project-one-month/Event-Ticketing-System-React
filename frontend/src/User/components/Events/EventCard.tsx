@@ -1,27 +1,33 @@
+import { MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-const EventCard = () => {
+const EventCard = ({
+  title,
+  location,
+}: {
+  title: string;
+  location: string;
+}) => {
   return (
-    <div className="flex flex-col items-center justify-center rounded bg-gray-300 p-3">
+    <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md shadow-gray-800 transition-shadow hover:shadow-md dark:border">
       <img
-        src="https://placehold.co/600x400/png"
+        src="yw-event-img/event.png"
         alt=""
-        className="h-[250px] w-full rounded-sm object-cover object-center"
+        className="z-0 h-full w-full object-cover object-center"
       />
-      <div className="w-full text-left">
-        <h2>Title</h2>
-        <p>Description</p>
-        <p>
-          Date <span>Dec-10-2025</span>
-        </p>
-      </div>
-      <div className="flex w-full justify-end">
-        <NavLink
-          to={"/events/eventinfo"}
-          className="cursor-pointer rounded-3xl border border-black p-3 transition-colors hover:bg-black hover:text-white"
-        >
-          Buy Tickets
-        </NavLink>
+      <div className="absolute bottom-0 z-10 w-full bg-gradient-to-b from-transparent via-white/30 to-transparent p-3 text-white backdrop-blur-[2px]">
+        <h2 className="mb-2 text-3xl font-bold drop-shadow-lg">{title}</h2>
+        <div className="flex items-center justify-between">
+          <p className="flex">
+            <MapPin /> {location}
+          </p>
+          <NavLink
+            to={"/events/eventinfo"}
+            className="rounded-sm border border-black bg-white p-1 font-semibold text-black transition-colors hover:bg-[#071739] hover:text-white"
+          >
+            View Details
+          </NavLink>
+        </div>
       </div>
     </div>
   );

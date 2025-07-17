@@ -19,7 +19,7 @@ interface MainNavigationProps {
 
 const MainNavigation = ({ items }: MainNavigationProps) => {
   return (
-    <div className="hidden w-full items-center justify-between gap-6 lg:flex">
+    <div className={`hidden w-full items-center justify-between gap-6 lg:flex`}>
       <Link to="/" className="ml-5 flex items-center space-x-4">
         <Icons.logo className="size-7" aria-hidden="true" />
         <span className="inline-block font-bold">{siteConfig.name}</span>
@@ -28,7 +28,6 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
       <NavigationMenu>
         <NavigationMenuList className="flex flex-row items-center justify-center gap-4">
           {items?.map((item) => {
-
             return (
               <NavigationMenuItem key={item.title}>
                 <Link to={String(item.href)}>
