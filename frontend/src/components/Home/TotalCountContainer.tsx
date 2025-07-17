@@ -21,14 +21,19 @@ export default function TotalCountContainer() {
     },
   ];
   return (
-    <section className="mx-12 my-16 mt-20 flex h-80 flex-col justify-center gap-12 bg-[#071739] px-52">
+    <section className="mx-12 my-16 mt-20 flex h-80 flex-col justify-center gap-12 bg-[#071739] px-40">
       <h3 className="figtree text-center text-4xl text-white">
         Our progress in numbers
       </h3>
 
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex w-full flex-row items-center justify-between">
         {dummyTotalCounts.map((d, index) => (
-          <TotalCount key={index} count={d.count} label={d.label} />
+          <TotalCount
+            key={index}
+            count={d.count}
+            label={d.label}
+            format="short"
+          />
         ))}
       </div>
     </section>
