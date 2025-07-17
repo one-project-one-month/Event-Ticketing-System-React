@@ -30,7 +30,7 @@ export default function HeroSection() {
         </div>
         {/* Small Text */}
         <div className="col-span-5 mt-10 mr-20 flex flex-row items-center justify-center">
-          <p className="w-80" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <p className="figtreef w-80">
             Welcome to our ticketing platform , your one-stop-shop for all
             events you NEEDS ! whether you are planning to attend an event!
           </p>

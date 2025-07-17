@@ -1,5 +1,5 @@
 import HeroSection from "@/components/Home/HeroSection";
-import OverviewList from "@/components/Home/OverViewList";
+import OverviewList from "@/components/Home/OverviewList";
 import TotalCountContainer from "@/components/Home/TotalCountContainer";
 
 const Home = () => {
