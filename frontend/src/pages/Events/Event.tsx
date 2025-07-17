@@ -1,19 +1,29 @@
 import EventPostList from "@/components/Events/EventPostList";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 
 const Event = () => {
+  const [searchParam] = useSearchParams();
+  const selectCategory = searchParam.get("cat");
   return (
     <div className="px-5 pt-10">
-      <div className="bg-gray-500 py-3">
-        <div className="my-8 ms-2 w-[80%] bg-gray-400 p-8">
+      <div className="py-5">
+        <div className="my-8 ms-2 w-[80%]">
           <li className="flex list-none gap-3">
             <ul>
-              <NavLink to={"/"} className="p-3 underline">
+              <NavLink
+                to={"/events?cat=all"}
+                className={`border-black p-2 text-3xl font-semibold dark:border-white ${(selectCategory == "all" || !selectCategory) && "border-b-2"}`}
+              >
                 All
               </NavLink>
             </ul>
             <ul>
-              <NavLink to={"/"}>Trending Events</NavLink>
+              <NavLink
+                to={"/events?cat=trend"}
+                className={`border-black p-2 text-3xl font-semibold dark:border-white ${selectCategory == "trend" && "border-b-2"}`}
+              >
+                Trending Events
+              </NavLink>
             </ul>
           </li>
         </div>
