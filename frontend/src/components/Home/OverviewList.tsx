@@ -29,9 +29,9 @@ export default function OverviewList({
         </Link>
       </div>
       {/* Event List */}
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex flex-row items-center justify-between gap-6">
         {Array.from({ length: 3 }).map((_, index) => (
-          <EventCard key={index} />
+          <EventCard key={index} title="Sample Title" location="Yangon" />
         ))}
       </div>
     </section>
