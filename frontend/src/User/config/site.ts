@@ -1,3 +1,5 @@
+import { Icons } from "../components/Icons";
+
 export const siteConfig = {
   name: "Event Ticketing System",
 
@@ -18,6 +20,13 @@ export const siteConfig = {
       {
         title: "Check QR",
         href: "checkqr",
+      },
+      {
+        icon: Icons.search,
+        isSearch: true,
+        action: () => {
+          console.log("Search clicked");
+        },
       },
     ],
   },

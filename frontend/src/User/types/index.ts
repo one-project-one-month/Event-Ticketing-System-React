@@ -1,8 +1,13 @@
-export interface NavItem {
+import type { LucideIcon } from "lucide-react";
+
+export type NavItem = {
   title?: string;
   href?: string;
-  description?: string;
-}
+  icon?: LucideIcon; // Type-safe icon prop
+  disabled?: boolean;
+  isSearch?: boolean;
+  action?: () => void;
+};
 
 export interface NavItemWithChildren extends NavItem {
   menu?: NavItemWithChildren[];
@@ -31,4 +36,3 @@ export interface ITotalCount {
   count: number;
   label: string;
 }
-
