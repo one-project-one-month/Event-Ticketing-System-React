@@ -37,7 +37,7 @@
   --sidebar-accent-foreground: #374151;
   --sidebar-border: #d6d3d1;
   --sidebar-ring: #6366f1;
-  --font-sans: DM Sans, sans-serif;
+  --font-sans: Figtree, sans-serif;
   --font-serif: Lora, serif;
   --font-mono: Roboto Mono, monospace;
   --radius: 1.25rem;
@@ -70,9 +70,9 @@
   --card-foreground: #e2e8f0;
   --popover: #2c2825;
   --popover-foreground: #e2e8f0;
-  --primary: #818cf8;
+  --primary: #080739;
   --primary-foreground: #1e1b18;
-  --secondary: #3a3633;
+  --secondary: #103263;
   --secondary-foreground: #d1d5db;
   --muted: #2c2825;
   --muted-foreground: #9ca3af;
@@ -173,6 +173,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
   .radio-tab {
     @apply flex cursor-pointer flex-col items-center justify-center px-5 py-2 text-sm select-none hover:border-black hover:bg-gray-300;
