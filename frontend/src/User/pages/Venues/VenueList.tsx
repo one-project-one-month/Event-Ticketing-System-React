@@ -1,5 +1,7 @@
 import VenueCard from "@/User/components/Venues/VenueCard";
 import type { IVenueCard } from "@/User/types";
+import { useState } from "react";
+import ArrowRight from "@/User/assets/icons/arrow-right.svg";
 
 const Venue = () => {
   const venues: IVenueCard[] = [
@@ -84,13 +86,34 @@ const Venue = () => {
       size: 350,
       address: "33, Sayar San Road, Yangon",
     },
+    {
+      venueId: "v008",
+      imagePath:
+        "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg",
+      buildingName: "Unity Mall",
+      name: "Mini Theatre",
+      size: 250,
+      address: "56, Baho Road, Yangon",
+    },
+    {
+      venueId: "v009",
+      imagePath:
+        "https://i.pinimg.com/736x/86/e4/ab/86e4ab366931b3a01b2baf81d0b8e793.jpg",
+      buildingName: "Galaxy Plaza",
+      name: "Roof Top Lounge",
+      size: 350,
+      address: "33, Sayar San Road, Yangon",
+    },
   ];
+  const [penigation, setPenigation] = useState(0);
+  const venueCount = 11;
+  const lastCount = venueCount % 9;
 
   return (
     <section>
       {/* Venue List */}
       <div className="mx-auto my-10 grid w-fit grid-cols-3 justify-between gap-x-7 gap-y-5 align-middle">
-        {venues.map((venue) => (
+        {venues.slice(9 * penigation, 9 * penigation + 9).map((venue) => (
           <VenueCard
             venueId={venue.venueId}
             buildingName={venue.buildingName}
@@ -102,6 +125,39 @@ const Venue = () => {
         ))}
       </div>
       {/* Penigation Indicator */}
+      {venueCount > 9 ? (
+        <div className="flex flex-row items-center justify-center gap-2">
+          <img
+            src={ArrowRight}
+            alt="Left Penigation Arrow"
+            className={`size-8 rotate-180 cursor-pointer ${penigation != lastCount - 1 && "hidden"}`}
+            onClick={() => {
+              setPenigation(penigation - 1);
+            }}
+          />
+          <div className="flex w-fit flex-row gap-1.5 text-xl">
+            {Array.from({ length: lastCount }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setPenigation(index)}
+                className={`cursor-pointer p-0.5 hover:underline ${index == penigation && "underline"}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <img
+            src={ArrowRight}
+            alt="Right Penigation Arrow"
+            className={`size-8 cursor-pointer ${penigation == lastCount - 1 && "hidden"}`}
+            onClick={() => {
+              setPenigation(penigation + 1);
+            }}
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </section>
   );
 };
