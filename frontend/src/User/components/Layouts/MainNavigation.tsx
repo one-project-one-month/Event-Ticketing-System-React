@@ -23,7 +23,6 @@ interface MainNavigationProps {
 
 const MainNavigation = ({ items }: MainNavigationProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <div className={`hidden w-full items-center justify-between gap-6 lg:flex`}>
@@ -40,45 +39,59 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
             if (item.isSearch) {
               return (
                 <NavigationMenuItem key="search">
-                  {/* Search toggle button */}
-                  <button
-                    onClick={() => setIsSearchOpen(!isSearchOpen)}
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-white transition-colors hover:bg-white/10",
-                    )}
-                  >
-                    {item.icon && (
-                      <item.icon
-                        className="size-4 text-white"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span className="sr-only">Search</span>
-                  </button>
-                  {isSearchOpen && (
-                    <div className="bg-background absolute top-full right-4 mt-1 rounded-md border shadow-lg">
-                      <div className="flex w-64 items-center px-4 py-2">
-                        <Icons.search className="text-muted-foreground mr-2 size-5" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button
+                        onClick={item.action}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "hover:bg-transparent",
+                          "rounded-none border-b-2 border-transparent hover:border-white",
+                          "px-3 py-5",
+                          "transition-colors duration-200",
+                        )}
+                      >
+                        {item.icon && (
+                          <item.icon
+                            className="size-4 text-white"
+                            aria-hidden="true"
+                          />
+                        )}
+                        <span className="sr-only">Search</span>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent
+                      className="top-16 p-0 sm:max-w-md"
+                      showCloseButton={false}
+                    >
+                      <div className="flex items-center px-4 py-2">
+                        <Icons.search className="text-muted-foreground size-5" />
                         <Input
                           type="search"
                           placeholder="Search events..."
                           className="border-0 shadow-none focus-visible:ring-0"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          autoFocus
                         />
                       </div>
-                    </div>
-                  )}
+                    </DialogContent>
+                  </Dialog>
                 </NavigationMenuItem>
               );
             }
 
             return (
               <NavigationMenuItem key={item.title}>
-                <Link to={String(item.href)} className="text-white">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <Link to={String(item.href)}>
+                  <NavigationMenuLink
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-white hover:bg-transparent",
+                      "rounded-none border-b-2 border-transparent hover:border-white",
+                      "px-3 py-5",
+                      "transition-colors duration-200",
+                    )}
+                  >
                     {item.icon && (
                       <item.icon
                         className="mt-1.5 size-4 flex-shrink-0 text-white"
@@ -91,12 +104,11 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
               </NavigationMenuItem>
             );
           })}
+          <div className="mr-5">
+            <ModeToggle />
+          </div>
         </NavigationMenuList>
       </NavigationMenu>
-
-      <div className="mr-5">
-        <ModeToggle />
-      </div>
     </div>
   );
 };

@@ -19,11 +19,11 @@ export default function HeroSection() {
           <p>GET READY TO EXPERIENCE THE BEST EVENTS</p>
         </div>
         {/* Image */}
-        <div className="col-span-3 row-span-3 ml-6 h-[34.5rem] w-[29rem] overflow-hidden rounded-t-full rounded-b-4xl shadow-lg shadow-gray-800">
+        <div className="col-span-3 row-span-3 ml-6 h-[36.5rem] w-[29rem] overflow-hidden rounded-t-full rounded-b-lg shadow-lg shadow-gray-800">
           <img
             src={HeroImg}
             alt="Hero Image"
-            className="h-full w-full object-cover"
+            className="h-full w-full rounded-b-lg object-cover"
           />
         </div>
         {/* Small Text */}

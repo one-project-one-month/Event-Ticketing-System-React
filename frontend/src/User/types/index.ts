@@ -11,6 +11,7 @@ export type NavItem = {
 
 export interface NavItemWithChildren extends NavItem {
   menu?: NavItemWithChildren[];
+  footer?: NavItemWithChildren[];
 }
 
 export type MainNavItem = NavItemWithChildren;
