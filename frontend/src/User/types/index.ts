@@ -32,3 +32,11 @@ export interface ITotalCount {
   label: string;
 }
 
+export interface IVenueCard {
+  venueId: string;
+  imagePath: string;
+  buildingName: string;
+  name: string;
+  size: number;
+  address: string;
+}
