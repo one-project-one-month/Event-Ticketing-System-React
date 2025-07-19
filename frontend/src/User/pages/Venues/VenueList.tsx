@@ -111,6 +111,12 @@ const Venue = () => {
 
   return (
     <section>
+      <div className="flex w-full flex-col items-center gap-4">
+        <h1 className="figtreef text-[2rem] font-bold">
+          Venues for Your Next Event
+        </h1>
+        <hr className="w-44 border-2 border-black" />
+      </div>
       {/* Venue List */}
       <div className="mx-auto my-10 grid w-fit grid-cols-3 justify-between gap-x-7 gap-y-5 align-middle">
         {venues.slice(9 * penigation, 9 * penigation + 9).map((venue) => (
