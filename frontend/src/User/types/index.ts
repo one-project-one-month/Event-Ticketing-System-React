@@ -37,6 +37,6 @@ export interface IVenueCard {
   imagePath: string;
   buildingName: string;
   name: string;
-  size: number;
+  capacity: number;
   address: string;
 }

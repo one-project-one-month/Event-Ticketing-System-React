@@ -11,7 +11,7 @@ const Venue = () => {
         "https://i.pinimg.com/1200x/07/aa/c9/07aac91701af0d21a2182bf433430cee.jpg",
       buildingName: "Royal Tower",
       name: "Grand Hall",
-      size: 500,
+      capacity: 500,
       address: "No.12, Main Street, Yangon",
     },
     {
@@ -20,7 +20,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg",
       buildingName: "Silver Plaza",
       name: "Event Space A",
-      size: 300,
+      capacity: 300,
       address: "45B, Inya Road, Yangon",
     },
     {
@@ -29,7 +29,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/86/e4/ab/86e4ab366931b3a01b2baf81d0b8e793.jpg",
       buildingName: "Skyline Center",
       name: "Conference Room",
-      size: 200,
+      capacity: 200,
       address: "No.8, Pyay Road, Yangon",
     },
     {
@@ -38,7 +38,7 @@ const Venue = () => {
         "https://i.pinimg.com/1200x/07/aa/c9/07aac91701af0d21a2182bf433430cee.jpg",
       buildingName: "Empire Tower",
       name: "Banquet Hall",
-      size: 600,
+      capacity: 600,
       address: "77, Kabar Aye Pagoda Road, Yangon",
     },
     {
@@ -47,7 +47,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg",
       buildingName: "Sunset Complex",
       name: "Outdoor Venue",
-      size: 800,
+      capacity: 800,
       address: "123, Bayint Naung Road, Yangon",
     },
     {
@@ -56,7 +56,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/86/e4/ab/86e4ab366931b3a01b2baf81d0b8e793.jpg",
       buildingName: "Heritage Hall",
       name: "Art Gallery Space",
-      size: 150,
+      capacity: 150,
       address: "19, Bogalay Zay Street, Yangon",
     },
     {
@@ -65,7 +65,7 @@ const Venue = () => {
         "https://i.pinimg.com/1200x/07/aa/c9/07aac91701af0d21a2182bf433430cee.jpg",
       buildingName: "Crystal Center",
       name: "Wedding Ballroom",
-      size: 700,
+      capacity: 700,
       address: "88, Strand Road, Yangon",
     },
     {
@@ -74,7 +74,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg",
       buildingName: "Unity Mall",
       name: "Mini Theatre",
-      size: 250,
+      capacity: 250,
       address: "56, Baho Road, Yangon",
     },
     {
@@ -83,7 +83,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/86/e4/ab/86e4ab366931b3a01b2baf81d0b8e793.jpg",
       buildingName: "Galaxy Plaza",
       name: "Roof Top Lounge",
-      size: 350,
+      capacity: 350,
       address: "33, Sayar San Road, Yangon",
     },
     {
@@ -92,7 +92,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg",
       buildingName: "Unity Mall",
       name: "Mini Theatre",
-      size: 250,
+      capacity: 250,
       address: "56, Baho Road, Yangon",
     },
     {
@@ -101,7 +101,7 @@ const Venue = () => {
         "https://i.pinimg.com/736x/86/e4/ab/86e4ab366931b3a01b2baf81d0b8e793.jpg",
       buildingName: "Galaxy Plaza",
       name: "Roof Top Lounge",
-      size: 350,
+      capacity: 350,
       address: "33, Sayar San Road, Yangon",
     },
   ];
@@ -125,7 +125,7 @@ const Venue = () => {
             buildingName={venue.buildingName}
             imagePath={venue.imagePath}
             name={venue.name}
-            size={venue.size}
+            capacity={venue.capacity}
             address={venue.address}
           />
         ))}

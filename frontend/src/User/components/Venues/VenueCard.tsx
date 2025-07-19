@@ -6,7 +6,7 @@ const VenueCard = ({
   imagePath,
   buildingName,
   name,
-  size,
+  capacity: size,
   address,
 }: IVenueCard) => {
   return (
