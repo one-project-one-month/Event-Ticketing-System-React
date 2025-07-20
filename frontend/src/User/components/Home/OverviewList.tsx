@@ -19,7 +19,7 @@ export default function OverviewList({
   return (
     <section className="mx-12 mb-5 p-14 pt-5 pb-0">
       {/* Title and View all */}
-      <div className="mb-8 flex flex-row items-center justify-between">
+      <div className="mt-16 mb-8 flex flex-row items-center justify-between">
         <h3 className="text-4xl font-bold">{title}</h3>
         <Link
           to={viewLink}
