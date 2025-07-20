@@ -3,8 +3,9 @@ import { Outlet } from "react-router-dom";
 const VenueRootLayout = () => {
   return (
     <>
-      <div>VenueRootLayout</div>
-      <Outlet />
+      <div className="px-16 py-8">
+        <Outlet />
+      </div>
     </>
   );
 };

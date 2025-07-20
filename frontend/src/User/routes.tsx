@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./components/Layouts/RootLayout";
 import HomePage from "./pages/Home";
 import EventPage from "./pages/Events/Event";
-import VenuePage from "./pages/Venues/Venue";
+import VenuePage from "./pages/Venues/VenueList";
 import EventRootLayout from "./pages/Events/EventRootLayout";
 import VenueRootLayout from "./pages/Venues/VenueRootLayout";
 import EventInfoPage from "./pages/Events/EventInfo";
@@ -35,8 +35,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "checkqr",
-        Component : CheckQr,
-      }
+        Component: CheckQr,
+      },
     ],
   },
 ]);
