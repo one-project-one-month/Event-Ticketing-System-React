@@ -21,8 +21,11 @@ const VerifyDialog = ({
     const newOtp = [...otpCode];
     newOtp[index] = e.target.value;
     setOtpCode(newOtp);
-    if (e.target.value && index < 3) {
+    if (e.target.value && index < 4) {
       inputRefs.current[index + 1].focus();
+    }
+    if (e.target.value == "" && index >= 0) {
+      inputRefs.current[index - 1].focus();
     }
   };
   if (isVerified) return <ThankYouDialog />;
