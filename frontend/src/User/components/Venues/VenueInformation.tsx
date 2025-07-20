@@ -40,18 +40,14 @@ export default function VenueInformation() {
             value="item-1"
           >
             <AccordionTrigger className="text-xl">
-              Product Information
+              Venue Information
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] text-lg text-balance">
               <p>
-                Our flagship product combines cutting-edge technology with sleek
-                design. Built with premium materials, it offers unparalleled
-                performance and reliability.
-              </p>
-              <p>
-                Key features include advanced processing capabilities, and an
-                intuitive user interface designed for both beginners and
-                experts.
+                LOTTE HOTEL YANGON's second largest function hall, The Sapphire
+                Ballroom is a stunning, functional space which may be divided
+                into three sections, allowing guests to customize the venue to
+                suit their exact demands and specifications.
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -60,18 +56,35 @@ export default function VenueInformation() {
             value="item-2"
           >
             <AccordionTrigger className="text-xl">
-              Shipping Details
+              Facilities & Services
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] text-lg text-balance">
-              <p>
-                We offer worldwide shipping through trusted courier partners.
-                Standard delivery takes 3-5 business days, while express
-                shipping ensures delivery within 1-2 business days.
-              </p>
-              <p>
-                All orders are carefully packaged and fully insured. Track your
-                shipment in real-time through our dedicated tracking portal.
-              </p>
+            <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] pt-3 text-lg text-balance">
+              <ul className="list-disc pl-6 leading-relaxed">
+                <li>
+                  <strong>Audio/Visual Capabilities:</strong> Comprehensive AV
+                  support for events.
+                </li>
+                <li>
+                  <strong>Electricity & Appliance Rental:</strong> Available
+                  upon request.
+                </li>
+                <li>
+                  <strong>Furniture Rental:</strong> Options for various event
+                  setups.
+                </li>
+                <li>
+                  <strong>Floor Space Planning:</strong> Assistance with layout
+                  arrangements.
+                </li>
+                <li>
+                  <strong>Advertising Space:</strong> Opportunities for event
+                  promotion.
+                </li>
+                <li>
+                  <strong>Event Planning Assistance:</strong> Onsite support for
+                  event coordination.
+                </li>
+              </ul>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem
@@ -79,19 +92,30 @@ export default function VenueInformation() {
             value="item-3"
           >
             <AccordionTrigger className="text-xl">
-              Return Policy
+              Additional Amenities
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] text-lg text-balance">
-              <p>
-                We stand behind our products with a comprehensive 30-day return
-                policy. If you&apos;re not completely satisfied, simply return
-                the item in its original condition.
-              </p>
-              <p>
-                Our hassle-free return process includes free return shipping and
-                full refunds processed within 48 hours of receiving the returned
-                item.
-              </p>
+            <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] pt-3 text-lg text-balance">
+              <ul className="list-disc pl-6 leading-relaxed">
+                <li>
+                  <strong>Security System:</strong> Robust security measures in
+                  place.
+                </li>
+                <li>
+                  <strong>Air Conditioning:</strong> Well-maintained climate
+                  control.
+                </li>
+                <li>
+                  <strong>Restrooms:</strong> Clean and accessible facilities.
+                </li>
+                <li>
+                  <strong>Nearby Dining Options:</strong> Various food vendors
+                  and cafes in the vicinity.
+                </li>
+                <li>
+                  <strong>VIP Lounge & Media Room:</strong> Available for
+                  special guests and press.
+                </li>
+              </ul>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
