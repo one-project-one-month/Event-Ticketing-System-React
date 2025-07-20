@@ -1,9 +1,14 @@
 import { useState, type HTMLInputTypeAttribute } from "react";
 
-export default function VenueForm() {
+export default function VenueForm({ openDialog }: { openDialog: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phNo, setPhNo] = useState("");
+
+  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    openDialog();
+  };
 
   return (
     <div className="figtreef float-right h-fit w-[26rem] rounded-lg bg-gradient-to-b from-[#103263] to-[#071739] px-9 py-14 text-white">
@@ -15,7 +20,7 @@ export default function VenueForm() {
           specific needs and details of your event.
         </p>
       </div>
-      <form action="post">
+      <form action="post" onSubmit={submitForm}>
         <LabelInput
           name="name"
           label="Full Name"
