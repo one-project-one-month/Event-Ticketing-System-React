@@ -37,7 +37,6 @@ export interface ITotalCount {
   count: number;
   label: string;
 }
-<<<<<<< HEAD
 
 export interface IVenueCard {
   venueId: string;
@@ -47,5 +46,3 @@ export interface IVenueCard {
   capacity: number;
   address: string;
 }
-=======
->>>>>>> Aye-Chan-Soe

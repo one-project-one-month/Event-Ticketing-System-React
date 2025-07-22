@@ -21,7 +21,7 @@ export default function TotalCountContainer() {
     },
   ];
   return (
-    <section className="mx-12 my-16 mt-20 flex h-80 flex-col justify-center gap-12 bg-[#071739] px-40">
+    <section className="mx-12 my-16 mt-20 mb-0 flex h-80 flex-col justify-center gap-12 bg-[#071739] px-40">
       <h3 className="figtree text-center text-4xl text-white">
         Our progress in numbers
       </h3>
