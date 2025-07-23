@@ -41,7 +41,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center mt-10">
       {/* This container is NOT inside printRef — so it won't be captured */}
       <div className="w-full max-w-4xl px-4 mb-6 flex justify-between items-start">
         <div className="text-left">
