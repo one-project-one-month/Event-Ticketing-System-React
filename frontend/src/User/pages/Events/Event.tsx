@@ -12,7 +12,7 @@ const Event = () => {
             <ul>
               <NavLink
                 to={"/events?cat=all"}
-                className={`border-black p-2 text-3xl font-semibold dark:border-white ${(selectCategory == "all" || !selectCategory) && "border-b-2"}`}
+                className={`border-black p-2 text-3xl font-semibold dark:border-white ${selectCategory == "all" || !selectCategory ? "border-b-2 text-black" : "text-gray-300"}`}
               >
                 All
               </NavLink>
@@ -20,7 +20,7 @@ const Event = () => {
             <ul>
               <NavLink
                 to={"/events?cat=trend"}
-                className={`border-black p-2 text-3xl font-semibold dark:border-white ${selectCategory == "trend" && "border-b-2"}`}
+                className={`border-black p-2 text-3xl font-semibold dark:border-white ${selectCategory == "trend" ? "border-b-2 text-black" : "text-gray-300"}`}
               >
                 Trending Events
               </NavLink>
