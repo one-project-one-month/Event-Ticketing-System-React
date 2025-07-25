@@ -13,7 +13,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({ progress, onCancel }) 
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[360px] border-2 border-dashed border-black rounded-lg bg-[#e6e6e6]">
+    <div className="flex flex-col items-center justify-center w-full h-[360px] mt-16 border-2 border-dashed border-black rounded-lg bg-[#e6e6e6]">
       <svg width={size} height={size} className="mb-4">
         <circle
           className="text-gray-300"

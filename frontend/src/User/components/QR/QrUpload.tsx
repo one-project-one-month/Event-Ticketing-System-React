@@ -41,7 +41,7 @@ const QRUpload = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 border-4 border-purple-500 rounded-2xl shadow-2xl gap-4 w-full max-w-md bg-gradient-to-br from-pink-100 via-purple-100 to-teal-100 transition-all">
+    <div className="flex flex-col items-center justify-center p-0 border-0 border-purple-500 rounded-2xl shadow-2xl gap-4 w-full max-w-md bg-gradient-to-br from-pink-100 via-purple-100 to-teal-100 transition-all">
       {!qrInfo && (
         <>
           {!previewUrl ? (
