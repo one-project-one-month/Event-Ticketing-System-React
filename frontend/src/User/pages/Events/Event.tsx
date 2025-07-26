@@ -43,8 +43,8 @@ const Event = () => {
     },
   ];
   return (
-    <div className="px-5 pt-10">
-      <div className="py-5">
+    <div className="px-5">
+      <div className="py-8">
         <div className="my-8 ms-2 w-[80%]">
           <li className="flex list-none gap-3">
             <ul>

@@ -9,7 +9,7 @@ const EventCard = ({
   location: string;
 }) => {
   return (
-    <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md shadow-gray-800 transition-shadow hover:shadow-md dark:border">
+    <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md font-['figtree'] shadow-gray-800 transition-shadow hover:shadow-md dark:border">
       <img
         src="yw-event-img/event.png"
         alt=""

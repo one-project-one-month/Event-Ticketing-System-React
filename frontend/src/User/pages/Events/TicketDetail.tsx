@@ -148,7 +148,7 @@ const TicketDetail = () => {
         </div>
       </div>
       <div
-        className={`fixed top-0 flex h-full w-full items-center justify-center backdrop-opacity-5 ${showVerifyDialog ? "block" : "hidden"}`}
+        className={`fixed top-0 flex h-full w-full items-center justify-center backdrop-opacity-30 ${showVerifyDialog ? "block" : "hidden"}`}
       >
         <VerifyDialog show={showVerifyDialog} setShow={setShowVerifyDialog} />
       </div>

@@ -27,7 +27,7 @@ const EventPostList = ({
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <>
-      <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-x-10">
+      <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-x-7">
         {currentEvents.map((e) => (
           <EventCard title={e.title} location={e.location} />
         ))}
