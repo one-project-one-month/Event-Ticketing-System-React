@@ -192,3 +192,13 @@
 .figtreef {
   font-family: "Figtree", sans-serif;
 }
+
+.pagination-button {
+  @apply w-8 h-8 flex items-center justify-center rounded bg-[#615CB8] text-white disabled:opacity-50;
+}
+
+.pagination-number {
+  @apply w-8 h-8 flex items-center justify-center rounded border border-gray-300 text-sm;
+}
+
+

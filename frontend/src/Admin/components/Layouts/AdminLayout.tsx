@@ -9,7 +9,7 @@ export default function AdminLayout() {
 
       <div className="flex flex-1 overflow-hidden">
         <AdminSidebar />
-        <main className="flex-1 p-4 overflow-y-auto">
+        <main className="flex-1 bg-[#D8DFEC] p-4 overflow-y-auto">
           <Outlet />
         </main>
       </div>
