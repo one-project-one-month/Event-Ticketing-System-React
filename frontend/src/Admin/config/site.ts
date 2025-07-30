@@ -29,15 +29,15 @@ export const adminSiteConfig = {
     {
       title: "Business",
       children: [
-        { title: "Business Owner", href: "/admin/business/owner" },
-        { title: "Business Email", href: "/admin/business/email" },
+        { title: "Business Owner", href: "/admin/businessowner" },
+        { title: "Business Email", href: "/admin/businessemail" },
       ],
     },
     {
       title: "History",
       children: [
-        { title: "Purchased History", href: "/admin/history/purchased" },
-        { title: "Verification History", href: "/admin/history/verification" },
+        { title: "Purchased History", href: "/admin/historypurchased" },
+        { title: "Verification History", href: "/admin/historyverification" },
       ],
     },
     {

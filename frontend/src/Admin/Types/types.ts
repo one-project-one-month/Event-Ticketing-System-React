@@ -17,5 +17,5 @@ export interface EventListData{
     TotalTicketQty:number,
     TicketSold:number,
     EventStatus:string,
-    IsActive:boolean,
+    IsActive:boolean
 }
