@@ -1,4 +1,4 @@
-import type { IVenueCard } from "@/User/types";
+import type { IVenueCard } from "@/types";
 import { House, MapPin, Users } from "lucide-react";
 
 const VenueCard = ({

@@ -2,45 +2,129 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
 
+import { Card, CardContent } from "@/User/components/ui/card";
+import { User, Lock, CheckCircle } from "lucide-react";
+import { Button } from "@/User/components/ui/button";
+import { Input } from "@/User/components/ui/input";
+
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const { login } = useAdminAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const success = login(username, password);
+
     if (success) {
-      navigate("/admin/dashboard");
+      setShowSuccess(true);
+      setError("");
     } else {
       setError("Invalid credentials");
     }
   };
 
+  const handleGoToDashboard = () => {
+    setShowSuccess(false);
+    navigate("/admin/dashboard");
+  };
+
   return (
-    <div className="p-4 max-w-sm mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Admin Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        {error && <p className="text-red-500 mb-2">{error}</p>}
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 w-full">
-          Login
-        </button>
-      </form>
+    <div className="flex min-h-screen items-center justify-center gap-3 bg-[#444444] p-8">
+      {/* Login Form */}
+      {!showSuccess && (
+        <Card className="w-[400px] border-none bg-[linear-gradient(180deg,#3f2b96_50%,#a8c0ff_100%)] shadow-xl">
+          <CardContent className="p-14">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-8 text-center">
+                <h1 className="mb-4 text-sm font-medium text-white">
+                  Event Ticket System
+                </h1>
+                <h2 className="mb-2 text-start text-xl font-semibold text-white">
+                  Welcome, Admin
+                </h2>
+                <p className="text-start text-sm text-white/80">
+                  Please log in to access the dashboard
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="relative">
+                  <User className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-white/60" />
+                  <Input
+                    placeholder="Username"
+                    className="h-12 border-0 border-b-white/20 bg-white/10 pl-10 text-white placeholder:text-white/60"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+
+                <div className="relative">
+                  <Lock className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-white/60" />
+                  <Input
+                    type="password"
+                    placeholder="Password"
+                    className="h-12 border-0 border-white/20 bg-white/10 pl-10 text-white placeholder:text-white/60"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+
+                {error && <p className="text-sm text-red-500">{error}</p>}
+
+                <div className="text-right">
+                  <button
+                    type="button"
+                    className="text-sm text-white/80 hover:text-white"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="h-12 w-full bg-[#030812] font-medium text-white hover:bg-[#030812]/90"
+                >
+                  Log In
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <Card className="w-[350px] border-none bg-gradient-to-b from-[#43319a] to-[#43319a]/80 shadow-xl">
+          <CardContent className="p-8 text-center">
+            <div className="mb-6">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
+                <CheckCircle className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="mb-2 text-xl font-semibold text-white">
+                Login Successful!
+              </h2>
+              <p className="mb-1 text-sm text-white/80">
+                Welcome back, Admin! You have successfully logged in.
+              </p>
+              <p className="text-xs text-white/60">
+                Remember to log out if you're done.
+              </p>
+            </div>
+
+            <Button
+              className="bg-primary h-10 w-full font-medium text-white hover:bg-[#030812]/90"
+              onClick={handleGoToDashboard}
+            >
+              Go to Dashboard
+            </Button>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

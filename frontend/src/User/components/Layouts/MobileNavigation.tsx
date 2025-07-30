@@ -11,7 +11,7 @@ import { ScrollArea } from "@/User/components/ui/scroll-area";
 import { Button } from "../ui/button";
 import { Icons } from "../Icons";
 import { siteConfig } from "@/User/config/site";
-import type { MainNavItem } from "@/User/types";
+import type { MainNavItem } from "@/types";
 import { ModeToggle } from "../mode-toggle";
 interface MainNavigationProps {
   items?: MainNavItem[];
