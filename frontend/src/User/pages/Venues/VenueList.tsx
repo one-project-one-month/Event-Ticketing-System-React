@@ -1,5 +1,5 @@
 import VenueCard from "@/User/components/Venues/VenueCard";
-import type { IVenueCard } from "@/User/types";
+import type { IVenueCard } from "@/types";
 import { useState } from "react";
 import ArrowRight from "@/User/assets/icons/arrow-right.svg";
 
