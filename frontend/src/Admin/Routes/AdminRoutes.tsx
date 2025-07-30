@@ -9,13 +9,15 @@ import AdminPage from "@/Admin/pages/Admin";
 import TicketTypePage from "@/Admin/pages/TicketType";
 import VenueTypePage from "@/Admin/pages/VenueType";
 import VenueListPage from "@/Admin/pages/VenueList";
-import EventTypePage from "@/Admin/pages/EventType";
-import EventListPage from "@/Admin/pages/EventList";
+import EventTypePage from "@/Admin/pages/EventTypePages/EventType";
+import EventListPage from "@/Admin/pages/EventListPages/EventList";
 import BusinessOwnerPage from "@/Admin/pages/BusinessOwner";
 import BusinessEmailPage from "@/Admin/pages/BusinessEmail";
 import PurchasedHistoryPage from "@/Admin/pages/PurchasedHistory";
 import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
 import SettingPage from "@/Admin/pages/Setting";
+import EventDetailPage from "../pages/EventListPages/EventDetail";
+import EventEditPage from "../pages/EventListPages/EventEdit";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -34,10 +36,20 @@ export const adminRouter = createBrowserRouter([
           { path: "dashboard", Component: AdminDashboardPage },
           { path: "admin", Component: AdminPage },
           { path: "ticket-type", Component: TicketTypePage },
-          { path: "venue/type", Component: VenueTypePage },
-          { path: "venue/list", Component: VenueListPage },
-          { path: "event/type", Component: EventTypePage },
-          { path: "event/list", Component: EventListPage },
+          { path: "venuetype", Component: VenueTypePage },
+          { path: "venuelist", Component: VenueListPage },
+          { path: "eventtype",
+            children:[
+              { index: true, Component: EventTypePage}
+            ]
+           },
+          { path: "eventlist", 
+            children: [
+              {index: true, Component: EventListPage},
+              { path: ":eventId", Component: EventDetailPage },
+              { path: ":eventId/edit", Component: EventEditPage },
+            ]
+          },
           { path: "business/owner", Component: BusinessOwnerPage },
           { path: "business/email", Component: BusinessEmailPage },
           { path: "history/purchased", Component: PurchasedHistoryPage },

@@ -94,7 +94,7 @@ const EventList = () => {
                     {event.EventName}
                   </td>
                   <td className="px-[10px] py-[10px] text-center whitespace text-lg">{event.EventUniqueName}</td>
-                  <td className="px-[10px] py-[10px] text-center whitespace text-lg">{event.BussinessOwnerName}</td>
+                  <td className="px-[10px] py-[10px] text-center whitespace text-lg">{event.BusinessOwnerName}</td>
                   <td className="px-[10px] py-[10px] whitespace">
                     <span
                       className={`px-[10px] py-[4px] rounded-[20px] text-lg ${

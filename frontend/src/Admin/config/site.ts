@@ -15,15 +15,15 @@ export const adminSiteConfig = {
     {
       title: "Venue",
       children: [
-        { title: "Venue Type", href: "/admin/venue/type" },
-        { title: "Venue List", href: "/admin/venue/list" },
+        { title: "Venue Type", href: "/admin/venuetype" },
+        { title: "Venue List", href: "/admin/venuelist" },
       ],
     },
     {
       title: "Event",
       children: [
-        { title: "Event Type", href: "/admin/event/type" },
-        { title: "Event List", href: "/admin/event/list" },
+        { title: "Event Type", href: "/admin/eventtype" },
+        { title: "Event List", href: "/admin/eventlist" },
       ],
     },
     {

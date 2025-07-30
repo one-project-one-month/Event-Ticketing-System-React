@@ -1,16 +1,16 @@
-export interface EventViewData{
+export interface EventListData{
     EventCode:string,
     EventCatecoryCode:string,
     EventName:string,
-    UniqueName:string,
+    EventUniqueName:string,
     BusinessOwnerName:string,
     VenueName:string,
     VenueType:string,
     Capacity:number,
     Description:string,
     Facility:string,
-    Addons:[string],
-    VenueImage:[string],
+    Addons:string[],
+    VenueImage:string[],
     Address:string,
     StartDate:Date,
     EndDate:Date,
@@ -18,11 +18,4 @@ export interface EventViewData{
     TicketSold:number,
     EventStatus:string,
     IsActive:boolean,
-}
-
-export interface EventListData{
-    EventName: string;
-    EventUniqueName: string;
-    BussinessOwnerName: string;
-    IsActive: boolean;
 }
