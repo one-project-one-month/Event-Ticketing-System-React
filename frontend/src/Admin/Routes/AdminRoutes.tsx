@@ -46,7 +46,7 @@ export const adminRouter = createBrowserRouter([
           { path: "eventlist", 
             children: [
               {index: true, Component: EventListPage},
-              { path: ":eventId", Component: EventDetailPage },
+              { path: ":EventUniqueName", Component: EventDetailPage },
               { path: ":eventId/edit", Component: EventEditPage },
             ]
           },

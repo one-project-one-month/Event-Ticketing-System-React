@@ -115,7 +115,7 @@ const EventList = () => {
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(``)}
+                      onClick={() => navigate(`/admin/eventlist/${event.EventUniqueName}`)}
                     >
                       <img src="/icons/Eye.svg" alt="view" className="w-4 h-4" />
                     </Button>
@@ -131,7 +131,7 @@ const EventList = () => {
                       variant="ghost"
                       onClick={() => handleDelete(event.EventUniqueName)}
                     >
-                      <img src="/icons/Delete.svg" alt="delete" className="w-4 h-4" />/admin/eventlist/${event.EventUniqueName}
+                      <img src="/icons/Delete.svg" alt="delete" className="w-4 h-4" />
                     </Button>
                   </td>
                 </tr>
