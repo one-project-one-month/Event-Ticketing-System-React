@@ -1,4 +1,4 @@
-import type { EventTypeData } from '@/Admin/Types/DataTypes';
+import type { EventTypeData } from '@/Admin/DataTypes/DataTypes';
 
 export const eventTypeDemoData: EventTypeData[] = [
   {

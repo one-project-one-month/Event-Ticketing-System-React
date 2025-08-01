@@ -1,4 +1,4 @@
-import { type TicketTypeData } from '@/Admin/Types/DataTypes';
+import { type TicketTypeData } from '@/Admin/DataTypes/DataTypes';
 
 export const TicketTypeDemoData: TicketTypeData[] = [
   {
