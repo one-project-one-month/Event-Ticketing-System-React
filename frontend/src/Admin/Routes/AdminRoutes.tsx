@@ -11,7 +11,7 @@ import VenueTypePage from "@/Admin/pages/VenueType";
 import VenueListPage from "@/Admin/pages/VenueList";
 import EventTypePage from "@/Admin/pages/EventTypePages/EventType";
 import EventListPage from "@/Admin/pages/EventListPages/EventList";
-import BusinessOwnerPage from "@/Admin/pages/BusinessOwner";
+import BusinessOwnerPage from "@/Admin/pages/BusinessOwnerPages/BusinessOwner";
 import BusinessEmailPage from "@/Admin/pages/BusinessEmail";
 import PurchasedHistoryPage from "@/Admin/pages/PurchasedHistory";
 import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
@@ -25,6 +25,9 @@ import CreateEventTypePage from "../pages/EventTypePages/CreateEventType";
 import TicketTypeDetailPage from "../pages/TicketTypePages/TicketTypeDetail";
 import TicketTypeEditPage from "../pages/TicketTypePages/TicketTypeEdit";
 import CreateTicketTypePage from "../pages/TicketTypePages/CreateTicketType";
+import BusinessOwnerDetailPage from "../pages/BusinessOwnerPages/BusinessOwnerDetail";
+import BusinessOwnerEditPage from "../pages/BusinessOwnerPages/BusinessOwnerEdit";
+import CreateBusinessOwnerPage from "../pages/BusinessOwnerPages/CreateBusinessOwner";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -68,7 +71,14 @@ export const adminRouter = createBrowserRouter([
               {path:"create", Component: CreateEventPage}
             ]
           },
-          { path: "business", Component: BusinessOwnerPage},
+          { path: "business/owner",
+            children:[
+              { index: true, Component: BusinessOwnerPage },
+              {path:":BusinessOwnerCode", Component: BusinessOwnerDetailPage },
+              {path:":businessOwnerCode/edit", Component: BusinessOwnerEditPage },
+              {path: "create", Component: CreateBusinessOwnerPage}
+            ] 
+          },
           { path: "businessemail", Component: BusinessEmailPage },
           { path: "historypurchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },

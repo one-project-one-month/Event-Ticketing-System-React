@@ -34,3 +34,9 @@ export interface TicketTypeData {
     EventName: string;
 }
 
+export interface BusinessOwnerData {
+    BusinessOwnerCode: string;
+    BusinessOwnerName: string;
+    Email: string;
+    PhoneNumber: string;
+}
