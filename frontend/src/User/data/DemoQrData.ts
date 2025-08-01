@@ -1,4 +1,4 @@
-import type { QRInfo } from "@/User/types";
+import type { QRInfo } from "@/types";
 
 export const demoQrDataList: QRInfo[] = [
   {

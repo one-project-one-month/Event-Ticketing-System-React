@@ -12,6 +12,7 @@
   --popover: #f5f5f4;
   --popover-foreground: #1e293b;
   --primary: #080739;
+  --primary-admin: linear-gradient(90deg, #3f2b96 50%, #a8c0ff 100%);
   --primary-foreground: #4b5563;
   --secondary: #103263;
   --secondary-foreground: #4b5563;
