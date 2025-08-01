@@ -25,3 +25,12 @@ export interface EventTypeData {
     EventTypeName: string;
     CreatedDate: Date;
 }
+
+export interface TicketTypeData {
+    TicketTypeCode: string;
+    TicketTypeName: string;
+    TicketPrice: number;
+    TicketQuantity: number;
+    EventName: string;
+}
+

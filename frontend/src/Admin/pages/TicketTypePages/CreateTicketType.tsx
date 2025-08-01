@@ -6,7 +6,7 @@ import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 import { useNavigate } from "react-router-dom";
 import SaveSuccessModal from "@/Admin/components/ui/SaveSuccessModal";
 
-export default function CreateEventType () {
+export default function CreateTicketType () {
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
       const handleSave = () => {
@@ -15,12 +15,24 @@ export default function CreateEventType () {
       };
     return (
         <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6  text-[#6C2BD9]">Event Category Information</h1>
-            <h2 className="text-xl mb-6  text-[#6C2BD9]">Please fill in all required fields to create a new ticket type.</h2>
+            <h1 className="text-3xl font-bold mb-6  text-[#6C2BD9]">Ticket Type Information</h1>
+            <h2 className="text-xl mb-6  text-[#6C2BD9]">Please fill in all required fields to create a new Ticket Type.</h2>
             <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
                 <div>
-                    <Label label="Category Name" required />
-                    <TextInput placeholder="Enter category name" />
+                    <Label label="Ticket Type Name" required />
+                    <TextInput placeholder="Enter tiket type name" />
+                </div>
+                <div>
+                    <Label label="Price" required />
+                    <TextInput placeholder="Enter price" />
+                </div>
+                <div>
+                    <Label label="Quantity" required />
+                    <TextInput placeholder="Enter quantity" />
+                </div>
+                <div>
+                    <Label label="Event Name" required />
+                    <TextInput placeholder="Enter event name" />
                 </div>
             </div>
             <div className="mt-8 flex justify-end gap-[20px]">
