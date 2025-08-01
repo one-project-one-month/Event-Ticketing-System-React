@@ -19,6 +19,9 @@ import SettingPage from "@/Admin/pages/Setting";
 import EventDetailPage from "../pages/EventListPages/EventDetail";
 import EventEditPage from "../pages/EventListPages/EventEdit";
 import CreateEventPage from "../pages/EventListPages/CreateEvent";
+import EventTypeDetailPage from "../pages/EventTypePages/EventTypeDetail";
+import EventTypeEditPage from "../pages/EventTypePages/EventTypeEdit";
+import CreateEventTypePage from "../pages/EventTypePages/CreateEventType";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -41,7 +44,10 @@ export const adminRouter = createBrowserRouter([
           { path: "venuelist", Component: VenueListPage },
           { path: "event/type",
             children:[
-              { index: true, Component: EventTypePage}
+              { index: true, Component: EventTypePage},
+              {path: ":EventTypeCode", Component: EventTypeDetailPage},
+              {path: ":eventTypeCode/edit", Component: EventTypeEditPage},
+              {path: "create", Component: CreateEventTypePage}
             ]
            },
           { path: "event/list", 

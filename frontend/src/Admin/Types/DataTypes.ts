@@ -19,3 +19,9 @@ export interface EventListData{
     EventStatus:string,
     IsActive:boolean
 }
+
+export interface EventTypeData {
+    EventTypeCode: string;
+    EventTypeName: string;
+    CreatedDate: Date;
+}
