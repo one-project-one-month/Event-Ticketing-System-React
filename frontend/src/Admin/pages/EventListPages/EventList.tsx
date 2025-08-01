@@ -68,7 +68,7 @@ const EventList = () => {
         <Toolbar
           onSearch={(val) => setSearchTerm(val)}
           onExport={handleExport}
-          addNewPath="/admin/eventlist/create"
+          addNewPath="/admin/event/list/create"
         />
 
         <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px]">Event List</h2>
@@ -115,14 +115,14 @@ const EventList = () => {
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/eventlist/${event.EventUniqueName}`)}
+                      onClick={() => navigate(`/admin/event/list/${event.EventUniqueName}`)}
                     >
                       <img src="/icons/Eye.svg" alt="view" className="w-4 h-4" />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/eventlist/${event.EventUniqueName}/edit`)}
+                      onClick={() => navigate(`/admin/event/list/${event.EventUniqueName}/edit`)}
                     >
                       <img src="/icons/Edit.svg" alt="edit" className="w-4 h-4" />
                     </Button>

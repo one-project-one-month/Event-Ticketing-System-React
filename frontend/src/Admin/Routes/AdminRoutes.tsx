@@ -18,6 +18,7 @@ import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
 import SettingPage from "@/Admin/pages/Setting";
 import EventDetailPage from "../pages/EventListPages/EventDetail";
 import EventEditPage from "../pages/EventListPages/EventEdit";
+import CreateEventPage from "../pages/EventListPages/CreateEvent";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -38,16 +39,17 @@ export const adminRouter = createBrowserRouter([
           { path: "ticket-type", Component: TicketTypePage },
           { path: "venuetype", Component: VenueTypePage },
           { path: "venuelist", Component: VenueListPage },
-          { path: "eventtype",
+          { path: "event/type",
             children:[
               { index: true, Component: EventTypePage}
             ]
            },
-          { path: "eventlist", 
+          { path: "event/list", 
             children: [
               {index: true, Component: EventListPage},
               { path: ":EventUniqueName", Component: EventDetailPage },
               { path: ":eventId/edit", Component: EventEditPage },
+              {path:"create", Component: CreateEventPage}
             ]
           },
           { path: "business", Component: BusinessOwnerPage},

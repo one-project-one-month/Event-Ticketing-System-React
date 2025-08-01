@@ -1,9 +1,11 @@
-// src/Admin/pages/Event/Edit.tsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { eventListDemoData } from "@/Admin/data/eventListDemoData";
-import { Input } from "@/User/components/ui/input";
-import { Button } from "@/User/components/ui/button";
+import { TextInput } from "@/Admin/components/ui/TextInput";
+import { YellowButton } from "@/Admin/components/ui/YellowButton";
+import { Label } from "@/Admin/components/ui/Label";
+import { Checkbox} from "@/Admin/components/ui/Checkbox";
+import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 
 export default function EventEditPage() {
   const { eventId } = useParams();
@@ -39,82 +41,76 @@ useEffect(() => {
   }
 }, [eventId]);
 
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleToggleActive = () => {
-    setForm(prev => ({ ...prev, IsActive: !prev.IsActive }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Updated Event:", form);
-    alert("This is demo-only. Event changes are not saved.");
-    navigate("/admin/event/list");
-  };
-
   return (
-    <div className="p-6 max-w-xl">
-      <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          name="EventCode"
-          value={form.EventCode}
-          onChange={handleChange}
-          placeholder="Event Code"
-        />
-        <Input
-          name="EventName"
-          value={form.EventName}
-          onChange={handleChange}
-          placeholder="Event Name"
-        />
-        <Input
-          name="EventUniqueName"
-          value={form.EventUniqueName}
-          onChange={handleChange}
-          placeholder="Unique Name"
+    <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Information</h1>
+      <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
+        <div>
+           <Label label="Event Name" required />
+        <TextInput
+          value={form.EventName} 
           disabled
         />
-        <Input
-          name="BusinessOwnerName"
-          value={form.BusinessOwnerName}
-          onChange={handleChange}
-          placeholder="Business Owner"
-        />
-        <Input
-          name="VenueName"
-          value={form.VenueName}
-          onChange={handleChange}
-          placeholder="Venue Name"
-        />
-        <label className="block text-sm font-medium">Start Date</label>
-        <Input
-          type="datetime-local"
-          name="StartDate"
-          value={form.StartDate}
-          onChange={handleChange}
-        />
-        <label className="block text-sm font-medium">End Date</label>
-        <Input
-          type="datetime-local"
-          name="EndDate"
-          value={form.EndDate}
-          onChange={handleChange}
-        />
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={form.IsActive}
-            onChange={handleToggleActive}
-          />
-          <label>Status: {form.IsActive ? "Active" : "Inactive"}</label>
         </div>
-        <Button type="submit">Save Changes</Button>
-      </form>
+        <div>
+          <Label label="Event Unique Name" required />
+        <TextInput
+          value={form.EventUniqueName}
+          disabled
+        />
+        </div>
+        <div>
+          <Label label="Event Category" required />
+        <TextInput
+         value={"MapThisWithAPI"}
+         disabled
+         />
+        </div>
+        <div>
+          <Label label="Business Owner Name" required />
+        <TextInput
+          value={form.BusinessOwnerName} 
+          disabled
+        />
+        </div>
+        <div>
+          <Label label="Venue Name" required />
+        <TextInput
+          value={form.VenueName} 
+          disabled
+        />
+        </div>
+        <div>
+          <Label label="Total Ticket Quantity" required />
+        <TextInput
+        value={"MapThisWithAPI"}
+        disabled
+        />
+        </div>
+        <div>
+          <Label label="Start Date" required />
+        <TextInput
+          value={form.StartDate}
+          disabled/>
+        </div>
+        <div>
+          <Label label="End Date" required />
+        <TextInput
+        value={form.EndDate} 
+        disabled
+        />
+        </div>
+        <div>
+          <Checkbox
+          label="Is Active"
+          checked={form.IsActive}
+          />
+        </div>
+      </div>
+      <div className="mt-8 flex justify-end gap-[20px]">
+        <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
+        <YellowButton text="Update" type="submit" />
+      </div>
     </div>
   );
 }
