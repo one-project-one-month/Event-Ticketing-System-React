@@ -1,4 +1,4 @@
-import type { ITotalCount } from "@/User/types";
+import type { ITotalCount } from "@/types";
 import TotalCount from "./TotalCount";
 
 export default function TotalCountContainer() {

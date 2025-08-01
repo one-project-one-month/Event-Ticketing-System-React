@@ -1,4 +1,4 @@
-import type { ITotalCount } from "@/User/types";
+import type { ITotalCount } from "@/types";
 
 interface TotalCountProps extends ITotalCount {
   format?: "default" | "short" | "percent";

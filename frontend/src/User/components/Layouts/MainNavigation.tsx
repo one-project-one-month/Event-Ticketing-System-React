@@ -14,7 +14,7 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
 import { Icons } from "../Icons";
 import { siteConfig } from "@/User/config/site";
-import type { MainNavItem } from "@/User/types";
+import type { MainNavItem } from "@/types";
 import { cn } from "@/User/lib/utils";
 
 interface MainNavigationProps {

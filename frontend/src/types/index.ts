@@ -46,3 +46,19 @@ export interface IVenueCard {
   capacity: number;
   address: string;
 }
+// ADMIN Types
+
+export type NavItemChild = {
+  title: string;
+  href: string;
+  icon?: LucideIcon; // Make icon optional
+};
+
+export type AdminNavItem = {
+  title: string;
+  href: string;
+  icon?: LucideIcon;
+  active?: boolean;
+  hasDropdown?: boolean;
+  children?: NavItemChild[]; // Use the new child type
+};

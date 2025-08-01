@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/User/components/ui/button";
 import { useQRValidator } from "@/User/hooks/useQrValidator";
 import QrResult from "@/User/components/QR/QrResult";
-import { type QRInfo } from "@/User/types/index";
+import { type QRInfo } from "@/types/index";
 import { UploadIcon } from "lucide-react";
 
 const QRUpload = () => {
@@ -41,16 +41,18 @@ const QRUpload = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-0 border-0 border-purple-500 rounded-2xl shadow-2xl gap-4 w-full max-w-md bg-gradient-to-br from-pink-100 via-purple-100 to-teal-100 transition-all">
+    <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border-0 border-purple-500 bg-gradient-to-br from-pink-100 via-purple-100 to-teal-100 p-0 shadow-2xl transition-all">
       {!qrInfo && (
         <>
           {!previewUrl ? (
             <label
               htmlFor="qr-upload"
-              className="flex flex-col items-center justify-center w-60 h-60 border-4 border-dashed border-pink-400 rounded-2xl cursor-pointer hover:bg-pink-50 transition duration-300 shadow-inner text-center"
+              className="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-2xl border-4 border-dashed border-pink-400 text-center shadow-inner transition duration-300 hover:bg-pink-50"
             >
-              <UploadIcon className="h-10 w-10 text-pink-500 mb-2 animate-pulse" />
-              <span className="text-pink-600 font-semibold">Click to upload QR code</span>
+              <UploadIcon className="mb-2 h-10 w-10 animate-pulse text-pink-500" />
+              <span className="font-semibold text-pink-600">
+                Click to upload QR code
+              </span>
               <input
                 id="qr-upload"
                 type="file"
@@ -63,21 +65,25 @@ const QRUpload = () => {
               />
             </label>
           ) : (
-            <div className="w-full flex flex-col items-center gap-2">
+            <div className="flex w-full flex-col items-center gap-2">
               <img
                 src={previewUrl}
                 alt="Uploaded QR"
-                className="w-60 h-60 object-contain border-4 border-purple-400 rounded-2xl shadow-lg"
+                className="h-60 w-60 rounded-2xl border-4 border-purple-400 object-contain shadow-lg"
               />
-              <Button variant="ghost" onClick={reset}>Change QR</Button>
+              <Button variant="ghost" onClick={reset}>
+                Change QR
+              </Button>
             </div>
           )}
 
-          {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+          {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
           {file && (
-            <div className="flex gap-4 mt-2">
-              <Button variant="outline" onClick={reset}>Cancel</Button>
+            <div className="mt-2 flex gap-4">
+              <Button variant="outline" onClick={reset}>
+                Cancel
+              </Button>
               <Button onClick={handleUpload} disabled={loading}>
                 {loading ? "Checking..." : "Confirm QR"}
               </Button>
