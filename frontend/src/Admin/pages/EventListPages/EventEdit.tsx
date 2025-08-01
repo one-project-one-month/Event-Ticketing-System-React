@@ -110,6 +110,7 @@ useEffect(() => {
           <Checkbox
           label="Is Active"
           checked={form.IsActive}
+          onChange={(e) => setForm({ ...form, IsActive: e.target.checked })}
           />
         </div>
       </div>
