@@ -3,10 +3,14 @@ import Toolbar from "@/Admin/components/ui/ToolBar";
 import { useNavigate } from "react-router-dom";
 import { eventListDemoData } from "@/Admin/data/eventListDemoData";
 import { Pagination } from "@/Admin/components/ui/Pagination";
-import { exportToCSV, exportToExcel, exportToPDF } from "@/Admin/utils/exportUtils";
+import {
+  exportToCSV,
+  exportToExcel,
+  exportToPDF,
+} from "@/Admin/utils/exportUtils";
 import { useEffect, useState } from "react";
 
-type EventItem = typeof eventListDemoData[number];
+type EventItem = (typeof eventListDemoData)[number];
 
 const EventList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,7 +24,9 @@ const EventList = () => {
   }, []);
 
   const handleDelete = (eventUniqueName: string) => {
-    const confirmed = window.confirm("Are you sure you want to delete this event?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event?",
+    );
     if (confirmed) {
       const updated = data.filter((e) => e.EventUniqueName !== eventUniqueName);
       setData(updated);
@@ -30,7 +36,7 @@ const EventList = () => {
   const filteredEvents = data.filter(
     (event) =>
       event.EventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      event.EventUniqueName.toLowerCase().includes(searchTerm.toLowerCase())
+      event.EventUniqueName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleExport = (format: string) => {
@@ -63,20 +69,29 @@ const EventList = () => {
   const currentEvents = filteredEvents.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="px-[15px] py-[10px] flex justify-center">
-      <div className="w-full max-w-[1057px] flex flex-col gap-[20px]">
+    <div className="flex justify-center px-[15px] py-[10px]">
+      <div className="flex w-full max-w-[1057px] flex-col gap-[20px]">
         <Toolbar
           onSearch={(val) => setSearchTerm(val)}
           onExport={handleExport}
           addNewPath="/admin/event/list/create"
         />
 
-        <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px]">Event List</h2>
-        <div className="overflow-auto rounded-[20px] border border-gray-200">
+        <h2 className="gap-[48px] text-[30px] font-semibold text-[#43319A] dark:text-white">
+          Event List
+        </h2>
+        <div className="overflow-auto rounded-[20px] border border-gray-200 dark:border-[#334155]">
           <table className="min-w-full divide-y divide-[#67648D]">
-            <thead className="bg-[#615CB8] padding-[20px]">
+            <thead className="padding-[20px] bg-[#615CB8] dark:bg-[#0F172A]">
               <tr>
-                {["No", "Event Name", "Event Unique Name", "Business Owner Name", "Active", "Actions"].map((heading) => (
+                {[
+                  "No",
+                  "Event Name",
+                  "Event Unique Name",
+                  "Business Owner Name",
+                  "Active",
+                  "Actions",
+                ].map((heading) => (
                   <th
                     key={heading}
                     className="py-[20px] text-center text-lg font-medium text-white/80 uppercase"
@@ -87,51 +102,74 @@ const EventList = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
               {currentEvents.map((event, index) => (
-                <tr key={event.EventUniqueName} className="hover:bg-gray-50">
-                  <td className="px-[20px] py-[10px] text-center whitespace-nowrap text-lg">
+                <tr
+                  key={event.EventUniqueName}
+                  className="hover:bg-[#1E293B] hover:text-black hover:dark:bg-gray-50"
+                >
+                  <td className="px-[20px] py-[10px] text-center text-lg whitespace-nowrap">
                     {indexOfFirstItem + index + 1}
                   </td>
-                  <td className="px-[10px] py-[10px] text-center whitespace-nowrap font-medium text-lg">
+                  <td className="px-[10px] py-[10px] text-center text-lg font-medium whitespace-nowrap">
                     {event.EventName}
                   </td>
-                  <td className="px-[10px] py-[10px] text-center whitespace text-lg">
+                  <td className="whitespace px-[10px] py-[10px] text-center text-lg">
                     {event.EventUniqueName}
                   </td>
-                  <td className="px-[10px] py-[10px] text-center whitespace text-lg">
+                  <td className="whitespace px-[10px] py-[10px] text-center text-lg">
                     {event.BusinessOwnerName}
                   </td>
-                  <td className="px-[10px] py-[10px] whitespace text-center">
+                  <td className="whitespace px-[10px] py-[10px] text-center">
                     <span
-                      className={`px-[10px] py-[4px] rounded-[20px] min-w-[100px] inline-block text-center text-lg ${
-                        event.IsActive ? "bg-[#58B651] text-[#030812]" : "bg-[#D6D6D6] text-[#030812]"
+                      className={`inline-block min-w-[100px] rounded-[20px] px-[10px] py-[4px] text-center text-lg ${
+                        event.IsActive
+                          ? "bg-[#58B651] text-[#030812]"
+                          : "bg-[#D6D6D6] text-[#030812]"
                       }`}
                     >
                       {event.IsActive ? "Active" : "Inactive"}
                     </span>
                   </td>
-                  <td className="px-[10px] py-[10px] whitespace-nowrap flex justify-center items-center gap-[6px]">
+                  <td className="flex items-center justify-center gap-[6px] px-[10px] py-[10px] whitespace-nowrap">
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/event/list/${event.EventUniqueName}`)}
+                      onClick={() =>
+                        navigate(`/admin/event/list/${event.EventUniqueName}`)
+                      }
                     >
-                      <img src="/icons/Eye.svg" alt="view" className="w-4 h-4" />
+                      <img
+                        src="/icons/Eye.svg"
+                        alt="view"
+                        className="h-4 w-4"
+                      />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/event/list/${event.EventUniqueName}/edit`)}
+                      onClick={() =>
+                        navigate(
+                          `/admin/event/list/${event.EventUniqueName}/edit`,
+                        )
+                      }
                     >
-                      <img src="/icons/Edit.svg" alt="edit" className="w-4 h-4" />
+                      <img
+                        src="/icons/Edit.svg"
+                        alt="edit"
+                        className="h-4 w-4"
+                      />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
                       onClick={() => handleDelete(event.EventUniqueName)}
                     >
-                      <img src="/icons/Delete.svg" alt="delete" className="w-4 h-4" />
+                      <img
+                        src="/icons/Delete.svg"
+                        alt="delete"
+                        className="h-4 w-4"
+                      />
                     </Button>
                   </td>
                 </tr>

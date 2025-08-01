@@ -1,4 +1,9 @@
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 type PaginationProps = {
   currentPage: number;
@@ -19,16 +24,17 @@ export function Pagination({
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
-  const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1).slice(
-    Math.max(0, currentPage - 3),
-    Math.min(currentPage + 2, totalPages)
-  );
+  const visiblePages = Array.from(
+    { length: totalPages },
+    (_, i) => i + 1,
+  ).slice(Math.max(0, currentPage - 3), Math.min(currentPage + 2, totalPages));
 
   return (
-    <div className="w-full flex justify-between items-center bg-transparent px-4 py-2 rounded-md">
+    <div className="flex w-full items-center justify-between rounded-md bg-transparent px-4 py-2">
       {/* Left side: 1-10 of 100 items */}
-      <div className="text-sm font-medium text-black">
-        {startItem.toString().padStart(2, "0")}-{endItem.toString().padStart(2, "0")} of {totalItems} items
+      <div className="text-sm font-medium text-black dark:text-white">
+        {startItem.toString().padStart(2, "0")}-
+        {endItem.toString().padStart(2, "0")} of {totalItems} items
       </div>
 
       {/* Middle: Pagination Controls */}
@@ -53,7 +59,9 @@ export function Pagination({
             key={page}
             onClick={() => onPageChange(page)}
             className={`pagination-number ${
-              page === currentPage ? "bg-[#615CB8] text-white" : "bg-white text-black"
+              page === currentPage
+                ? "bg-[#615CB8] text-white"
+                : "bg-white text-black"
             }`}
           >
             {page}
@@ -77,11 +85,11 @@ export function Pagination({
       </div>
 
       {/* Right side: Items per page */}
-      <div className="flex items-center gap-2 text-sm text-black">
+      <div className="flex items-center gap-2 text-sm text-black dark:text-white">
         <select
           value={itemsPerPage}
           onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-          className="bg-[#615CB8] text-white rounded px-2 py-1 text-sm"
+          className="rounded bg-[#615CB8] px-2 py-1 text-sm text-white"
         >
           {[5, 10, 20, 50].map((val) => (
             <option key={val} value={val}>
