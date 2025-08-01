@@ -126,7 +126,7 @@ const TicketDetail = () => {
               <input
                 type="number"
                 value={quantity}
-                className="no-spinner w-12 rounded border p-1 text-xl font-semibold text-[#071739] outline-none"
+                className="no-spinner w-12 border-b-2 p-1 text-center text-xl font-semibold text-white outline-none"
                 onChange={(e) => setQuantity(Number(e.target.value))}
               />
               <Button
@@ -148,7 +148,7 @@ const TicketDetail = () => {
         </div>
       </div>
       <div
-        className={`fixed top-0 flex h-full w-full items-center justify-center backdrop-opacity-5 ${showVerifyDialog ? "block" : "hidden"}`}
+        className={`fixed top-0 flex h-full w-full items-center justify-center backdrop-opacity-30 ${showVerifyDialog ? "block" : "hidden"}`}
       >
         <VerifyDialog show={showVerifyDialog} setShow={setShowVerifyDialog} />
       </div>

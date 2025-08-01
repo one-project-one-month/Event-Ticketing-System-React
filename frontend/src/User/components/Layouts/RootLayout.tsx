@@ -7,7 +7,7 @@ function RootLayout() {
     <>
       <div className="flex min-h-screen flex-col overflow-hidden">
         <Header />
-        <main className="mt-16 flex-1">
+        <main className="mt-0 flex-1">
           <Outlet />
         </main>
         <Footer />

@@ -4,7 +4,7 @@ interface CompleteStepProps {
 
 export const CompleteStep = ({ fileName }: CompleteStepProps) => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[360px] border-2 border-dashed border-black rounded-lg bg-[#e6e6e6]">
+    <div className="flex flex-col items-center justify-center mt-16 w-full h-[360px] border-2 border-dashed border-black rounded-lg bg-[#e6e6e6]">
       <div className="relative w-[160px] h-[160px] flex items-center justify-center mb-6">
 
         <div className="absolute w-[160px] h-[160px] rounded-full bg-[#233b75ff] opacity-10 animate-ping" />
