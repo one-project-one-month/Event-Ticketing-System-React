@@ -4,6 +4,7 @@ import {
 } from "@/Admin/DataTypes/DataTypes.ts";
 import AdminTotalCard from "@/Admin/components/pages/dashboard/AdminTotalCard";
 import { BestSellingChart } from "@/Admin/components/pages/dashboard/BestSellingChart.tsx";
+import TicketSaleChart from "@/Admin/components/pages/dashboard/TicketSaleChart.tsx";
 
 const Dashboard = () => {
   // --- Mock Data ---
@@ -39,9 +40,9 @@ const Dashboard = () => {
   return (
     <section className="figtreef max-h-[22rem] w-[79vw]">
       {/* Summery Total Cards */}
-      <div className="flex flex-row gap-5">
+      <div className="flex h-full flex-row gap-5">
         {/* Cards */}
-        <div className="grid flex-1 grid-cols-2 gap-5">
+        <div className="grid h-full flex-1 grid-cols-2 gap-5">
           <AdminTotalCard
             iconPath={`/icons/PurpleEventNote.svg`}
             title={"Total Event"}
@@ -68,12 +69,14 @@ const Dashboard = () => {
           />
         </div>
         {/* Chart */}
-        <div className="w-[30rem]">
+        <div className="h-full w-[30rem]">
           <BestSellingChart chartData={mockDashboardData} />
         </div>
       </div>
       {/* Ticket Sale Comparison */}
-      <div></div>
+      <div className={`mt-6 w-full`}>
+        <TicketSaleChart />
+      </div>
     </section>
   );
 };

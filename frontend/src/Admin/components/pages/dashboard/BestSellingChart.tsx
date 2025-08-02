@@ -68,7 +68,7 @@ export const BestSellingChart = ({
   };
 
   return (
-    <div className="mx-auto w-full max-w-2xl rounded-2xl bg-slate-50 p-6 font-sans">
+    <div className="mx-auto max-h-[22rem] w-full max-w-2xl rounded-2xl bg-slate-50 p-6 font-sans">
       {/* Header Section */}
       <header className="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
         <h1 className="mb-4 text-3xl font-bold text-slate-800 sm:mb-0">
@@ -121,7 +121,7 @@ export const BestSellingChart = ({
       {/* Chart and Legend Section */}
       <div className="flex flex-row items-center gap-8">
         {/* Donut Chart */}
-        <div className="h-72 w-full flex-1">
+        <div className="h-64 w-full flex-1 shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -149,7 +149,7 @@ export const BestSellingChart = ({
         </div>
 
         {/* Custom Legend */}
-        <div className="flex flex-col justify-center space-y-6">
+        <div className="flex flex-col justify-center space-y-4">
           {data.map((entry) => (
             <div key={entry.Label} className="flex items-start space-x-4">
               <div
