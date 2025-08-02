@@ -34,6 +34,7 @@
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
+    "recharts": "^3.1.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
     "xlsx": "^0.18.5"
@@ -48,6 +49,7 @@
     "@types/xlsx": "^0.0.35",
     "@vitejs/plugin-react": "^4.5.2",
     "eslint": "^9.29.0",
+    "eslint-plugin-erasable-syntax-only": "^0.3.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
