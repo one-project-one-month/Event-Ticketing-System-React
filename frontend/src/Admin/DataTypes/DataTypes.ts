@@ -1,3 +1,5 @@
+import {type ApiResponse } from "@/types/ApiResponse";
+
 export interface EventListData{
     EventCode:string,
     EventCatecoryCode:string,
@@ -20,11 +22,21 @@ export interface EventListData{
     IsActive:boolean
 }
 
+export type EventListResponse = ApiResponse<{
+  events: EventListData[];
+}>;
+
 export interface EventTypeData {
-    EventTypeCode: string;
-    EventTypeName: string;
-    CreatedDate: Date;
+    eventCategoryid: string;
+    eventCategorycode: string;
+    categoryname: string;
+    createdby: string;
+    createdat: Date;
 }
+
+export type EventTypeResponse = ApiResponse<{
+  eventTypes: EventTypeData[];
+}>;
 
 export interface TicketTypeData {
     TicketTypeCode: string;
@@ -34,9 +46,18 @@ export interface TicketTypeData {
     EventName: string;
 }
 
+export type TicketTypeResponse = ApiResponse<{
+  ticketTypes: TicketTypeData[];
+}>;
+
 export interface BusinessOwnerData {
     BusinessOwnerCode: string;
     BusinessOwnerName: string;
     Email: string;
     PhoneNumber: string;
 }
+
+export type BusinessOwnerResponse = ApiResponse<{
+  businessOwners: BusinessOwnerData[];
+}>;
+

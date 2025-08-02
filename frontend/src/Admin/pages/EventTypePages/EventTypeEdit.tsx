@@ -1,57 +1,81 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { eventTypeDemoData } from "@/Admin/data/EventTypeDemoData";
 import { TextInput } from "@/Admin/components/ui/TextInput";
 import { YellowButton } from "@/Admin/components/ui/YellowButton";
 import { Label } from "@/Admin/components/ui/Label";
 import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 import UpdateSuccessModal from "@/Admin/components/ui/UpdateSuccessModal";
+import { getEventTypeByCode, updateEventType } from "@/services/EventTypeServices";
 
 export default function EventTypeEditPage() {
     const navigate = useNavigate();
-    const { eventTypeCode } = useParams();
+    const { eventCategorycode } = useParams();
     const [showSuccess, setShowSuccess] = useState(false);
-    const handleUpdate = () => {
-        // Update logic here...
-        setShowSuccess(true);
-    };
 
     const [form, setForm] = useState({
-    EventTypeCode: "",
-    EventTypeName: "",
+    eventCategoryid: "",
+    eventCategorycode: "",
+    categoryname: "",
+    createdby: "",
+    createdat: new Date(),
     });
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        const found = eventTypeDemoData.find(
-        (e) => e.EventTypeCode === eventTypeCode
-        );
-        console.log("eventTypeCode from route:", eventTypeCode);
-        console.log("found record:", found);
-        if (found) {
+    if (!eventCategorycode) return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await getEventTypeByCode(eventCategorycode);
+      if (res.isSuccess && res.data?.eventType) {
         setForm({
-            EventTypeCode: found.EventTypeCode,
-            EventTypeName: found.EventTypeName,
+            eventCategoryid: res.data.eventType.eventCategoryid,
+            eventCategorycode: res.data.eventType.eventCategorycode,
+            categoryname: res.data.eventType.categoryname,
+            createdby: res.data.eventType.createdby,
+            createdat: new Date(res.data.eventType.createdat),
         });
-        }
-        }, [eventTypeCode]);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [eventCategorycode]);
+
+    const handleUpdate = async () => {
+        const res = await updateEventType(form);
+    if (res.isSuccess) {
+      setShowSuccess(true);
+    } else {
+      alert(res.message || "Update failed.");
+    }
+    };
 
     return(
         <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Category Information</h1>
-            <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
-                <div>
-                    <Label label="Event Type Name" required />
-                    <TextInput
-                    value={form.EventTypeName} onChange={(e) =>
-                    setForm({ ...form, EventTypeName: e.target.value })
-                }/>
+            {loading ? (
+                <p className="text-gray-500">Loading...</p>
+            ) : (
+                <>
+                <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
+                    <div>
+                        <Label label="Event Type Name" required />
+                        <TextInput
+                        value={form.eventCategorycode} onChange={(e) =>
+                        setForm({ ...form, categoryname: e.target.value })
+                    }/>
+                    </div>
                 </div>
-            </div>
-            <div className="mt-8 flex justify-end gap-[20px]">
-                <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
-                <YellowButton text="Update" type="submit" onClick={handleUpdate}/>
-                <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
-            </div>
+                    <div className="mt-8 flex justify-end gap-[20px]">
+                        <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
+                        <YellowButton text="Update" type="submit" onClick={handleUpdate}/>
+                    </div>
+                </>
+            )}
+            
+            <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
         </div>
     );
 }
