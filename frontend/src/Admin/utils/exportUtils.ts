@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // @/User/utils/exportUtils.ts
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
