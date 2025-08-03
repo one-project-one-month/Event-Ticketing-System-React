@@ -3,44 +3,62 @@ import { useNavigate } from "react-router-dom";
 import { Pagination } from "@/Admin/components/ui/Pagination";
 import { exportToCSV, exportToExcel, exportToPDF } from "@/Admin/utils/exportUtils";
 import { useEffect, useState } from "react";
-import { TicketTypeDemoData } from "@/Admin/data/TicketTypeDemoData";
 import { Button } from "@/User/components/ui/button";
-
-type TicketTypeItem = typeof TicketTypeDemoData[number];
+import type { TicketTypeData } from "@/Admin/DataTypes/TicketTypes";
+import { getTicketTypes, deleteTicketType } from "@/services/TicketTypeServices";
 
 const TicketType = () => {
   
       const [searchTerm, setSearchTerm] = useState("");
-      const [data, setData] = useState<TicketTypeItem[]>([]);
+      const [data, setData] = useState<TicketTypeData[]>([]);
       const navigate = useNavigate();
       const [currentPage, setCurrentPage] = useState(1);
       const [itemsPerPage, setItemsPerPage] = useState(10);
   
       useEffect(() => {
-          setData(TicketTypeDemoData);
-        }, []);
+        const fetchData = async () => {
+          const res = await getTicketTypes();
+
+          if (res.isSuccess && Array.isArray(res.data?.ticketTypeList)) {
+            setData(res.data.ticketTypeList);
+          } else {
+            console.error("Failed to fetch Ticket Types:", res.message);
+            setData([]);
+          }
+        };
+        fetchData();
+      }, []);
   
-      const handleDelete = (eventUniqueName: string) => {
-      const confirmed = window.confirm("Are you sure you want to delete this event?");
-      if (confirmed) {
-        const updated = data.filter((e) => e.TicketTypeCode !== eventUniqueName);
-        setData(updated);
-      }
+      const handleDelete = async (code: string) => {
+      const confirmed = window.confirm("Are you sure you want to delete this Ticket Type?");
+      if (!confirmed) return;
+      try{
+        const res = await deleteTicketType(code);
+        if (res.isSuccess) {
+          setData(prev => prev.filter(e => e.tickettypecode !== code));
+        } else {
+          alert(res.message || "Failed to delete Ticket Type.");
+        } 
+      }catch (error) {
+          console.error("Delete failed:", error);
+          alert("An error occurred while deleting. Please try again.");
+        }
     };
   
     const filteredEventTypes = data.filter(
       (event) =>
-        event.TicketTypeName.toLowerCase().includes(searchTerm.toLowerCase()) 
+        event.tickettypename.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
   
     const handleExport = (format: string) => {
       if (filteredEventTypes.length === 0) return alert("No data to export.");
   
       const exportData = filteredEventTypes.map((e) => ({
-        "Event Unique Name": e.TicketTypeCode,
-        "Event Type Name": e.TicketTypeName,
-        "Price": e.TicketPrice,
-        "Event Name": e.EventName,
+        "Ticket Code": e.tickettypecode,
+        "Ticket Type Name": e.tickettypename,
+        "Price": e.ticketprice,
+        "Event Code": e.eventcode,
+        "Event Name": e.eventname,
       }));
   
       switch (format) {
@@ -88,38 +106,38 @@ const TicketType = () => {
 
                 <tbody className="divide-y divide-gray-100 bg-white">
                       {currentTicketType.map((event, index) => (
-                <tr key={event.TicketTypeCode} className="hover:bg-gray-50">
+                <tr key={event.tickettypecode} className="hover:bg-gray-50">
                   <td className="px-[20px] py-[10px] text-center whitespace-nowrap text-lg">
                     {indexOfFirstItem + index + 1}
                   </td>
                   <td className="px-[10px] py-[10px] text-center whitespace-nowrap font-medium text-lg">
-                    {event.TicketTypeName}
+                    {event.tickettypename}
                   </td>
                   <td className="px-[10px] py-[10px] text-center whitespace-nowrap font-medium text-lg">
-                    {event.EventName}
+                    {event.eventname}
                   </td>
                   <td className="px-[10px] py-[10px] text-center whitespace-nowrap font-medium text-lg">
-                    {event.TicketPrice}
+                    {event.ticketprice}
                   </td>
                   <td className="px-[10px] py-[10px] whitespace-nowrap flex justify-center items-center gap-[6px]">
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/ticket-type/${event.TicketTypeCode}`)}
+                      onClick={() => navigate(`/admin/ticket-type/${event.tickettypecode}`)}
                     >
                       <img src="/icons/Eye.svg" alt="view" className="w-4 h-4" />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/ticket-type/${event.TicketTypeCode}/edit`)}
+                      onClick={() => navigate(`/admin/ticket-type/${event.tickettypecode}/edit`)}
                     >
                       <img src="/icons/Edit.svg" alt="edit" className="w-4 h-4" />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => handleDelete(event.TicketTypeCode)}
+                      onClick={() => handleDelete(event.tickettypecode)}
                     >
                       <img src="/icons/Delete.svg" alt="delete" className="w-4 h-4" />
                     </Button>

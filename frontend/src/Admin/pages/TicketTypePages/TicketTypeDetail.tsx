@@ -3,44 +3,61 @@ import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 import { TextInput } from "@/Admin/components/ui/TextInput";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { TicketTypeDemoData } from "@/Admin/data/TicketTypeDemoData";
+import type { TicketTypeData } from "@/Admin/DataTypes/TicketTypes";
+import { getTicketTypeByCode } from "@/services/TicketTypeServices";
 
 export default function TicketTypeDetail() {
-    const { TicketTypeCode } = useParams();
+    const { tickettypecode } = useParams();
     const navigate = useNavigate();
-    const [event, setEvent] = useState<any>(null);
+    const [event, setEvent] = useState<TicketTypeData[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const found = TicketTypeDemoData.find((e) => e.TicketTypeCode === TicketTypeCode);
-        setEvent(found || null);
-      }, [TicketTypeCode]);
+        const fetchTicketType = async () => {
+            if (!tickettypecode) return;
+            const res = await getTicketTypeByCode(tickettypecode);
+            if (res.isSuccess && res.data?.TicketType){
+                setEvent(res.data.TicketType ? [res.data.TicketType] : []); 
+            } else {
+                console.error("Failed to fetch ticket type:", res.message);
+                setEvent([]);
+            }
+            setLoading(false);
+        };
+        fetchTicketType();
+    }, [tickettypecode]);
 
-      if (!event) return <p className="text-center mt-20">Ticket not found.</p>;
+    if (loading) return <p className="text-center mt-20">Loading...</p>;
+      if (!event.length) return <p className="text-center mt-20">Ticket not found.</p>;
       return(
         <div className="p-10 bg-white rounded-md max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Ticket Type Information</h1>
 
-            <div className="grid grid-cols-2 gap-x-8 gap-y-5">
-                <div>
-                    <Label label="Event Code" required />
-                    <TextInput value={event.TicketTypeCode} readOnly />
-                </div>
-                <div>
-                    <Label label="Event Category Code" required />
-                    <TextInput value={event.TicketTypeName} readOnly />
-                </div>
-                <div>
-                    <Label label="Event Category Code" required />
-                    <TextInput value={event.TicketPrice} readOnly />
-                </div>
-                <div>
-                    <Label label="Event Category Code" required />
-                    <TextInput value={event.TicketQuantity} readOnly />
-                </div>
-                <div>
-                    <Label label="Event Category Code" required />
-                    <TextInput value={event.EventName} readOnly />
-                </div>
+            <div className="space-y-10">
+                {event.map((event, index) => (
+                    <div key={index} className="grid grid-cols-2 gap-x-8 gap-y-5 border-b pb-5">
+                        <div>
+                            <Label label="Event Code" required />
+                            <TextInput value={event.tickettypecode} readOnly />
+                        </div>
+                        <div>
+                            <Label label="Event Category Code" required />
+                            <TextInput value={event.tickettypename} readOnly />
+                        </div>
+                        <div>
+                            <Label label="Event Category Code" required />
+                            <TextInput value={event.ticketprice} readOnly />
+                        </div>
+                        <div>
+                            <Label label="Event Category Code" required />
+                            <TextInput value={event.eventcode} readOnly />
+                        </div>
+                        <div>
+                            <Label label="Event Category Code" required />
+                            <TextInput value={event.eventname} readOnly />
+                        </div>
+                    </div>
+                ))};
             </div>
 
             <div className="mt-8 text-right">

@@ -1,50 +1,72 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { TicketTypeDemoData } from "@/Admin/data/TicketTypeDemoData";
 import { TextInput } from "@/Admin/components/ui/TextInput";
 import { YellowButton } from "@/Admin/components/ui/YellowButton";
 import { Label } from "@/Admin/components/ui/Label";
 import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 import UpdateSuccessModal from "@/Admin/components/ui/UpdateSuccessModal";
+import { getTicketTypeByCode, updateTicketType } from "@/services/TicketTypeServices";
 
 export default function TicketTypeEditPage() {
     const navigate = useNavigate();
     const { ticketTypeCode } = useParams();
     const [showSuccess, setShowSuccess] = useState(false);
-    const handleUpdate = () => {
-        // Update logic here...
-        setShowSuccess(true);
-    };
+    const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
     TicketTypeCode: "",
     TicketTypeName: "",
-    TicketPrice: 0.00,
+    TicketPrice: "",
     TicketQuantity: 0,
     EventName: "",
+    EventCode: ""
     });
 
     useEffect(() => {
-        const found = TicketTypeDemoData.find(
-        (e) => e.TicketTypeCode === ticketTypeCode
-        );
-        console.log("ticketTypeCode from route:", ticketTypeCode);
-        console.log("found record:", found);
-        if (found) {
-        setForm({
-            TicketTypeCode: found.TicketTypeCode,
-            TicketTypeName: found.TicketTypeName,
-            TicketPrice: found.TicketPrice,
-            TicketQuantity: found.TicketQuantity,
-            EventName: found.EventName,
-        });
+      if(!ticketTypeCode) return;
+      const fetchData = async () => {
+        setLoading(true);
+        const res = await getTicketTypeByCode(ticketTypeCode);
+        if(res.isSuccess && res.data?.TicketType){
+          const event = res.data.TicketType;
+
+          setForm({
+            TicketTypeCode: event.tickettypecode,
+            TicketTypeName: event.tickettypename,
+            TicketPrice: event.ticketprice,
+            TicketQuantity: event.ticketquantity,
+            EventCode: event.eventcode,
+            EventName: event.eventname
+          });
+        }else{
+          console.error("Failed to fetch ticket type: ", res.message)
         }
-        }, [ticketTypeCode]);
+        setLoading(false);
+      };
+      fetchData();
+      }, [ticketTypeCode]);
+
+      const handleUpdate = async () => {
+        const res = await updateTicketType({
+            tickettypecode: form.TicketTypeCode,
+            tickettypename:form.TicketTypeName
+        });
+        if(res.isSuccess){
+        setShowSuccess(true);
+        }
+        else{
+          alert
+        }
+    };
 
     return(
         <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Category Information</h1>
-            <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
+            {loading ? (
+              <p className="text-center mt-20">Loading...</p>
+            ) : (
+              <>
+                  <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
                 <div>
                     <Label label="Event Type Name" required />
                     <TextInput
@@ -77,8 +99,11 @@ export default function TicketTypeEditPage() {
             <div className="mt-8 flex justify-end gap-[20px]">
                 <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
                 <YellowButton text="Update" type="submit" onClick={handleUpdate}/>
-                <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
+                
             </div>
+              </>
+            )}
+            <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
         </div>
     );
 }
