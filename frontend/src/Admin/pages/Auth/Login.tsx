@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAdminAuth } from "@/Admin/data/AdminAuth";
+import { Link, useNavigate } from "react-router-dom";
 
+import { useAdminAuth } from "@/Admin/data/AdminAuth";
 import { Card, CardContent } from "@/User/components/ui/card";
-import { User, Lock, CheckCircle } from "lucide-react";
+import { User, Lock } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
+import loginSuccess from "@/Admin/data/Icons/loginSuccess.svg";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -34,14 +35,14 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center gap-3 bg-[#444444] p-8">
+    <div className="flex min-h-screen items-center justify-center gap-3 bg-[#D8DFEC]">
       {/* Login Form */}
       {!showSuccess && (
         <Card className="w-[400px] border-none bg-[linear-gradient(180deg,#3f2b96_50%,#a8c0ff_100%)] shadow-xl">
           <CardContent className="p-14">
             <form onSubmit={handleSubmit}>
               <div className="mb-8 text-center">
-                <h1 className="mb-4 text-sm font-medium text-white">
+                <h1 className="mb-6 text-[20px] font-medium text-white">
                   Event Ticket System
                 </h1>
                 <h2 className="mb-2 text-start text-xl font-semibold text-white">
@@ -77,17 +78,17 @@ export default function AdminLoginPage() {
                 {error && <p className="text-sm text-red-500">{error}</p>}
 
                 <div className="text-right">
-                  <button
-                    type="button"
-                    className="text-sm text-white/80 hover:text-white"
+                  <Link
+                    to="/admin/forgot-password"
+                    className="text-sm text-white/80 hover:underline"
                   >
                     Forgot Password?
-                  </button>
+                  </Link>
                 </div>
 
                 <Button
                   type="submit"
-                  className="h-12 w-full bg-[#030812] font-medium text-white hover:bg-[#030812]/90"
+                  className="h-12 w-full bg-[#43319A] font-medium text-white hover:bg-[#030812]/90"
                 >
                   Log In
                 </Button>
@@ -99,11 +100,15 @@ export default function AdminLoginPage() {
 
       {/* Success Modal */}
       {showSuccess && (
-        <Card className="w-[350px] border-none bg-gradient-to-b from-[#43319a] to-[#43319a]/80 shadow-xl">
+        <Card className="min-h-md w-full max-w-md border-none bg-gradient-to-b from-[#43319a] to-[#A8C0FF]/80 shadow-xl">
           <CardContent className="p-8 text-center">
             <div className="mb-6">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
-                <CheckCircle className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center">
+                <img
+                  src={loginSuccess}
+                  alt="loginSuccess"
+                  className="size-[164px]"
+                />
               </div>
               <h2 className="mb-2 text-xl font-semibold text-white">
                 Login Successful!
@@ -111,13 +116,13 @@ export default function AdminLoginPage() {
               <p className="mb-1 text-sm text-white/80">
                 Welcome back, Admin! You have successfully logged in.
               </p>
-              <p className="text-xs text-white/60">
+              <p className="dark:text-accent-foreground text-xs text-white/60">
                 Remember to log out if you're done.
               </p>
             </div>
 
             <Button
-              className="bg-primary h-10 w-full font-medium text-white hover:bg-[#030812]/90"
+              className="h-10 w-full bg-[#43319A] font-medium text-white hover:bg-[#030812]/90"
               onClick={handleGoToDashboard}
             >
               Go to Dashboard

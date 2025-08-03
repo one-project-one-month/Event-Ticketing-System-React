@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, Settings, LogOutIcon } from "lucide-react";
 
 import { adminSiteConfig } from "@/Admin/config/site.ts";
 import type { AdminNavItem } from "@/types";
+import LogoutConfirmation from "@/Admin/pages/Auth/LogoutConfirm";
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
@@ -93,13 +94,12 @@ export default function AdminSidebar() {
             </button>
           </li>
           <li>
-            <button
-              onClick={handleLogout}
-              className="my-3 flex w-full cursor-pointer items-center justify-start gap-x-6 rounded-s-3xl px-3 py-1 text-[18px] transition-all duration-200 ease-in-out hover:bg-[#F8F8FF] hover:text-[#030812]"
-            >
-              <LogOutIcon className="size-5" />
-              Logout
-            </button>
+            <LogoutConfirmation onConfirm={handleLogout}>
+              <button className="my-3 flex w-full cursor-pointer items-center justify-start gap-x-6 rounded-s-3xl px-3 py-1 text-[18px] transition-all duration-200 ease-in-out hover:bg-[#F8F8FF] hover:text-[#030812]">
+                <LogOutIcon className="size-5" />
+                Logout
+              </button>
+            </LogoutConfirmation>
           </li>
         </ul>
       </div>

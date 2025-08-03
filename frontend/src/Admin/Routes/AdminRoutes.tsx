@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAdminRoute } from "@/Admin/Routes/ProtectedAdminRoute";
 import AdminLayout from "@/Admin/components/Layouts/AdminLayout";
-import AdminLoginPage from "@/Admin/pages/Login";
+import AdminLoginPage from "@/Admin/pages/Auth/Login";
 
 // Admin pages
 import AdminDashboardPage from "@/Admin/pages/Dashboard";
@@ -19,12 +19,21 @@ import SettingPage from "@/Admin/pages/Setting";
 import EventDetailPage from "../pages/EventListPages/EventDetail";
 import EventEditPage from "../pages/EventListPages/EventEdit";
 import CreateEventPage from "../pages/EventListPages/CreateEvent";
+import ForgotPasswordPage from "@/Admin/pages/Auth/ForgotPassword";
+import ResetPasswordPage from "@/Admin/pages/Auth/ResetPassword";
+import ResetSuccess from "../pages/Auth/ResetSuccess";
 
 export const adminRouter = createBrowserRouter([
   {
     path: "/admin/login",
     Component: AdminLoginPage,
   },
+  {
+    path: "/admin/forgot-password",
+    Component: ForgotPasswordPage,
+  },
+  { path: "/admin/reset-password", Component: ResetPasswordPage },
+  { path: "/admin/reset-success", Component: ResetSuccess },
   {
     path: "/admin",
     Component: ProtectedAdminRoute,
@@ -39,20 +48,20 @@ export const adminRouter = createBrowserRouter([
           { path: "ticket-type", Component: TicketTypePage },
           { path: "venuetype", Component: VenueTypePage },
           { path: "venuelist", Component: VenueListPage },
-          { path: "event/type",
-            children:[
-              { index: true, Component: EventTypePage}
-            ]
-           },
-          { path: "event/list", 
+          {
+            path: "event/type",
+            children: [{ index: true, Component: EventTypePage }],
+          },
+          {
+            path: "event/list",
             children: [
-              {index: true, Component: EventListPage},
+              { index: true, Component: EventListPage },
               { path: ":EventUniqueName", Component: EventDetailPage },
               { path: ":eventId/edit", Component: EventEditPage },
-              {path:"create", Component: CreateEventPage}
-            ]
+              { path: "create", Component: CreateEventPage },
+            ],
           },
-          { path: "business", Component: BusinessOwnerPage},
+          { path: "business", Component: BusinessOwnerPage },
           { path: "businessemail", Component: BusinessEmailPage },
           { path: "historypurchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },
