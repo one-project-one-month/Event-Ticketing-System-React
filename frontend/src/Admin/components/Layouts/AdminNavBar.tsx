@@ -1,35 +1,36 @@
-import { BellIcon } from "lucide-react"; 
+import { BellIcon } from "lucide-react";
+import { Button } from "@/User/components/ui/button";
+import { ModeToggle } from "@/User/components/mode-toggle";
 
 export default function AdminNavBar() {
-  // Demo user data (you can replace with real user data from context/auth)
   const admin = {
-    name: "Admin User",
-    email: "admin@example.com",
-    avatarUrl: "https://i.pravatar.cc/40?img=12", 
+    name: "Brian",
+    email: "brian@example.com",
+    avatarUrl: "https://i.pravatar.cc/40?img=12",
   };
 
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-white shadow-sm border-b">
-      {/* Left: Logo or Title */}
-      <div className="text-lg font-bold text-[#233b75]">Admin Panel</div>
+    <header className="mb-1.5 flex h-[90px] w-full items-center justify-between px-6 py-3">
+      <div className="ml-10 text-3xl font-bold text-[#43319A] dark:text-[#E6E0FF]">
+        Event Ticket System
+      </div>
 
-      {/* Right: Notification + Profile */}
-      <div className="flex items-center gap-4">
-        <button className="relative text-gray-600 hover:text-black">
-          <BellIcon className="w-6 h-6" />
-          {/* Optional red dot */}
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
-
-        <div className="flex items-center gap-2">
+      <div className="mr-10 flex gap-x-4">
+        <div className="mt-2">
+          <ModeToggle />
+        </div>
+        <Button className="relative mt-2 bg-transparent text-[#43319A] shadow-none hover:cursor-pointer hover:bg-transparent dark:text-[#E6E0FF]">
+          <BellIcon className="size-7" />
+        </Button>
+        <div className="flex items-center gap-x-4 hover:cursor-pointer">
           <img
             src={admin.avatarUrl}
             alt="avatar"
-            className="w-9 h-9 rounded-full border"
+            className="h-[50px] w-[50px] rounded-full border"
           />
-          <div className="text-sm text-right leading-tight">
-            <div className="font-medium">{admin.name}</div>
-            <div className="text-gray-500 text-xs">{admin.email}</div>
+          <div className="text-[16px] text-[#43319A] hover:cursor-pointer dark:text-[#E6E0FF]">
+            <div>{admin.name}</div>
+            <div>{admin.email}</div>
           </div>
         </div>
       </div>

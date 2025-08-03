@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { type QRInfo } from "@/User/types";
+import { type QRInfo } from "@/types";
 import { BrowserQRCodeReader } from "@zxing/browser";
-import { demoQrDataList } from "@/User/data/DemoQrData"; 
+import { demoQrDataList } from "@/User/data/DemoQrData";
 
 export function useQRValidator() {
   const [loading, setLoading] = useState(false);
 
-  const validateQR = (file: File): Promise<{ valid: boolean; data?: QRInfo; error?: string }> => {
+  const validateQR = (
+    file: File,
+  ): Promise<{ valid: boolean; data?: QRInfo; error?: string }> => {
     setLoading(true);
 
     const reader = new BrowserQRCodeReader();
@@ -22,16 +24,24 @@ export function useQRValidator() {
           const result = await reader.decodeFromImageElement(img);
           const qrText = result.getText().trim();
 
-          const match = demoQrDataList.find((ticket) => ticket.QrString === qrText); 
+          const match = demoQrDataList.find(
+            (ticket) => ticket.QrString === qrText,
+          );
 
           if (match) {
             resolve({ valid: true, data: match });
           } else {
-            resolve({ valid: false, error: `No ticket found for QR "${qrText}"` });
+            resolve({
+              valid: false,
+              error: `No ticket found for QR "${qrText}"`,
+            });
           }
         } catch (error) {
           console.error("❌ QR decoding failed:", error);
-          resolve({ valid: false, error: "Unable to scan QR. Try a clearer image." });
+          resolve({
+            valid: false,
+            error: "Unable to scan QR. Try a clearer image.",
+          });
         } finally {
           setLoading(false);
           URL.revokeObjectURL(objectUrl);
