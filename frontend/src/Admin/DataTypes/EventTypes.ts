@@ -18,3 +18,8 @@ export type EventTypeByCode = ApiResponse<{
 export interface createEventTypeData {
     categoryName: string;
 }
+
+export interface updateEventTypeData {
+  eventCategoryCode: string;
+  categoryName: string;
+}

@@ -48,12 +48,9 @@ export default function EventTypeEditPage() {
   }, [eventCategorycode]);
 
   const handleUpdate = async () => {
-    const res = await updateEventType(form.eventCategorycode, {
-      eventCategoryid: form.eventCategoryid,
-      eventCategorycode: form.eventCategorycode,
-      categoryname: form.categoryname,
-      createdby: form.createdby,
-      createdat: form.createdat,
+    const res = await updateEventType({
+      eventCategoryCode: form.eventCategorycode,
+      categoryName: form.categoryname,
     });
 
     if (res.isSuccess) {
