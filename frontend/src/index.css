@@ -196,4 +196,11 @@
     @apply w-8 h-8 flex items-center justify-center rounded border border-gray-300 text-sm;
 }
 
+.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
 
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}

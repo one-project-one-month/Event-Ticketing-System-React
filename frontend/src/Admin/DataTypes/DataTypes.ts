@@ -84,3 +84,16 @@ export const TTCountType = {
 
 export type TTCountType = (typeof TTCountType)[keyof typeof TTCountType];
 // endregion
+
+// region: Ticket Types
+export interface IVenueType {
+  VenueTypeCode: string;
+  VenueTypename: string;
+  CreatedAt: string;
+}
+
+export interface IVenueTypeUI extends IVenueType {
+  index: number;
+}
+
+// endregion

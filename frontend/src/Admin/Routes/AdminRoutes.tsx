@@ -45,39 +45,49 @@ export const adminRouter = createBrowserRouter([
           { index: true, Component: AdminDashboardPage },
           { path: "dashboard", Component: AdminDashboardPage },
           { path: "admin", Component: AdminPage },
-          { path: "ticket-type", 
-            children:[
-              {index: true, Component: TicketTypePage },
-              {path: ":TicketTypeCode", Component: TicketTypeDetailPage },
-              {path: ":ticketTypeCode/edit", Component: TicketTypeEditPage },
-              {path: "create", Component: CreateTicketTypePage }
-            ]
-          },
-          { path: "venuetype", Component: VenueTypePage },
-          { path: "venuelist", Component: VenueListPage },
-          { path: "event/type",
-            children:[
-              { index: true, Component: EventTypePage},
-              {path: ":EventTypeCode", Component: EventTypeDetailPage},
-              {path: ":eventTypeCode/edit", Component: EventTypeEditPage},
-              {path: "create", Component: CreateEventTypePage}
-            ]
-           },
-          { path: "event/list", 
+          {
+            path: "ticket-type",
             children: [
-              {index: true, Component: EventListPage},
+              { index: true, Component: TicketTypePage },
+              { path: ":TicketTypeCode", Component: TicketTypeDetailPage },
+              { path: ":ticketTypeCode/edit", Component: TicketTypeEditPage },
+              { path: "create", Component: CreateTicketTypePage },
+            ],
+          },
+          { path: "venue/type", Component: VenueTypePage },
+          { path: "venue/list", Component: VenueListPage },
+          {
+            path: "event/type",
+            children: [
+              { index: true, Component: EventTypePage },
+              { path: ":EventTypeCode", Component: EventTypeDetailPage },
+              { path: ":eventTypeCode/edit", Component: EventTypeEditPage },
+              { path: "create", Component: CreateEventTypePage },
+            ],
+          },
+          {
+            path: "event/list",
+            children: [
+              { index: true, Component: EventListPage },
               { path: ":EventUniqueName", Component: EventDetailPage },
               { path: ":eventId/edit", Component: EventEditPage },
-              {path:"create", Component: CreateEventPage}
-            ]
+              { path: "create", Component: CreateEventPage },
+            ],
           },
-          { path: "business/owner",
-            children:[
+          {
+            path: "business/owner",
+            children: [
               { index: true, Component: BusinessOwnerPage },
-              {path:":BusinessOwnerCode", Component: BusinessOwnerDetailPage },
-              {path:":businessOwnerCode/edit", Component: BusinessOwnerEditPage },
-              {path: "create", Component: CreateBusinessOwnerPage}
-            ] 
+              {
+                path: ":BusinessOwnerCode",
+                Component: BusinessOwnerDetailPage,
+              },
+              {
+                path: ":businessOwnerCode/edit",
+                Component: BusinessOwnerEditPage,
+              },
+              { path: "create", Component: CreateBusinessOwnerPage },
+            ],
           },
           { path: "businessemail", Component: BusinessEmailPage },
           { path: "historypurchased", Component: PurchasedHistoryPage },
