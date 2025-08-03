@@ -109,14 +109,14 @@ const EventType = () => {
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/event/type/${event.eventCategoryid}`)}
+                      onClick={() => navigate(`/admin/event/type/${event.eventCategorycode}`)}
                     >
                       <img src="/icons/Eye.svg" alt="view" className="w-4 h-4" />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
-                      onClick={() => navigate(`/admin/event/type/${event.eventCategoryid}/edit`)}
+                      onClick={() => navigate(`/admin/event/type/${event.eventCategorycode}/edit`)}
                     >
                       <img src="/icons/Edit.svg" alt="edit" className="w-4 h-4" />
                     </Button>

@@ -3,6 +3,7 @@ import type {
   EventTypeData,
   EventTypeResponse,
   createEventTypeData,
+  EventTypeByCode
 } from "@/Admin/DataTypes/EventTypes";
 
 export const getEventTypes = () =>
@@ -15,4 +16,4 @@ export const updateEventType = (eventCategorycode: string, payload: EventTypeDat
   apiPost<{ eventType: EventTypeResponse }>(`api/EventCategory/Update/${eventCategorycode}`, payload);
 
 export const getEventTypeByCode = (eventCategorycode: string) =>
-  apiGet<{ eventType: EventTypeData }>(`api/EventCategory/Edit/${eventCategorycode}`);
+  apiGet<EventTypeByCode["data"]>(`api/EventCategory/Edit/${eventCategorycode}`);

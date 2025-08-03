@@ -8,34 +8,38 @@ import UpdateSuccessModal from "@/Admin/components/ui/UpdateSuccessModal";
 import { getEventTypeByCode, updateEventType } from "@/services/EventTypeServices";
 
 export default function EventTypeEditPage() {
-    const navigate = useNavigate();
-    const { eventCategorycode } = useParams();
-    const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { eventCategorycode } = useParams();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    const [form, setForm] = useState({
+  const [form, setForm] = useState({
     eventCategoryid: "",
     eventCategorycode: "",
     categoryname: "",
     createdby: "",
     createdat: new Date(),
-    });
+  });
 
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
+  useEffect(() => {
     if (!eventCategorycode) return;
 
     const fetchData = async () => {
       setLoading(true);
       const res = await getEventTypeByCode(eventCategorycode);
-      if (res.isSuccess && res.data?.eventType) {
+
+      if (res.isSuccess && res.data?.event) {
+        const event = res.data.event;
+
         setForm({
-            eventCategoryid: res.data.eventType.eventCategoryid,
-            eventCategorycode: res.data.eventType.eventCategorycode,
-            categoryname: res.data.eventType.categoryname,
-            createdby: res.data.eventType.createdby,
-            createdat: new Date(res.data.eventType.createdat),
+          eventCategoryid: event.eventCategoryid,
+          eventCategorycode: event.eventCategorycode,
+          categoryname: event.categoryname,
+          createdby: event.createdby,
+          createdat: new Date(event.createdat),
         });
+      } else {
+        console.error("Failed to fetch event type:", res.message);
       }
       setLoading(false);
     };
@@ -43,46 +47,48 @@ export default function EventTypeEditPage() {
     fetchData();
   }, [eventCategorycode]);
 
-    const handleUpdate = async () => {
+  const handleUpdate = async () => {
     const res = await updateEventType(form.eventCategorycode, {
-        eventCategoryid: form.eventCategoryid,
-        eventCategorycode: form.eventCategorycode,
-        categoryname: form.categoryname,
-        createdby: form.createdby,
-        createdat: form.createdat,
+      eventCategoryid: form.eventCategoryid,
+      eventCategorycode: form.eventCategorycode,
+      categoryname: form.categoryname,
+      createdby: form.createdby,
+      createdat: form.createdat,
     });
 
     if (res.isSuccess) {
-        setShowSuccess(true);
+      setShowSuccess(true);
     } else {
-        alert(res.message || "Update failed.");
+      alert(res.message || "Update failed.");
     }
-    };
+  };
 
-    return(
-        <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Category Information</h1>
-            {loading ? (
-                <p className="text-gray-500">Loading...</p>
-            ) : (
-                <>
-                <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
-                    <div>
-                        <Label label="Event Type Name" required />
-                        <TextInput
-                        value={form.categoryname}
-                        onChange={(e) => setForm({ ...form, categoryname: e.target.value })}
-                        />
-                    </div>
-                </div>
-                    <div className="mt-8 flex justify-end gap-[20px]">
-                        <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
-                        <YellowButton text="Update" type="submit" onClick={handleUpdate}/>
-                    </div>
-                </>
-            )}
-            
-            <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
-        </div>
-    );
+  return (
+    <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Category Information</h1>
+
+      {loading ? (
+        <p className="text-gray-500">Loading...</p>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
+            <div>
+              <Label label="Event Type Name" required />
+              <TextInput
+                value={form.categoryname}
+                onChange={(e) => setForm({ ...form, categoryname: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-end gap-[20px]">
+            <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
+            <YellowButton text="Update" type="submit" onClick={handleUpdate} />
+          </div>
+        </>
+      )}
+
+      <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
+    </div>
+  );
 }
