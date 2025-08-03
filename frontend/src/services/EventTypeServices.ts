@@ -17,3 +17,6 @@ export const updateEventType = (payload: updateEventTypeData) =>
 
 export const getEventTypeByCode = (eventCategorycode: string) =>
   apiGet<EventTypeByCode["data"]>(`api/EventCategory/Edit/${eventCategorycode}`);
+
+export const deleteEventType = (eventCategorycode: string) =>
+  apiPost<{ eventType: EventTypeResponse }>(`api/EventCategory/Delete/${eventCategorycode}`, {});

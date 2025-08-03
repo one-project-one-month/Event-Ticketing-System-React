@@ -4,6 +4,7 @@ import Toolbar from "@/Admin/components/ui/ToolBar";
 import { Pagination } from "@/Admin/components/ui/Pagination";
 import { Button } from "@/User/components/ui/button";
 import { getEventTypes } from "@/services/EventTypeServices";
+import { deleteEventType } from "@/services/EventTypeServices";
 import { exportToCSV, exportToExcel, exportToPDF } from "@/Admin/utils/exportUtils";
 import type { EventTypeData } from "@/Admin/DataTypes/DataTypes";
 
@@ -29,11 +30,20 @@ const EventType = () => {
     fetchData();
   }, []);
 
-  const handleDelete = (eventCategorycode: string) => {
-    const confirmed = window.confirm("Are you sure you want to delete this event category?");
-    if (confirmed) {
-      const updated = data.filter(e => e.eventCategorycode !== eventCategorycode);
-      setData(updated);
+  const handleDelete = async (eventCategorycode: string) => {
+  const confirmed = window.confirm("Are you sure you want to delete this event category?");
+  if (!confirmed) return;
+
+  try {
+      const res = await deleteEventType(eventCategorycode);
+      if (res.isSuccess) {
+        setData(prev => prev.filter(e => e.eventCategorycode !== eventCategorycode));
+      } else {
+        alert(res.message || "Failed to delete event category.");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("An error occurred while deleting. Please try again.");
     }
   };
 
