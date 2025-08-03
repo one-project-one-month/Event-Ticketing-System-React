@@ -10,3 +10,7 @@ export interface EventTypeData {
 export type EventTypeResponse = ApiResponse<{
   eventCategories: EventTypeData[];
 }>;
+
+export interface createEventTypeData {
+    categoryName: string;
+}

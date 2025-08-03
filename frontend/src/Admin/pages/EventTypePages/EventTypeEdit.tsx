@@ -44,11 +44,18 @@ export default function EventTypeEditPage() {
   }, [eventCategorycode]);
 
     const handleUpdate = async () => {
-        const res = await updateEventType(form);
+    const res = await updateEventType(form.eventCategorycode, {
+        eventCategoryid: form.eventCategoryid,
+        eventCategorycode: form.eventCategorycode,
+        categoryname: form.categoryname,
+        createdby: form.createdby,
+        createdat: form.createdat,
+    });
+
     if (res.isSuccess) {
-      setShowSuccess(true);
+        setShowSuccess(true);
     } else {
-      alert(res.message || "Update failed.");
+        alert(res.message || "Update failed.");
     }
     };
 
@@ -63,9 +70,9 @@ export default function EventTypeEditPage() {
                     <div>
                         <Label label="Event Type Name" required />
                         <TextInput
-                        value={form.eventCategorycode} onChange={(e) =>
-                        setForm({ ...form, categoryname: e.target.value })
-                    }/>
+                        value={form.categoryname}
+                        onChange={(e) => setForm({ ...form, categoryname: e.target.value })}
+                        />
                     </div>
                 </div>
                     <div className="mt-8 flex justify-end gap-[20px]">
