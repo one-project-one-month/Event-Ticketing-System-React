@@ -24,7 +24,11 @@ const VenueType = () => {
   return (
     <section className={`mx-10`}>
       {/* Search Bar */}
-      <ToolBar addNewPath={``} onExport={() => {}} onSearch={() => {}} />
+      <ToolBar
+        addNewPath={`/admin/venue-type/create`}
+        onExport={() => {}}
+        onSearch={() => {}}
+      />
       {/* List */}
       <VenueTypeList venueTypes={venueTypes} />
       {/* Pagination */}

@@ -28,6 +28,7 @@ import CreateTicketTypePage from "../pages/TicketTypePages/CreateTicketType";
 import BusinessOwnerDetailPage from "../pages/BusinessOwnerPages/BusinessOwnerDetail";
 import BusinessOwnerEditPage from "../pages/BusinessOwnerPages/BusinessOwnerEdit";
 import CreateBusinessOwnerPage from "../pages/BusinessOwnerPages/CreateBusinessOwner";
+import CreateVenueTypePage from "@/Admin/pages/VenueTypePages/CreateVenueType.tsx";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -54,7 +55,13 @@ export const adminRouter = createBrowserRouter([
               { path: "create", Component: CreateTicketTypePage },
             ],
           },
-          { path: "venue/type", Component: VenueTypePage },
+          {
+            path: "venue-type",
+            children: [
+              { index: true, Component: VenueTypePage },
+              { path: "create", Component: CreateVenueTypePage },
+            ],
+          },
           { path: "venue/list", Component: VenueListPage },
           {
             path: "event/type",
