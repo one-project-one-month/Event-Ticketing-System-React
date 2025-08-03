@@ -1,15 +1,15 @@
 import {type ApiResponse } from "@/types/ApiResponse";
 export interface BusinessOwnerData {
-    businessownerid: string,
-    businessownercode: string,
-    fullName: string,
-    email: string,
-    phone: string,
-    createdby: string,
-    createdat: Date,
-    modifiedby: string,
-    modifiedat: string,
-    deleteflag: boolean
+    businessownerid: string;
+    businessownercode: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    createdby: string;
+    createdat: Date;
+    modifiedby: string;
+    modifiedat: string;
+    deleteflag: boolean;
 }
 
 export type BusinessOwnerResponse = ApiResponse<{
@@ -21,19 +21,13 @@ export type BusinessOwnerByCode = ApiResponse<{
 }>;
 
 export interface createBusinessOwnerData {
-    businessownerid : string,
-    businessownercode: "string",
-    fullName: string,
-    email: string,
-    phone: string,
-    admin: string,
-    deleteflag: boolean
+    fullName: string;
+    email: string;
+    phone: string;
 }
 
 export interface updateBusinessOwnerData {
-    businessownerid : string,
-    businessownercode: "string",
-    fullName: string,
-    email: string,
-    phone: string
+    businessownercode: string;
+    fullName: string;
+    phone: string;
 }
