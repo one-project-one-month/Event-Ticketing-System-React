@@ -45,19 +45,18 @@ const TicketType = () => {
         }
     };
   
-    const filteredEventTypes = data.filter(
+    const filteredTycketTypes = data.filter(
       (event) =>
         event.tickettypename.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
   
     const handleExport = (format: string) => {
-      if (filteredEventTypes.length === 0) return alert("No data to export.");
+      if (filteredTycketTypes.length === 0) return alert("No data to export.");
   
-      const exportData = filteredEventTypes.map((e) => ({
+      const exportData = filteredTycketTypes.map((e) => ({
         "Ticket Code": e.tickettypecode,
         "Ticket Type Name": e.tickettypename,
         "Price": e.ticketprice,
-        "Event Code": e.eventcode,
         "Event Name": e.eventname,
       }));
   
@@ -78,7 +77,7 @@ const TicketType = () => {
   
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentTicketType = filteredEventTypes.slice(indexOfFirstItem, indexOfLastItem);
+    const currentTicketType = filteredTycketTypes.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <div className="px-[15px] py-[10px] flex justify-center">
         <div className="w-full max-w-[1057px] flex flex-col gap-[20px]">
@@ -151,7 +150,7 @@ const TicketType = () => {
         {/* Pagination */}
         <Pagination
           currentPage={currentPage}
-          totalItems={filteredEventTypes.length}
+          totalItems={filteredTycketTypes.length}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
           onItemsPerPageChange={(count) => {

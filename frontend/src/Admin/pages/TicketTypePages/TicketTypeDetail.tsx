@@ -37,23 +37,23 @@ export default function TicketTypeDetail() {
                 {event.map((event, index) => (
                     <div key={index} className="grid grid-cols-2 gap-x-8 gap-y-5 border-b pb-5">
                         <div>
-                            <Label label="Event Code" required />
+                            <Label label="Ticket Type Code" required />
                             <TextInput value={event.tickettypecode} readOnly />
                         </div>
                         <div>
-                            <Label label="Event Category Code" required />
+                            <Label label="Ticket Type Name" required />
                             <TextInput value={event.tickettypename} readOnly />
                         </div>
                         <div>
-                            <Label label="Event Category Code" required />
+                            <Label label="Ticket Price" required />
                             <TextInput value={event.ticketprice} readOnly />
                         </div>
                         <div>
-                            <Label label="Event Category Code" required />
-                            <TextInput value={event.eventcode} readOnly />
+                            <Label label="Ticket Quantity" required />
+                            <TextInput value={event.ticketquantity} readOnly />
                         </div>
                         <div>
-                            <Label label="Event Category Code" required />
+                            <Label label="Event Name" required />
                             <TextInput value={event.eventname} readOnly />
                         </div>
                     </div>

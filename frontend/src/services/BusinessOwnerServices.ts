@@ -6,17 +6,17 @@ import type {
   updateBusinessOwnerData
 } from "@/Admin/DataTypes/BusinessOwner";
 
-export const getEventTypes = () =>
+export const getBusinessOwners = () =>
   apiGet<BusinessOwnerResponse["data"]>("api/BusinessOwner/List");
 
-export const createEventType = (payload: createBusinessOwnerData) =>
+export const createBusinessOwner = (payload: createBusinessOwnerData) =>
   apiPost<{ businessOwner: BusinessOwnerResponse }>("api/BusinessOwner/Create", payload);
 
-export const updateEventType = (payload: updateBusinessOwnerData) =>
+export const updateBusinessOwner = (payload: updateBusinessOwnerData) =>
   apiPost<{ businessOwner: BusinessOwnerResponse }>(`api/BusinessOwner/Update`, payload);
 
-export const getEventTypeByCode = (ownerCode: string) =>
+export const getBusinessOwnerByCode = (ownerCode: string) =>
   apiGet<BusinessOwnerByCode["data"]>(`api/BusinessOwner/Edit/${ownerCode}`);
 
-export const deleteEventType = (eventCategorycode: string) =>
-  apiPost<{ businessOwner: BusinessOwnerResponse }>(`api/BusinessOwner/Delete/${eventCategorycode}`, {});
+export const deleteBusnisssOwner = (ownerCode: string) =>
+  apiPost<{ businessOwner: BusinessOwnerResponse }>(`api/BusinessOwner/Delete/${ownerCode}`, {});
