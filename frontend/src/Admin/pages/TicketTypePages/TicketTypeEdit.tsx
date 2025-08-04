@@ -36,7 +36,7 @@ export default function TicketTypeEditPage() {
             ticketprice: event.ticketprice,
             tickettypquantity: event.ticketQuantity,
             eventcode: event.eventCode,
-            eventname: "" // Assuming event name is not available in the response
+            eventname: event.eventName
           });
         }else{
           console.error("Failed to fetch ticket type: ", res.message)
@@ -84,7 +84,7 @@ export default function TicketTypeEditPage() {
                 <div>
                   <Label label="Quantity" required />
                   <TextInput
-                    value={form.tickettypquantity} 
+                    value={form.tickettypquantity ? form.tickettypquantity.toString() : ""} 
                     disabled
                   />
                 </div>

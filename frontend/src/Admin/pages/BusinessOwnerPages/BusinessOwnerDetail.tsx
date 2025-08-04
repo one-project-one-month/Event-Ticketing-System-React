@@ -37,10 +37,10 @@ export default function BusinessOwnerDetail() {
   if (!businessOwner) return <p className="text-center mt-20">Business owner not found.</p>;
 
   return (
-    <div className="p-10 bg-white rounded-md max-w-6xl mx-auto">
+    <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Business Owner Information</h1>
 
-      <div className="grid grid-cols-2 gap-x-8 gap-y-5 border-b pb-5">
+      <div className="grid grid-cols-2 gap-x-25 gap-y-10 border-b mt-10 pb-5">
         <div>
           <Label label="Business Owner Code" required />
           <TextInput value={businessOwner.businessownercode} readOnly />
