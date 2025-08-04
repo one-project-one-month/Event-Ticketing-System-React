@@ -85,7 +85,7 @@ export const TTCountType = {
 export type TTCountType = (typeof TTCountType)[keyof typeof TTCountType];
 // endregion
 
-// region: Ticket Types
+// region Ticket Types
 export interface IVenueType {
   VenueTypeCode: string;
   VenueTypename: string;
@@ -108,3 +108,13 @@ export interface IAdminInputProps {
   placeholder: string;
   readonly?: boolean;
 }
+
+// region Venue Model
+export interface IVenueModel {
+  VenueCode: string;
+  VenueTypeCode: string;
+  VenueName: string;
+  Capacity?: number;
+}
+
+// endregion
