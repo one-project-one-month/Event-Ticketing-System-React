@@ -53,7 +53,7 @@ function VenueTypeRow({
             className="cursor-pointer"
           />
         </a>
-        <a href={`/venue/edit/${VenueTypeCode}`}>
+        <a href={`/admin/venue-type/${VenueTypeCode}/edit`}>
           <img
             src="/icons/Edit.svg"
             alt="Edit Data"
