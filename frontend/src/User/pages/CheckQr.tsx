@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQRValidator } from "@/User/hooks/useQrValidator";
-import { type QRInfo } from "@/types/index";
+import type { QRInfo } from "@/User/DataTypes/QrCheck";
 import QrResult from "@/User/components/QR/QrResult";
 import Dropzone from "@/User/components/QR/DropZone";
 import { LoadingStep } from "@/User/components/QR/LoadingStep";

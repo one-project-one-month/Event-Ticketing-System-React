@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { type QRInfo } from "@/types";
 import { BrowserQRCodeReader } from "@zxing/browser";
-import { demoQrDataList } from "@/User/data/DemoQrData";
+import { getQrinfoByQrCode } from "@/services/QrCheckService";
+import type { QRInfo } from "@/User/DataTypes/QrCheck";
 
 export function useQRValidator() {
   const [loading, setLoading] = useState(false);
 
   const validateQR = (
-    file: File,
+    file: File
   ): Promise<{ valid: boolean; data?: QRInfo; error?: string }> => {
     setLoading(true);
 
@@ -16,7 +16,6 @@ export function useQRValidator() {
     return new Promise((resolve) => {
       const img = new Image();
       const objectUrl = URL.createObjectURL(file);
-
       img.src = objectUrl;
 
       img.onload = async () => {
@@ -24,16 +23,14 @@ export function useQRValidator() {
           const result = await reader.decodeFromImageElement(img);
           const qrText = result.getText().trim();
 
-          const match = demoQrDataList.find(
-            (ticket) => ticket.QrString === qrText,
-          );
+          const res = await getQrinfoByQrCode(qrText);
 
-          if (match) {
-            resolve({ valid: true, data: match });
+          if (res && res.isSuccess && res.data?.qrinfo) {
+            resolve({ valid: true, data: res.data.qrinfo });
           } else {
             resolve({
               valid: false,
-              error: `No ticket found for QR "${qrText}"`,
+              error: res.message || `No ticket found for QR "${qrText}"`,
             });
           }
         } catch (error) {

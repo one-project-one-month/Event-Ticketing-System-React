@@ -9,7 +9,7 @@ import feTicketIcon from "@/User/assets/icons/QR/fe_ticket.svg";
 import personalIcon from "@/User/assets/icons/QR/personalinfoicon.svg";
 import locationIcon from "@/User/assets/icons/QR/locationicon.svg";
 
-import { type QRInfo } from "@/types";
+import { type QRInfo } from "@/User/DataTypes/QrCheck";
 
 interface QrResultProps {
   onClose: () => void;
@@ -32,7 +32,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
     try {
       const dataUrl = await toPng(printRef.current, { cacheBust: true });
       const link = document.createElement("a");
-      link.download = `${info.EventName}-Ticket.png`;
+      link.download = `${info.eventName}-Ticket.png`;
       link.href = dataUrl;
       link.click();
     } catch (error) {
@@ -80,10 +80,10 @@ export default function QrResult({ onClose, info }: QrResultProps) {
           style={{ background: "linear-gradient(to right, #233b75, #3a4b9d)" }}
         >
           <div>
-            <h1 className="text-2xl font-bold">{info.EventName}</h1>
+            <h1 className="text-2xl font-bold">{info.eventName}</h1>
             <div className="flex items-center gap-2 text-sm opacity-90">
               <img src={scheduleIcon} alt="schedule" className="h-4 w-4" />
-              Event Code: {info.EventCode}
+              Event Code: {info.eventCode}
             </div>
           </div>
           <img src={ticketIcon} alt="ticket icon" className="h-10 w-10" />
@@ -98,12 +98,12 @@ export default function QrResult({ onClose, info }: QrResultProps) {
               Time
             </div>
             <div className="space-y-1">
-              <InfoRow label="Date:" value={info.Eventdate} />
+              <InfoRow label="Date:" value={info.eventdate} />
               <InfoRow
                 label="Time:"
-                value={`${info.EventTimeFrom} - ${info.EventTimeTo}`}
+                value={`${info.eventTimeFrom} - ${info.eventTimeTo}`}
               />
-              <InfoRow label="Gate open:" value={info.GateOpenTime} />
+              <InfoRow label="Gate open:" value={info.gateOpenTime} />
             </div>
           </div>
 
@@ -118,9 +118,9 @@ export default function QrResult({ onClose, info }: QrResultProps) {
               Ticket Details
             </div>
             <div className="space-y-1">
-              <InfoRow label="Ticket Code:" value={info.TicketCode} />
-              <InfoRow label="Price:" value={`${info.TicketPrice} MMK`} />
-              <InfoRow label="Type:" value={info.TicketType} />
+              <InfoRow label="Ticket Code:" value={info.ticketCode} />
+              <InfoRow label="Price:" value={`${info.ticketPrice} MMK`} />
+              <InfoRow label="Type:" value={info.ticketType} />
             </div>
           </div>
 
@@ -131,8 +131,8 @@ export default function QrResult({ onClose, info }: QrResultProps) {
               Personal Information
             </div>
             <div className="space-y-1">
-              <InfoRow label="Full Name:" value={info.FullName} />
-              <InfoRow label="Email:" value={info.Email} />
+              <InfoRow label="Full Name:" value={info.fullName} />
+              <InfoRow label="Email:" value={info.email} />
             </div>
           </div>
 
@@ -143,8 +143,8 @@ export default function QrResult({ onClose, info }: QrResultProps) {
               Event Information
             </div>
             <div className="space-y-1">
-              <InfoRow label="Venue Name:" value={info.VenueName} />
-              <InfoRow label="Address:" value={info.Address} />
+              <InfoRow label="Venue Name:" value={info.location} />
+              <InfoRow label="Address:" value={info.address} />
             </div>
           </div>
         </div>

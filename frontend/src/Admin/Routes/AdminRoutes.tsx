@@ -48,8 +48,8 @@ export const adminRouter = createBrowserRouter([
           { path: "ticket-type", 
             children:[
               {index: true, Component: TicketTypePage },
-              {path: ":TicketTypeCode", Component: TicketTypeDetailPage },
-              {path: ":ticketTypeCode/edit", Component: TicketTypeEditPage },
+              {path: ":code", Component: TicketTypeDetailPage },
+              {path: ":code/edit", Component: TicketTypeEditPage },
               {path: "create", Component: CreateTicketTypePage }
             ]
           },
@@ -58,8 +58,8 @@ export const adminRouter = createBrowserRouter([
           { path: "event/type",
             children:[
               { index: true, Component: EventTypePage},
-              {path: ":EventTypeCode", Component: EventTypeDetailPage},
-              {path: ":eventTypeCode/edit", Component: EventTypeEditPage},
+              {path: ":eventCategorycode", Component: EventTypeDetailPage},
+              {path: ":eventCategorycode/edit", Component: EventTypeEditPage},
               {path: "create", Component: CreateEventTypePage}
             ]
            },
@@ -74,8 +74,8 @@ export const adminRouter = createBrowserRouter([
           { path: "business/owner",
             children:[
               { index: true, Component: BusinessOwnerPage },
-              {path:":BusinessOwnerCode", Component: BusinessOwnerDetailPage },
-              {path:":businessOwnerCode/edit", Component: BusinessOwnerEditPage },
+              {path:":ownerCode", Component: BusinessOwnerDetailPage },
+              {path:":ownerCode/edit", Component: BusinessOwnerEditPage },
               {path: "create", Component: CreateBusinessOwnerPage}
             ] 
           },
