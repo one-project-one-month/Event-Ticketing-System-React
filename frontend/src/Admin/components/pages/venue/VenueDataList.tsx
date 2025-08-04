@@ -1,8 +1,12 @@
-import type { IVenueModel } from "@/Admin/DataTypes/DataTypes";
+import type { IVenueOverViewModel } from "@/Admin/DataTypes/DataTypes";
 import { useState } from "react";
 import AdminDeleteDialog from "@/Admin/components/Layouts/AdminDeleteDialog";
 
-export default function VenueDataList({ venues }: { venues: IVenueModel[] }) {
+export default function VenueDataList({
+  venues,
+}: {
+  venues: IVenueOverViewModel[];
+}) {
   return (
     <section className="mt-5">
       <h1 className="text-3xl font-semibold text-[#103263]">Venue List</h1>
@@ -34,7 +38,7 @@ function VenueRow({
   VenueName,
   VenueTypeCode,
   Capacity,
-}: IVenueModel & { index: number }) {
+}: IVenueOverViewModel & { index: number }) {
   const [showDelete, setShowDelete] = useState(false);
 
   const handleDelete = () => {

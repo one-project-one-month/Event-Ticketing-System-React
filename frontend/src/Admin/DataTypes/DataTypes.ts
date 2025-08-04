@@ -110,11 +110,23 @@ export interface IAdminInputProps {
 }
 
 // region Venue Model
-export interface IVenueModel {
+export interface IVenueOverViewModel {
   VenueCode: string;
   VenueTypeCode: string;
   VenueName: string;
   Capacity?: number;
+}
+
+export interface IVenueDetailModel {
+  VenueCode: string;
+  VenueTypeCode: string;
+  VenueName: string;
+  Capacity?: number;
+  Address?: string;
+  Description?: string;
+  Addons?: string[];
+  Facilities?: string;
+  VenueImage: string[];
 }
 
 // endregion

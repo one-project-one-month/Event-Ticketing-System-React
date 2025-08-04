@@ -1,10 +1,10 @@
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import VenuePagination from "@/Admin/components/pages/venuetype/VenuePagination.tsx";
-import type { IVenueModel } from "@/Admin/DataTypes/DataTypes.ts";
+import type { IVenueOverViewModel } from "@/Admin/DataTypes/DataTypes.ts";
 import VenueDataList from "@/Admin/components/pages/venue/VenueDataList.tsx";
 
 const VenueList = () => {
-  const sampleVenues: IVenueModel[] = [
+  const sampleVenues: IVenueOverViewModel[] = [
     {
       VenueCode: "VEN001",
       VenueTypeCode: "TYPE01",
