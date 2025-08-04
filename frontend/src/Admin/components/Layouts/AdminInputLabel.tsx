@@ -1,0 +1,28 @@
+import type { IAdminInputProps } from "@/Admin/DataTypes/DataTypes.ts";
+
+export default function AdminInputLabel({
+  label,
+  value,
+  name,
+  onChange,
+  required = false,
+  type,
+  placeholder,
+}: IAdminInputProps) {
+  return (
+    <div className={`flex flex-col justify-start gap-2`}>
+      <label className={`text-xl text-[#615CB8]`} htmlFor={name}>
+        {label} {required && <span className={`text-red-400`}>*</span>}
+      </label>
+      <input
+        value={value}
+        name={name}
+        type={type}
+        onChange={(e) => onChange(e.target.value)}
+        required={required}
+        placeholder={placeholder}
+        className={`w-80 rounded-[0.5rem] border px-3 py-2 text-lg`}
+      />
+    </div>
+  );
+}

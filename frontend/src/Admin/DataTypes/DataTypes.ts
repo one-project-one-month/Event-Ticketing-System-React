@@ -97,3 +97,13 @@ export interface IVenueTypeUI extends IVenueType {
 }
 
 // endregion
+
+export interface IAdminInputProps {
+  label: string;
+  value: string;
+  name: string;
+  onChange: (value: string) => void;
+  required?: boolean;
+  type: string;
+  placeholder: string;
+}
