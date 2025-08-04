@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/User/components/ui/card";
 import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
-import { Login } from "@/services/Auth";
+import { Login } from "@/services/AuthServices";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
       const response = await Login({ userName: username, password });
 
       if (response.isSuccess && response.data) {
-        login(response.data.token);
+        login(response.data.token, response.data.refreshToken);
         setShowSuccess(true);
         setError("");
       } else {
@@ -32,8 +32,7 @@ export default function AdminLoginPage() {
       console.error(err);
     }
   };
-
-  // ✅ Reload the page to re-evaluate ProtectedAdminRoute after success
+  
   const handleGoToDashboard = () => {
     window.location.href = "/admin/dashboard";
   };

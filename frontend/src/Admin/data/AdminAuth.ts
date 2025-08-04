@@ -5,19 +5,27 @@ export function useAdminAuth() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("admin-token");
-    setToken(storedToken);
-    setIsAuthenticated(!!storedToken);
+    const accessToken = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('access_token='))?.split('=')[1];
+
+    setToken(accessToken ?? null);
+    setIsAuthenticated(!!accessToken);
   }, []);
 
-  const login = (jwtToken: string) => {
-    localStorage.setItem("admin-token", jwtToken);
-    setToken(jwtToken);
+  const login = (accessToken: string, refreshToken: string) => {
+    document.cookie = `access_token=${accessToken}; path=/; SameSite=Strict`;
+
+    document.cookie = `refresh_token=${refreshToken}; path=/; HttpOnly; Secure; SameSite=Strict`;
+
+    setToken(accessToken);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("admin-token");
+    document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    document.cookie = "refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
     setToken(null);
     setIsAuthenticated(false);
   };
