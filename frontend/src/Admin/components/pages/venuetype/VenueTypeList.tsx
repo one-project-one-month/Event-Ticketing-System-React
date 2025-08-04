@@ -1,4 +1,6 @@
 import type { IVenueType, IVenueTypeUI } from "@/Admin/DataTypes/DataTypes.ts";
+import { useState } from "react";
+import AdminDeleteDialog from "@/Admin/components/Layouts/AdminDeleteDialog.tsx";
 
 export default function VenueTypeList({
   venueTypes,
@@ -40,6 +42,12 @@ function VenueTypeRow({
   VenueTypename,
   CreatedAt,
 }: IVenueTypeUI) {
+  const [showDelete, setShowDelete] = useState(false);
+
+  const handleDelete = () => {
+    console.log("Deleted!");
+    setShowDelete(false);
+  };
   return (
     <div className="mb-2 flex items-center bg-white px-6 py-4 text-[#333]">
       <div className="w-[10%] pl-14">{index}</div>
@@ -64,8 +72,14 @@ function VenueTypeRow({
           src="/icons/Delete.svg"
           alt="Delete Data"
           className="cursor-pointer"
+          onClick={() => setShowDelete(true)}
         />
       </div>
+      <AdminDeleteDialog
+        open={showDelete}
+        onCancel={() => setShowDelete(false)}
+        onConfirm={handleDelete}
+      />
     </div>
   );
 }
