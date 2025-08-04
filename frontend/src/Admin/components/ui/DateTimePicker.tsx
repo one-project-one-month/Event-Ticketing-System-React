@@ -7,7 +7,7 @@ export default function DateTimePicker() {
 
   const CustomInput = forwardRef<HTMLInputElement, any>(({ value, onClick }, ref) => (
     <div
-      className="relative w-full bg-[#F9F9FD] border border-[#E2E2EA] rounded-sm cursor-pointer"
+      className="relative w-full bg-[#F9F9FD] border border-[#E2E2EA] rounded-[10px] cursor-pointer"
       onClick={onClick}
     >
       <input

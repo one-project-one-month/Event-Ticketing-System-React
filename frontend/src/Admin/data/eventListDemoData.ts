@@ -1,5 +1,5 @@
 // src/Admin/Demo/EventListDemodata.ts
-import type { EventListData } from '@/Admin/Types/types';
+import type { EventListData } from '@/Admin/DataTypes/DataTypes';
 
 export const eventListDemoData: EventListData[] = [
   {

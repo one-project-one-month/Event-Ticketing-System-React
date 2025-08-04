@@ -6,10 +6,16 @@ import { YellowButton } from "@/Admin/components/ui/YellowButton";
 import { Label } from "@/Admin/components/ui/Label";
 import { Checkbox} from "@/Admin/components/ui/Checkbox";
 import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
+import UpdateSuccessModal from "@/Admin/components/ui/UpdateSuccessModal";
 
 export default function EventEditPage() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const handleUpdate = () => {
+    // Update logic here...
+    setShowSuccess(true);
+  };
 
   const [form, setForm] = useState({
     EventCode: "",
@@ -104,12 +110,14 @@ useEffect(() => {
           <Checkbox
           label="Is Active"
           checked={form.IsActive}
+          onChange={(e) => setForm({ ...form, IsActive: e.target.checked })}
           />
         </div>
       </div>
       <div className="mt-8 flex justify-end gap-[20px]">
         <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
-        <YellowButton text="Update" type="submit" />
+        <YellowButton text="Update" type="submit" onClick={handleUpdate}/>
+        <UpdateSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
       </div>
     </div>
   );

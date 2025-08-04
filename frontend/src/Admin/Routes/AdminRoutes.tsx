@@ -6,12 +6,12 @@ import AdminLoginPage from "@/Admin/pages/Auth/Login";
 // Admin pages
 import AdminDashboardPage from "@/Admin/pages/Dashboard";
 import AdminPage from "@/Admin/pages/Admin";
-import TicketTypePage from "@/Admin/pages/TicketType";
+import TicketTypePage from "@/Admin/pages/TicketTypePages/TicketType";
 import VenueTypePage from "@/Admin/pages/VenueType";
 import VenueListPage from "@/Admin/pages/VenueList";
 import EventTypePage from "@/Admin/pages/EventTypePages/EventType";
 import EventListPage from "@/Admin/pages/EventListPages/EventList";
-import BusinessOwnerPage from "@/Admin/pages/BusinessOwner";
+import BusinessOwnerPage from "@/Admin/pages/BusinessOwnerPages/BusinessOwner";
 import BusinessEmailPage from "@/Admin/pages/BusinessEmail";
 import PurchasedHistoryPage from "@/Admin/pages/PurchasedHistory";
 import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
@@ -19,6 +19,15 @@ import SettingPage from "@/Admin/pages/Setting";
 import EventDetailPage from "../pages/EventListPages/EventDetail";
 import EventEditPage from "../pages/EventListPages/EventEdit";
 import CreateEventPage from "../pages/EventListPages/CreateEvent";
+import EventTypeDetailPage from "../pages/EventTypePages/EventTypeDetail";
+import EventTypeEditPage from "../pages/EventTypePages/EventTypeEdit";
+import CreateEventTypePage from "../pages/EventTypePages/CreateEventType";
+import TicketTypeDetailPage from "../pages/TicketTypePages/TicketTypeDetail";
+import TicketTypeEditPage from "../pages/TicketTypePages/TicketTypeEdit";
+import CreateTicketTypePage from "../pages/TicketTypePages/CreateTicketType";
+import BusinessOwnerDetailPage from "../pages/BusinessOwnerPages/BusinessOwnerDetail";
+import BusinessOwnerEditPage from "../pages/BusinessOwnerPages/BusinessOwnerEdit";
+import CreateBusinessOwnerPage from "../pages/BusinessOwnerPages/CreateBusinessOwner";
 import ForgotPasswordPage from "@/Admin/pages/Auth/ForgotPassword";
 import ResetPasswordPage from "@/Admin/pages/Auth/ResetPassword";
 import ResetSuccess from "../pages/Auth/ResetSuccess";
@@ -45,12 +54,25 @@ export const adminRouter = createBrowserRouter([
           { index: true, Component: AdminDashboardPage },
           { path: "dashboard", Component: AdminDashboardPage },
           { path: "admin", Component: AdminPage },
-          { path: "ticket-type", Component: TicketTypePage },
+          {
+            path: "ticket-type",
+            children: [
+              { index: true, Component: TicketTypePage },
+              { path: ":code", Component: TicketTypeDetailPage },
+              { path: ":code/edit", Component: TicketTypeEditPage },
+              { path: "create", Component: CreateTicketTypePage },
+            ],
+          },
           { path: "venuetype", Component: VenueTypePage },
           { path: "venuelist", Component: VenueListPage },
           {
             path: "event/type",
-            children: [{ index: true, Component: EventTypePage }],
+            children: [
+              { index: true, Component: EventTypePage },
+              { path: ":eventCategorycode", Component: EventTypeDetailPage },
+              { path: ":eventCategorycode/edit", Component: EventTypeEditPage },
+              { path: "create", Component: CreateEventTypePage },
+            ],
           },
           {
             path: "event/list",
@@ -61,7 +83,15 @@ export const adminRouter = createBrowserRouter([
               { path: "create", Component: CreateEventPage },
             ],
           },
-          { path: "business", Component: BusinessOwnerPage },
+          {
+            path: "business/owner",
+            children: [
+              { index: true, Component: BusinessOwnerPage },
+              { path: ":ownerCode", Component: BusinessOwnerDetailPage },
+              { path: ":ownerCode/edit", Component: BusinessOwnerEditPage },
+              { path: "create", Component: CreateBusinessOwnerPage },
+            ],
+          },
           { path: "businessemail", Component: BusinessEmailPage },
           { path: "historypurchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },
