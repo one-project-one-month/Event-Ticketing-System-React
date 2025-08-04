@@ -106,4 +106,5 @@ export interface IAdminInputProps {
   required?: boolean;
   type: string;
   placeholder: string;
+  readonly?: boolean;
 }

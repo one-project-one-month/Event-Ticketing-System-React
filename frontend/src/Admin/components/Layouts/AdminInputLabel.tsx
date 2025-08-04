@@ -8,9 +8,10 @@ export default function AdminInputLabel({
   required = false,
   type,
   placeholder,
+  readonly = false,
 }: IAdminInputProps) {
   return (
-    <div className={`flex flex-col justify-start gap-2`}>
+    <div className={`flex flex-col justify-start gap-3`}>
       <label className={`text-xl text-[#615CB8]`} htmlFor={name}>
         {label} {required && <span className={`text-red-400`}>*</span>}
       </label>
@@ -18,10 +19,11 @@ export default function AdminInputLabel({
         value={value}
         name={name}
         type={type}
+        readOnly={readonly}
         onChange={(e) => onChange(e.target.value)}
         required={required}
         placeholder={placeholder}
-        className={`w-80 rounded-[0.5rem] border px-3 py-2 text-lg`}
+        className={`w-96 rounded-[0.5rem] border px-3 py-2 text-lg`}
       />
     </div>
   );

@@ -46,7 +46,7 @@ function VenueTypeRow({
       <div className="w-[43%]">{VenueTypename}</div>
       <div className="w-[32%]">{CreatedAt}</div>
       <div className="flex w-[12%] items-center justify-end gap-2">
-        <a href={`/venue/view/${VenueTypeCode}`}>
+        <a href={`/admin/venue-type/${VenueTypeCode}`}>
           <img
             src="/icons/Eye.svg"
             alt="View Data"
