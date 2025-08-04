@@ -22,7 +22,7 @@ const VenueType = () => {
     },
   ];
   return (
-    <section className={`mx-10`}>
+    <section className={`figtreef mx-10`}>
       {/* Search Bar */}
       <ToolBar
         addNewPath={`/admin/venue-type/create`}
