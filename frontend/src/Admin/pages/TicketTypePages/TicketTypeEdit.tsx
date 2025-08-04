@@ -9,34 +9,34 @@ import { getTicketTypeByCode, updateTicketType } from "@/services/TicketTypeServ
 
 export default function TicketTypeEditPage() {
     const navigate = useNavigate();
-    const { ticketTypeCode } = useParams();
+    const { code } = useParams();
     const [showSuccess, setShowSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
-    TicketTypeCode: "",
-    TicketTypeName: "",
-    TicketPrice: "",
-    TicketQuantity: 0,
-    EventName: "",
-    EventCode: ""
+    tickettypecode: "",
+    tickettypename: "",
+    ticketprice: "",
+    tickettypquantity: 0,
+    eventname: "",
+    eventcode: ""
     });
 
     useEffect(() => {
-      if(!ticketTypeCode) return;
+      if(!code) return;
       const fetchData = async () => {
         setLoading(true);
-        const res = await getTicketTypeByCode(ticketTypeCode);
-        if(res.isSuccess && res.data?.TicketType){
-          const event = res.data.TicketType;
+        const res = await getTicketTypeByCode(code);
+        if(res.isSuccess && res.data?.ticketType){
+          const event = res.data.ticketType;
 
           setForm({
-            TicketTypeCode: event.tickettypecode,
-            TicketTypeName: event.tickettypename,
-            TicketPrice: event.ticketprice,
-            TicketQuantity: event.ticketquantity,
-            EventCode: event.eventcode,
-            EventName: event.eventname
+            tickettypecode: event.ticketTypeCode,
+            tickettypename: event.ticketTypeName,
+            ticketprice: event.ticketprice,
+            tickettypquantity: event.ticketQuantity,
+            eventcode: event.eventCode,
+            eventname: "" // Assuming event name is not available in the response
           });
         }else{
           console.error("Failed to fetch ticket type: ", res.message)
@@ -44,12 +44,12 @@ export default function TicketTypeEditPage() {
         setLoading(false);
       };
       fetchData();
-      }, [ticketTypeCode]);
+      }, [code]);
 
       const handleUpdate = async () => {
         const res = await updateTicketType({
-            tickettypecode: form.TicketTypeCode,
-            tickettypename:form.TicketTypeName
+            ticketTypeCode: form.tickettypecode,
+            ticketTypeName:form.tickettypename
         });
         if(res.isSuccess){
         setShowSuccess(true);
@@ -68,30 +68,30 @@ export default function TicketTypeEditPage() {
               <>
                   <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
                 <div>
-                    <Label label="Event Type Name" required />
+                    <Label label="Ticket Type Name" required />
                     <TextInput
-                    value={form.TicketTypeName} onChange={(e) =>
-                    setForm({ ...form, TicketTypeName: e.target.value })
+                    value={form.tickettypename} onChange={(e) =>
+                    setForm({ ...form, tickettypename: e.target.value })
                 }/>
                 </div>
                 <div>
                   <Label label="Price" required />
                   <TextInput
-                    value={form.TicketPrice} 
+                    value={form.ticketprice} 
                     disabled
                   />
                 </div>
                 <div>
                   <Label label="Quantity" required />
                   <TextInput
-                    value={form.TicketQuantity} 
+                    value={form.tickettypquantity} 
                     disabled
                   />
                 </div>
                 <div>
                   <Label label="Event Name" required />
                   <TextInput
-                    value={form.EventName} 
+                    value={form.eventname} 
                     disabled
                   />
                 </div>

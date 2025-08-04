@@ -14,10 +14,11 @@ export default function BusinessOwnerEditPage() {
     const [loading, setLoading] = useState(true);
 
     const [form, setForm] = useState({
-    BusinessOwnerCode: "",
-    BusinessOwnerName: "",
-    Email: "",
-    PhoneNumber: ""
+      businessownerid: "",
+    businessownercode: "",
+    fullName: "",
+    email: "",
+    phone: ""
     });
 
     useEffect(() => {
@@ -31,10 +32,11 @@ export default function BusinessOwnerEditPage() {
             const event = res.data.businessOwner;
     
             setForm({
-              BusinessOwnerCode: event.businessownercode,
-              BusinessOwnerName: event.fullName,
-              Email: event.email,
-              PhoneNumber: event.phone,
+              businessownerid: event.businessownerid || "",
+              businessownercode: event.businessownercode,
+              fullName: event.fullName,
+              email: event.email,
+              phone: event.phone,
             });
           } else {
             console.error("Failed to fetch Business Owner:", res.message);
@@ -47,9 +49,11 @@ export default function BusinessOwnerEditPage() {
 
       const handleUpdate = async () => {
           const res = await updateBusinessOwner({
-            businessownercode: form.BusinessOwnerCode,
-            fullName: form.BusinessOwnerName,
-            phone: form.PhoneNumber,
+            businessownerid: form.businessownerid,
+            businessownercode: form.businessownercode,
+            fullName: form.fullName,
+            phone: form.phone,
+            email: form.email
           });
       
           if (res.isSuccess) {
@@ -70,22 +74,22 @@ export default function BusinessOwnerEditPage() {
                     <div>
                         <Label label="Full Name" required />
                         <TextInput
-                        value={form.BusinessOwnerName} onChange={(e) =>
-                        setForm({ ...form, BusinessOwnerName: e.target.value })
+                        value={form.fullName} onChange={(e) =>
+                        setForm({ ...form, fullName: e.target.value })
                     }/>
                     </div>
                     <div>
                     <Label label="Email" required />
                     <TextInput
-                        value={form.Email} 
+                        value={form.email} 
                         disabled
                     />
                     </div>
                     <div>
                     <Label label="Phone Number" required />
                     <TextInput
-                        value={form.PhoneNumber} onChange={(e) =>
-                        setForm({ ...form, PhoneNumber: e.target.value })
+                        value={form.phone} onChange={(e) =>
+                        setForm({ ...form, phone: e.target.value })
                         }/>
                     </div>
                 </div>

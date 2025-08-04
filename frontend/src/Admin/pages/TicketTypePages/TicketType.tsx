@@ -47,7 +47,7 @@ const TicketType = () => {
   
     const filteredTycketTypes = data.filter(
       (event) =>
-        event.tickettypename.toLowerCase().includes(searchTerm.toLowerCase()) 
+        event.tickettypecode.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
   
     const handleExport = (format: string) => {
@@ -55,7 +55,7 @@ const TicketType = () => {
   
       const exportData = filteredTycketTypes.map((e) => ({
         "Ticket Code": e.tickettypecode,
-        "Ticket Type Name": e.tickettypename,
+        "Ticket Type Name": e.tickettypecode,
         "Price": e.ticketprice,
         "Event Name": e.eventname,
       }));

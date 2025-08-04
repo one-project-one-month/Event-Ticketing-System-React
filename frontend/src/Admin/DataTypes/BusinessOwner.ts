@@ -6,7 +6,7 @@ export interface BusinessOwnerData {
     email: string;
     phone: string;
     createdby: string;
-    createdat: Date;
+    createdat: string;
     modifiedby: string;
     modifiedat: string;
     deleteflag: boolean;
@@ -27,7 +27,9 @@ export interface createBusinessOwnerData {
 }
 
 export interface updateBusinessOwnerData {
+    businessownerid: string;
     businessownercode: string;
     fullName: string;
     phone: string;
+    email: string;
 }

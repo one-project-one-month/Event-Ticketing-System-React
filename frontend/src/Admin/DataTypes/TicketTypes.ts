@@ -1,11 +1,25 @@
 import {type ApiResponse } from "@/types/ApiResponse";
 export interface TicketTypeData {
-    tickettypecode: string;
-    tickettypename: string;
+  ticketTypeId: string;
+  tickettypecode: string;
+  tickettypename: string;
+  ticketprice: string;
+  eventCode: string;
+  eventname: string;
+  ticketQuantity: number;
+}
+
+export interface OneTicketTypeResponse {
+    ticketTypeId: string;
+    ticketTypeCode: string;
+    eventCode: string;
+    ticketTypeName: string;
+    createdBy: string;
+    createdAt: string;
+    modifiedBy: string;
+    modifiedAt: string;
     ticketprice: string;
-    eventcode: string;
-    eventname: string;
-    ticketquantity: number;
+    ticketQuantity: number;
 }
 
 export type TicketTypeResponse = ApiResponse<{
@@ -13,7 +27,7 @@ export type TicketTypeResponse = ApiResponse<{
 }>;
 
 export type TicketTypeByCode = ApiResponse<{
-  TicketType: TicketTypeData;
+  ticketType: OneTicketTypeResponse;
 }>;
 
 export interface createTicketTypeData {
@@ -24,6 +38,6 @@ export interface createTicketTypeData {
 }
 
 export interface updateTicketTypeData {
-    tickettypecode: string,
-    tickettypename: string
+    ticketTypeCode: string,
+    ticketTypeName: string
 }
