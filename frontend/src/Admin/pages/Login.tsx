@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
 
 import { Card, CardContent } from "@/User/components/ui/card";
 import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
+import { Login } from "@/services/Auth";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -14,23 +14,28 @@ export default function AdminLoginPage() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const { login } = useAdminAuth();
-  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = login(username, password);
+    try {
+      const response = await Login({ userName: username, password });
 
-    if (success) {
-      setShowSuccess(true);
-      setError("");
-    } else {
-      setError("Invalid credentials");
+      if (response.isSuccess && response.data) {
+        login(response.data.token);
+        setShowSuccess(true);
+        setError("");
+      } else {
+        setError(response.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setError("Something went wrong.");
+      console.error(err);
     }
   };
 
+  // ✅ Reload the page to re-evaluate ProtectedAdminRoute after success
   const handleGoToDashboard = () => {
-    setShowSuccess(false);
-    navigate("/admin/dashboard");
+    window.location.href = "/admin/dashboard";
   };
 
   return (

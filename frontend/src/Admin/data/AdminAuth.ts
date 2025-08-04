@@ -2,25 +2,25 @@ import { useEffect, useState } from "react";
 
 export function useAdminAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token");
-    setIsAuthenticated(!!token);
+    const storedToken = localStorage.getItem("admin-token");
+    setToken(storedToken);
+    setIsAuthenticated(!!storedToken);
   }, []);
 
-  const login = (username: string, password: string) => {
-    if (username === "admin" && password === "admin123") {
-      localStorage.setItem("admin-token", "demo-token");
-      setIsAuthenticated(true);
-      return true;
-    }
-    return false;
+  const login = (jwtToken: string) => {
+    localStorage.setItem("admin-token", jwtToken);
+    setToken(jwtToken);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
     localStorage.removeItem("admin-token");
+    setToken(null);
     setIsAuthenticated(false);
   };
 
-  return { isAuthenticated, login, logout };
+  return { isAuthenticated, token, login, logout };
 }
