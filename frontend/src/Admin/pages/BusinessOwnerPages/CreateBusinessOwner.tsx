@@ -91,10 +91,14 @@ export default function CreateBusinessOwner() {
         <YellowButton text="Create" onClick={handleSave} />
       </div>
 
-      <SaveSuccessModal open={showSuccess} onClose={() => {
-        setShowSuccess(false);
-        navigate(-1);
-      }} />
+      <SaveSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        onConfirm={() => {
+          setShowSuccess(false);
+          navigate("/admin/event/type");
+        }}
+      />
     </div>
   );
 }

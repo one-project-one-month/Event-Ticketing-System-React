@@ -17,7 +17,7 @@ export default function CreateTicketType() {
     eventCode: "",
     ticketTypeName: "",
     ticketprice: "",
-    ticketQuantity: 0,
+    ticketQuantity: "",
   });
 
   const handleChange = (
@@ -94,9 +94,10 @@ export default function CreateTicketType() {
 
       <SaveSuccessModal
         open={showSuccess}
-        onClose={() => {
+        onClose={() => setShowSuccess(false)}
+        onConfirm={() => {
           setShowSuccess(false);
-          navigate(-1);
+          navigate("/admin/ticket/type");
         }}
       />
     </div>

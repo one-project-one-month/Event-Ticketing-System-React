@@ -34,7 +34,7 @@ export interface createTicketTypeData {
     eventCode: string,
     ticketTypeName: string,
     ticketprice: string,
-    ticketQuantity: number,
+    ticketQuantity: string,
 }
 
 export interface updateTicketTypeData {

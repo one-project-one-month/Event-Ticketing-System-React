@@ -59,10 +59,14 @@ export default function CreateEventType() {
       <div className="mt-8 flex justify-end gap-[20px]">
         <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
         <YellowButton text="Create" type="button" onClick={handleSave} />
-        <SaveSuccessModal open={showSuccess} onClose={() => {
-          setShowSuccess(false);
-          navigate(-1); 
-        }} />
+        <SaveSuccessModal
+          open={showSuccess}
+          onClose={() => setShowSuccess(false)}
+          onConfirm={() => {
+            setShowSuccess(false);
+            navigate("/admin/event/type");
+          }}
+        />
       </div>
     </div>
   );
