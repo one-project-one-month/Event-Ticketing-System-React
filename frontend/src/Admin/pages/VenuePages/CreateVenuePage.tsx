@@ -3,6 +3,7 @@ import AdminInputLabel from "@/Admin/components/Layouts/AdminInputLabel.tsx";
 import { useState } from "react";
 import AdminActionDialog from "@/Admin/components/Layouts/AdminActionDialog.tsx";
 import AddonsInputGroup from "@/Admin/components/pages/venue/AddonInputGroup.tsx";
+import VenueImageUpload from "@/Admin/components/pages/venue/VenueImageUpload.tsx";
 
 export default function CreateVenuePage() {
   const [venueName, setVenueName] = useState("");
@@ -87,6 +88,7 @@ export default function CreateVenuePage() {
 
         <div className={`flex justify-between`}>
           <AddonsInputGroup selectedAddons={addons} onChange={setAddons} />
+          <VenueImageUpload />
         </div>
       </div>
 
