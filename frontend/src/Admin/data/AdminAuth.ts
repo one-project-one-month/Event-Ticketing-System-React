@@ -1,26 +1,37 @@
 import { useEffect, useState } from "react";
+import {
+  getAuthToken,
+  saveTokens,
+  clearTokens,
+} from "@/Admin/utils/authTokenUtils";
 
 export function useAdminAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    return !!token && tokenExpireAt && new Date() < tokenExpireAt;
+  });
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("admin-token");
-    setToken(storedToken);
-    setIsAuthenticated(!!storedToken);
-  }, []);
-
-  const login = (jwtToken: string) => {
-    localStorage.setItem("admin-token", jwtToken);
-    setToken(jwtToken);
-    setIsAuthenticated(true);
+  const login = (
+    token: string,
+    tokenExpiresAt: string,
+    refreshToken: string,
+    refreshTokenExpiresAt: string
+  ) => {
+  saveTokens(token, tokenExpiresAt, refreshToken, refreshTokenExpiresAt);
+  setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("admin-token");
-    setToken(null);
+    clearTokens();
     setIsAuthenticated(false);
   };
 
-  return { isAuthenticated, token, login, logout };
+  useEffect(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    if (!token || (tokenExpireAt && new Date() > tokenExpireAt)) {
+      logout();
+    }
+  }, []);
+
+  return { isAuthenticated, login, logout };
 }

@@ -97,7 +97,7 @@ export default function CreateTicketType() {
         onClose={() => setShowSuccess(false)}
         onConfirm={() => {
           setShowSuccess(false);
-          navigate("/admin/ticket/type");
+          navigate("/admin/ticket-type");
         }}
       />
     </div>

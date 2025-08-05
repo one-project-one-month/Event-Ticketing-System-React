@@ -59,6 +59,7 @@ export default function BusinessOwnerEditPage() {
           if (res.isSuccess) {
             setShowSuccess(true);
           } else {
+            console.error("Update failed:", res.message);
             alert(res.message || "Update failed.");
           }
         };
