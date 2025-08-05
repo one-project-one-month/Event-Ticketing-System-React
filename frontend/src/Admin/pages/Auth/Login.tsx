@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
 import { Login } from "@/services/AuthServices";
 import { Card, CardContent } from "@/User/components/ui/card";
-import { User, Lock } from "lucide-react";
+import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
 
@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
           <CardContent className="p-14">
             <form onSubmit={handleSubmit}>
               <div className="mb-8 text-center">
-                <h1 className="mb-6 text-[20px] font-medium text-white">
+                <h1 className="mb-4 text-sm font-medium text-white">
                   Event Ticket System
                 </h1>
                 <h2 className="mb-2 text-start text-xl font-semibold text-white">
@@ -89,17 +89,16 @@ export default function AdminLoginPage() {
                 {error && <p className="text-sm text-red-500">{error}</p>}
 
                 <div className="text-right">
-                  <Link
-                    to="/admin/forgot-password"
-                    className="text-sm text-white/80 hover:underline"
+                  <button
+                    type="button"
+                    className="text-sm text-white/80 hover:text-white"
                   >
                     Forgot Password?
-                  </Link>
+                  </button>
                 </div>
-
                 <Button
                   type="submit"
-                  className="h-12 w-full bg-[#43319A] font-medium text-white hover:bg-[#030812]/90"
+                  className="h-12 w-full bg-[#030812] font-medium text-white hover:bg-[#030812]/90"
                 >
                   Log In
                 </Button>
@@ -111,12 +110,8 @@ export default function AdminLoginPage() {
         <Card className="w-[350px] border-none bg-gradient-to-b from-[#43319a] to-[#43319a]/80 shadow-xl">
           <CardContent className="p-8 text-center">
             <div className="mb-6">
-              <div className="flex items-center justify-center">
-                <img
-                  src={loginSuccess}
-                  alt="loginSuccess"
-                  className="size-[164px]"
-                />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
+                <CheckCircle className="h-8 w-8 text-white" />
               </div>
               <h2 className="mb-2 text-xl font-semibold text-white">
                 Login Successful!
