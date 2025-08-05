@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAdminRoute } from "@/Admin/Routes/ProtectedAdminRoute";
 import AdminLayout from "@/Admin/components/Layouts/AdminLayout";
-import AdminLoginPage from "@/Admin/pages/Login";
+import AdminLoginPage from "@/Admin/pages/Auth/Login";
 
 // Admin pages
 import AdminDashboardPage from "@/Admin/pages/Dashboard";

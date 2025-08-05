@@ -1,56 +1,83 @@
-import axios from 'axios';
-import { RefreshToken } from "@/services/AuthServices"; 
+import axios from "axios";
+import { getAuthToken, getRefreshToken, saveTokens, clearTokens } from "@/Admin/utils/authTokenUtils";
+import { RefreshToken } from "@/services/AuthServices";
 
-const Api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-Api.interceptors.request.use((config) => {
-  const accessToken = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('access_token='))?.split('=')[1];
+let isRefreshing = false;
+let failedQueue: (() => void)[] = [];
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+const processQueue = () => {
+  failedQueue.forEach(cb => cb());
+  failedQueue = [];
+};
+
+api.interceptors.request.use(async (config) => {
+  const { token, tokenExpireAt } = getAuthToken();
+
+  if (token && tokenExpireAt && new Date() < tokenExpireAt) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
 
-Api.interceptors.response.use(
-  response => response,
+api.interceptors.response.use(
+  (res) => res,
   async (error) => {
-    if (error.response && error.response.status === 401) {
-      const refreshToken = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('refresh_token='))?.split('=')[1];
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !isRefreshing
+    ) {
+      originalRequest._retry = true;
+      isRefreshing = true;
 
-      if (!refreshToken) {
-        console.log('No refresh token available.');
-        return Promise.reject(error); 
+      const { refreshToken, refreshTokenExpireAt } = getRefreshToken();
+
+      if (!refreshToken || (refreshTokenExpireAt && new Date() > refreshTokenExpireAt)) {
+        clearTokens();
+        window.location.href = "/admin/login"; 
+        return Promise.reject(error);
       }
 
       try {
-        const refreshResponse = await RefreshToken({ refreshToken });
+        const res = await RefreshToken({ refreshToken });
 
-        if (refreshResponse.data && refreshResponse.data.token && refreshResponse.data.refreshToken) {
-          document.cookie = `access_token=${refreshResponse.data.token}; path=/; SameSite=Strict`;
-          document.cookie = `refresh_token=${refreshResponse.data.refreshToken}; path=/; HttpOnly; Secure; SameSite=Strict`;
+        if (res.isSuccess && res.data) {
+          saveTokens(
+            res.data.token,
+            res.data.tokenExpiredAt,
+            res.data.refreshToken,
+            res.data.refreshTokenExpireAt
+          );
 
-          error.config.headers['Authorization'] = `Bearer ${refreshResponse.data.token}`;
-          return axios(error.config);
+          processQueue();
+
+          originalRequest.headers.Authorization = `Bearer ${res.data.token}`;
+          return api(originalRequest);
         } else {
-          console.log('Failed to refresh token: Missing response data');
-          return Promise.reject(new Error("Failed to refresh token: response data is missing."));
+          clearTokens();
+          window.location.href = "/admin/login";
+          return Promise.reject(error);
         }
-      } catch (refreshError) {
-        console.log('Error during token refresh:', refreshError);
-        window.location.href = "/login";
-        return Promise.reject(refreshError); 
+      } catch (err) {
+        clearTokens();
+        window.location.href = "/admin/login";
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
-    return Promise.reject(error); 
+
+    return Promise.reject(error);
   }
 );
 
-export default Api;
+export const apiGet = <T>(url: string) => api.get<T>(url).then(res => res.data);
+export const apiPost = <T>(url: string, data?: any) => api.post<T>(url, data).then(res => res.data);
+
+export default api;

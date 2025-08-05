@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
-
+import { Login } from "@/services/AuthServices";
 import { Card, CardContent } from "@/User/components/ui/card";
 import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
-import { Login } from "@/services/AuthServices";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -21,26 +20,30 @@ export default function AdminLoginPage() {
       const response = await Login({ userName: username, password });
 
       if (response.isSuccess && response.data) {
-        login(response.data.token, response.data.refreshToken);
+        login(
+          response.data.token,
+          response.data.tokenExpiredAt,
+          response.data.refreshToken,
+          response.data.refreshTokenExpireAt 
+        );
         setShowSuccess(true);
         setError("");
       } else {
         setError(response.message || "Invalid credentials");
       }
     } catch (err) {
-      setError("Something went wrong.");
       console.error(err);
+      setError("Something went wrong.");
     }
   };
-  
+
   const handleGoToDashboard = () => {
     window.location.href = "/admin/dashboard";
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center gap-3 bg-[#444444] p-8">
-      {/* Login Form */}
-      {!showSuccess && (
+      {!showSuccess ? (
         <Card className="w-[400px] border-none bg-[linear-gradient(180deg,#3f2b96_50%,#a8c0ff_100%)] shadow-xl">
           <CardContent className="p-14">
             <form onSubmit={handleSubmit}>
@@ -99,10 +102,7 @@ export default function AdminLoginPage() {
             </form>
           </CardContent>
         </Card>
-      )}
-
-      {/* Success Modal */}
-      {showSuccess && (
+      ) : (
         <Card className="w-[350px] border-none bg-gradient-to-b from-[#43319a] to-[#43319a]/80 shadow-xl">
           <CardContent className="p-8 text-center">
             <div className="mb-6">

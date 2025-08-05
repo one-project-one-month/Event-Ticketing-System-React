@@ -1,34 +1,37 @@
 import { useEffect, useState } from "react";
+import {
+  getAuthToken,
+  saveTokens,
+  clearTokens,
+} from "@/Admin/utils/authTokenUtils";
 
 export function useAdminAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    return !!token && tokenExpireAt && new Date() < tokenExpireAt;
+  });
 
-  useEffect(() => {
-    const accessToken = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('access_token='))?.split('=')[1];
-
-    setToken(accessToken ?? null);
-    setIsAuthenticated(!!accessToken);
-  }, []);
-
-  const login = (accessToken: string, refreshToken: string) => {
-    document.cookie = `access_token=${accessToken}; path=/; SameSite=Strict`;
-
-    document.cookie = `refresh_token=${refreshToken}; path=/; HttpOnly; Secure; SameSite=Strict`;
-
-    setToken(accessToken);
+  const login = (
+    token: string,
+    tokenExpireAt: string,
+    refreshToken: string,
+    refreshTokenExpireAt: string
+  ) => {
+    saveTokens(token, tokenExpireAt, refreshToken, refreshTokenExpireAt);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    document.cookie = "refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-
-    setToken(null);
+    clearTokens();
     setIsAuthenticated(false);
   };
 
-  return { isAuthenticated, token, login, logout };
+  useEffect(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    if (!token || (tokenExpireAt && new Date() > tokenExpireAt)) {
+      logout();
+    }
+  }, []);
+
+  return { isAuthenticated, login, logout };
 }
