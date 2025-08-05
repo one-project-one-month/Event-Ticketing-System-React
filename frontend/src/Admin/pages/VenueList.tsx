@@ -35,7 +35,7 @@ const VenueList = () => {
     <section className={`figtreef mx-10`}>
       {/* Search Bar */}
       <ToolBar
-        addNewPath={`/admin/venue-type/create`}
+        addNewPath={`/admin/venue/list/create`}
         onExport={() => {}}
         onSearch={() => {}}
       />

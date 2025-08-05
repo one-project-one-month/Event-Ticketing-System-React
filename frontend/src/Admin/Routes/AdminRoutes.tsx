@@ -31,6 +31,7 @@ import CreateBusinessOwnerPage from "../pages/BusinessOwnerPages/CreateBusinessO
 import CreateVenueTypePage from "@/Admin/pages/VenueTypePages/CreateVenueType.tsx";
 import ViewVenueTypePage from "@/Admin/pages/VenueTypePages/ViewVenueType.tsx";
 import EditVenueTypePage from "@/Admin/pages/VenueTypePages/EditVenueType.tsx";
+import CreateVenuePage from "@/Admin/pages/VenuePages/CreateVenuePage.tsx";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -66,7 +67,13 @@ export const adminRouter = createBrowserRouter([
               { path: ":venueTypeCode/edit", Component: EditVenueTypePage },
             ],
           },
-          { path: "venue/list", Component: VenueListPage },
+          {
+            path: "venue/list",
+            children: [
+              { index: true, Component: VenueListPage },
+              { path: "create", Component: CreateVenuePage },
+            ],
+          },
           {
             path: "event/type",
             children: [

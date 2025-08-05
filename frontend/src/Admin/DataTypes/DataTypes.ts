@@ -100,7 +100,7 @@ export interface IVenueTypeUI extends IVenueType {
 
 export interface IAdminInputProps {
   label: string;
-  value: string;
+  value: string | number;
   name: string;
   onChange: (value: string) => void;
   required?: boolean;

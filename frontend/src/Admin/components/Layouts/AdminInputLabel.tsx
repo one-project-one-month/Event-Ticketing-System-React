@@ -1,4 +1,5 @@
 import type { IAdminInputProps } from "@/Admin/DataTypes/DataTypes.ts";
+import { useRef, useEffect } from "react";
 
 export default function AdminInputLabel({
   label,
@@ -10,6 +11,15 @@ export default function AdminInputLabel({
   placeholder,
   readonly = false,
 }: IAdminInputProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (type === "textarea" && textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [value]);
+
   return (
     <div className={`flex flex-col justify-start gap-3`}>
       <label className={`text-xl text-[#615CB8]`} htmlFor={name}>
@@ -18,14 +28,15 @@ export default function AdminInputLabel({
 
       {type === "textarea" ? (
         <textarea
+          ref={textareaRef}
           value={value}
           name={name}
           readOnly={readonly}
           onChange={(e) => onChange(e.target.value)}
           required={required}
           placeholder={placeholder}
+          rows={1}
           className={`w-96 resize-none rounded-[0.5rem] border px-3 py-2 text-lg`}
-          rows={5}
         />
       ) : (
         <input
