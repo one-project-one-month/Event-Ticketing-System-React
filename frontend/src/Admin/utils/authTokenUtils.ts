@@ -1,10 +1,11 @@
 export const getAuthToken = () => {
   const token = sessionStorage.getItem("accessToken");
   const tokenExpireAt = sessionStorage.getItem("accessTokenExpireAt");
+  const parsedTokenExpireAt = tokenExpireAt ? new Date(tokenExpireAt) : null;
 
   return {
     token,
-    tokenExpireAt: tokenExpireAt ? new Date(tokenExpireAt) : null,
+    tokenExpireAt: parsedTokenExpireAt,
   };
 };
 
@@ -24,6 +25,7 @@ export const saveTokens = (
   refreshToken: string,
   refreshTokenExpireAt: string
 ) => {
+
   sessionStorage.setItem("accessToken", token);
   sessionStorage.setItem("accessTokenExpireAt", tokenExpiredAt);
   sessionStorage.setItem("refreshToken", refreshToken);

@@ -50,9 +50,9 @@ api.interceptors.response.use(
         if (res.isSuccess && res.data) {
           saveTokens(
             res.data.token,
-            res.data.tokenExpiredAt,
+            res.data.tokenExpiresAt,
             res.data.refreshToken,
-            res.data.refreshTokenExpireAt
+            res.data.refreshTokenExpiresAt
           );
 
           processQueue();

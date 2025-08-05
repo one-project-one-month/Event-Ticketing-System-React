@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
 import { Login } from "@/services/AuthServices";
 import { Card, CardContent } from "@/User/components/ui/card";
@@ -14,32 +14,38 @@ export default function AdminLoginPage() {
 
   const { login } = useAdminAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await Login({ userName: username, password });
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const response = await Login({ userName: username, password });
 
-      if (response.isSuccess && response.data) {
-        login(
-          response.data.token,
-          response.data.tokenExpiredAt,
-          response.data.refreshToken,
-          response.data.refreshTokenExpireAt 
-        );
-        setShowSuccess(true);
-        setError("");
-      } else {
-        setError(response.message || "Invalid credentials");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong.");
+    if (response.isSuccess && response.data) {
+
+      login(
+        response.data.token,
+        response.data.tokenExpiresAt,
+        response.data.refreshToken,
+        response.data.refreshTokenExpiresAt
+      );
+      setShowSuccess(true);
+      setError("");
+    } else {
+      setError(response.message || "Invalid credentials");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Something went wrong.");
+  }
+};
 
-  const handleGoToDashboard = () => {
-    window.location.href = "/admin/dashboard";
-  };
+  useEffect(() => {
+    if (showSuccess) {
+      const timer = setTimeout(() => {
+        window.location.href = "/admin/dashboard"; 
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess]);
 
   return (
     <div className="flex min-h-screen items-center justify-center gap-3 bg-[#444444] p-8">
@@ -116,13 +122,13 @@ export default function AdminLoginPage() {
                 Welcome back, Admin! You have successfully logged in.
               </p>
               <p className="text-xs text-white/60">
-                Remember to log out if you're done.
+                Redirecting to dashboard...
               </p>
             </div>
 
             <Button
               className="bg-primary h-10 w-full font-medium text-white hover:bg-[#030812]/90"
-              onClick={handleGoToDashboard}
+              onClick={() => (window.location.href = "/admin/dashboard")}
             >
               Go to Dashboard
             </Button>

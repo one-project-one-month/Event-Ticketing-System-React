@@ -13,12 +13,12 @@ export function useAdminAuth() {
 
   const login = (
     token: string,
-    tokenExpireAt: string,
+    tokenExpiresAt: string,
     refreshToken: string,
-    refreshTokenExpireAt: string
+    refreshTokenExpiresAt: string
   ) => {
-    saveTokens(token, tokenExpireAt, refreshToken, refreshTokenExpireAt);
-    setIsAuthenticated(true);
+  saveTokens(token, tokenExpiresAt, refreshToken, refreshTokenExpiresAt);
+  setIsAuthenticated(true);
   };
 
   const logout = () => {

@@ -7,9 +7,9 @@ export interface LoginRequestData{
 
 export interface LoginResponseData{
     token:string;
-    tokenExpiredAt:string;
+    tokenExpiresAt:string;
     refreshToken:string;
-    refreshTokenExpireAt:string;
+    refreshTokenExpiresAt:string;
 }
 
 export type LoginResponse = ApiResponse<LoginResponseData>;
@@ -20,7 +20,7 @@ export interface RefreshTokenRequestData {
 
 export interface RefreshTokenResponseData {
     token:string;
-    tokenExpiredAt:string;
+    tokenExpiresAt:string;
     refreshToken:string;
-    refreshTokenExpireAt:string;
+    refreshTokenExpiresAt:string;
 }
