@@ -73,9 +73,15 @@ interface ToolbarProps {
   onSearch: (query: string) => void;
   onExport: (format: "csv" | "pdf" | "xlsx") => void;
   addNewPath: string;
+  hideAddNew?: boolean;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ onSearch, onExport, addNewPath }) => {
+const Toolbar: FC<ToolbarProps> = ({
+  onSearch,
+  onExport,
+  addNewPath,
+  hideAddNew = false,
+}) => {
   const [query, setQuery] = useState("");
   const [showExportModal, setShowExportModal] = useState(false);
   const navigate = useNavigate();
@@ -107,13 +113,15 @@ const Toolbar: FC<ToolbarProps> = ({ onSearch, onExport, addNewPath }) => {
           <img src="/icons/Export.svg" alt="export" className="h-5 w-5" />
           Export
         </Button>
-        <Button
-          onClick={() => navigate(addNewPath)}
-          className="flex h-[56px] items-center gap-2 rounded-[16px] bg-[#FC9B51] px-6 text-base font-semibold text-white shadow-none hover:bg-[#e48945]"
-        >
-          <img src="/icons/Plus.svg" alt="add" className="h-5 w-5" />
-          Add New
-        </Button>
+        {!hideAddNew && (
+          <Button
+            onClick={() => navigate(addNewPath)}
+            className="flex h-[56px] items-center gap-2 rounded-[16px] bg-[#FC9B51] px-6 text-base font-semibold text-white shadow-none hover:bg-[#e48945]"
+          >
+            <img src="/icons/Plus.svg" alt="add" className="h-5 w-5" />
+            Add New
+          </Button>
+        )}
       </div>
 
       <ExportDataModal
