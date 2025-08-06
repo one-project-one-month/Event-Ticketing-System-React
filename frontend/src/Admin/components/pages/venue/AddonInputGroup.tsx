@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface AddonsInputGroupProps {
   selectedAddons: string[];
   onChange: (addons: string[]) => void;
+  readonly?: boolean;
 }
 
 const defaultOptions = [
@@ -17,6 +18,7 @@ const defaultOptions = [
 export default function AddonsInputGroup({
   selectedAddons,
   onChange,
+  readonly = false,
 }: AddonsInputGroupProps) {
   const [checked, setChecked] = useState<string[]>(selectedAddons || []);
   const [otherText, setOtherText] = useState("");
@@ -51,6 +53,7 @@ export default function AddonsInputGroup({
             <input
               id={`addon-${option}`}
               type="checkbox"
+              readOnly={readonly}
               checked={checked.includes(option)}
               onChange={() => handleCheckboxChange(option)}
               className={`relative mr-2 flex size-5 appearance-none items-center justify-center rounded border border-[#6F6C8F] bg-[#6F6C8F] before:absolute before:top-[1px] before:left-[5px] before:hidden before:text-xs before:font-bold before:text-white before:content-['✓'] checked:bg-[#615CB8] checked:before:block`}

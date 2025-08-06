@@ -48,7 +48,10 @@ export default function VenueImageUpload() {
           onClick={openFileDialog}
         >
           {images.map((img, index) => (
-            <div key={index} className="relative">
+            <div
+              key={index}
+              className="relative border border-dashed border-gray-500 p-2"
+            >
               <img
                 src={URL.createObjectURL(img)}
                 alt={`Image ${index + 1}`}
