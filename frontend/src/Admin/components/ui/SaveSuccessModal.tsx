@@ -1,20 +1,13 @@
 import { Dialog } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 
 interface SaveSuccessModalProps {
   open: boolean;
   onClose: () => void;
+  onConfirm: () => void; 
 }
 
-export default function SaveSuccessModal({ open, onClose }: SaveSuccessModalProps) {
-  const navigate = useNavigate();
-
-  const handleOkay = () => {
-    onClose();
-    navigate(-1); 
-  };
-
+export default function SaveSuccessModal({ open, onClose, onConfirm }: SaveSuccessModalProps) {
   return (
     <Dialog open={open} onClose={onClose} className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
       <Dialog.Panel className="relative bg-white rounded-xl p-8 w-full max-w-sm text-center shadow-xl">
@@ -37,7 +30,7 @@ export default function SaveSuccessModal({ open, onClose }: SaveSuccessModalProp
         </Dialog.Title>
 
         <button
-          onClick={handleOkay}
+          onClick={onConfirm} // ✅ use onConfirm instead of hardcoded navigate
           className="bg-[#233b75] hover:bg-[#1b2e5f] text-white text-sm px-6 py-2 rounded-md transition"
         >
           Okay

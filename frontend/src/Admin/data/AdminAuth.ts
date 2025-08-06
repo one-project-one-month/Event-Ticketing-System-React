@@ -1,26 +1,37 @@
 import { useEffect, useState } from "react";
+import {
+  getAuthToken,
+  saveTokens,
+  clearTokens,
+} from "@/Admin/utils/authTokenUtils";
 
 export function useAdminAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    return !!token && tokenExpireAt && new Date() < tokenExpireAt;
+  });
 
-  useEffect(() => {
-    const token = localStorage.getItem("admin-token");
-    setIsAuthenticated(!!token);
-  }, []);
-
-  const login = (username: string, password: string) => {
-    if (username === "admin" && password === "admin123") {
-      localStorage.setItem("admin-token", "demo-token");
-      setIsAuthenticated(true);
-      return true;
-    }
-    return false;
+  const login = (
+    token: string,
+    tokenExpiresAt: string,
+    refreshToken: string,
+    refreshTokenExpiresAt: string
+  ) => {
+  saveTokens(token, tokenExpiresAt, refreshToken, refreshTokenExpiresAt);
+  setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("admin-token");
+    clearTokens();
     setIsAuthenticated(false);
   };
+
+  useEffect(() => {
+    const { token, tokenExpireAt } = getAuthToken();
+    if (!token || (tokenExpireAt && new Date() > tokenExpireAt)) {
+      logout();
+    }
+  }, []);
 
   return { isAuthenticated, login, logout };
 }

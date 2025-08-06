@@ -16,23 +16,6 @@ export interface NavItemWithChildren extends NavItem {
 
 export type MainNavItem = NavItemWithChildren;
 
-export interface QRInfo {
-  QrString: string;
-  EventName: string;
-  EventCode: string;
-  Eventdate: string;
-  EventTimeFrom: string;
-  EventTimeTo: string;
-  GateOpenTime: string;
-  TicketCode: string;
-  TicketPrice: string;
-  TicketType: string;
-  FullName: string;
-  Email: string;
-  VenueName: string;
-  Address: string;
-}
-
 export interface ITotalCount {
   count: number;
   label: string;
@@ -47,7 +30,6 @@ export interface IVenueCard {
   address: string;
 }
 // ADMIN Types
-
 export type NavItemChild = {
   title: string;
   href: string;

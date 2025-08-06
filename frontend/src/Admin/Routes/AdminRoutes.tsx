@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAdminRoute } from "@/Admin/Routes/ProtectedAdminRoute";
 import AdminLayout from "@/Admin/components/Layouts/AdminLayout";
-import AdminLoginPage from "@/Admin/pages/Login";
+import AdminLoginPage from "@/Admin/pages/Auth/Login";
 
 // Admin pages
 import AdminDashboardPage from "@/Admin/pages/Dashboard";
@@ -51,14 +51,13 @@ export const adminRouter = createBrowserRouter([
           { index: true, Component: AdminDashboardPage },
           { path: "dashboard", Component: AdminDashboardPage },
           { path: "admin", Component: AdminPage },
-          {
-            path: "ticket-type",
-            children: [
-              { index: true, Component: TicketTypePage },
-              { path: ":TicketTypeCode", Component: TicketTypeDetailPage },
-              { path: ":ticketTypeCode/edit", Component: TicketTypeEditPage },
-              { path: "create", Component: CreateTicketTypePage },
-            ],
+          { path: "ticket-type", 
+            children:[
+              {index: true, Component: TicketTypePage },
+              {path: ":code", Component: TicketTypeDetailPage },
+              {path: ":code/edit", Component: TicketTypeEditPage },
+              {path: "create", Component: CreateTicketTypePage }
+            ]
           },
           {
             path: "venue-type",
@@ -100,16 +99,10 @@ export const adminRouter = createBrowserRouter([
             path: "business/owner",
             children: [
               { index: true, Component: BusinessOwnerPage },
-              {
-                path: ":BusinessOwnerCode",
-                Component: BusinessOwnerDetailPage,
-              },
-              {
-                path: ":businessOwnerCode/edit",
-                Component: BusinessOwnerEditPage,
-              },
-              { path: "create", Component: CreateBusinessOwnerPage },
-            ],
+              {path:":ownerCode", Component: BusinessOwnerDetailPage },
+              {path:":ownerCode/edit", Component: BusinessOwnerEditPage },
+              {path: "create", Component: CreateBusinessOwnerPage}
+            ] 
           },
           { path: "businessemail", Component: BusinessEmailPage },
           { path: "historypurchased", Component: PurchasedHistoryPage },

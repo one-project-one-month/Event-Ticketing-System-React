@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/User/components/ui/button";
 import { useQRValidator } from "@/User/hooks/useQrValidator";
 import QrResult from "@/User/components/QR/QrResult";
-import { type QRInfo } from "@/types/index";
+import { type QRInfo } from "@/User/DataTypes/QrCheck";
 import { UploadIcon } from "lucide-react";
 
 const QRUpload = () => {

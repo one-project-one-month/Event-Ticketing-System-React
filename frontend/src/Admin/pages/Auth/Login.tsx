@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
-
+import { Login } from "@/services/AuthServices";
 import { Card, CardContent } from "@/User/components/ui/card";
 import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
@@ -14,29 +13,43 @@ export default function AdminLoginPage() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const { login } = useAdminAuth();
-  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const success = login(username, password);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const response = await Login({ userName: username, password });
 
-    if (success) {
+    if (response.isSuccess && response.data) {
+
+      login(
+        response.data.token,
+        response.data.tokenExpiresAt,
+        response.data.refreshToken,
+        response.data.refreshTokenExpiresAt
+      );
       setShowSuccess(true);
       setError("");
     } else {
-      setError("Invalid credentials");
+      setError(response.message || "Invalid credentials");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Something went wrong.");
+  }
+};
 
-  const handleGoToDashboard = () => {
-    setShowSuccess(false);
-    navigate("/admin/dashboard");
-  };
+  useEffect(() => {
+    if (showSuccess) {
+      const timer = setTimeout(() => {
+        window.location.href = "/admin/dashboard"; 
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess]);
 
   return (
     <div className="flex min-h-screen items-center justify-center gap-3 bg-[#444444] p-8">
-      {/* Login Form */}
-      {!showSuccess && (
+      {!showSuccess ? (
         <Card className="w-[400px] border-none bg-[linear-gradient(180deg,#3f2b96_50%,#a8c0ff_100%)] shadow-xl">
           <CardContent className="p-14">
             <form onSubmit={handleSubmit}>
@@ -95,10 +108,7 @@ export default function AdminLoginPage() {
             </form>
           </CardContent>
         </Card>
-      )}
-
-      {/* Success Modal */}
-      {showSuccess && (
+      ) : (
         <Card className="w-[350px] border-none bg-gradient-to-b from-[#43319a] to-[#43319a]/80 shadow-xl">
           <CardContent className="p-8 text-center">
             <div className="mb-6">
@@ -112,13 +122,13 @@ export default function AdminLoginPage() {
                 Welcome back, Admin! You have successfully logged in.
               </p>
               <p className="text-xs text-white/60">
-                Remember to log out if you're done.
+                Redirecting to dashboard...
               </p>
             </div>
 
             <Button
               className="bg-primary h-10 w-full font-medium text-white hover:bg-[#030812]/90"
-              onClick={handleGoToDashboard}
+              onClick={() => (window.location.href = "/admin/dashboard")}
             >
               Go to Dashboard
             </Button>
