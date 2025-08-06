@@ -107,6 +107,7 @@ export interface IAdminInputProps {
   type: string;
   placeholder: string;
   readonly?: boolean;
+  disabled?: boolean;
 }
 
 // region Venue Model

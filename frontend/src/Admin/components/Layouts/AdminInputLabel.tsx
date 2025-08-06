@@ -10,6 +10,7 @@ export default function AdminInputLabel({
   type,
   placeholder,
   readonly = false,
+  disabled = false,
 }: IAdminInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -36,7 +37,8 @@ export default function AdminInputLabel({
           required={required}
           placeholder={placeholder}
           rows={1}
-          className={`w-96 resize-none rounded-[0.5rem] border px-3 py-2 text-lg`}
+          disabled={disabled}
+          className={`w-96 resize-none rounded-[0.5rem] border px-3 py-2 text-lg disabled:cursor-not-allowed disabled:bg-[#D8DFEC] disabled:text-gray-400`}
         />
       ) : (
         <input
@@ -47,7 +49,8 @@ export default function AdminInputLabel({
           onChange={(e) => onChange(e.target.value)}
           required={required}
           placeholder={placeholder}
-          className={`w-96 rounded-[0.5rem] border px-3 py-2 text-lg`}
+          disabled={disabled}
+          className={`w-96 rounded-[0.5rem] border px-3 py-2 text-lg disabled:cursor-not-allowed disabled:bg-[#D8DFEC] disabled:text-gray-400`}
         />
       )}
     </div>
