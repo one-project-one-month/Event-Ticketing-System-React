@@ -80,7 +80,7 @@ const EventList = () => {
         <h2 className="gap-[48px] text-[30px] font-semibold text-[#43319A] dark:text-white">
           Event List
         </h2>
-        <div className="overflow-auto rounded-[20px] border border-gray-200 dark:border-[#334155]">
+        <div className="overflow-auto rounded-[20px] border border-gray-200 dark:bg-[#1E293B]">
           <table className="min-w-full divide-y divide-[#67648D]">
             <thead className="padding-[20px] bg-[#615CB8] dark:bg-[#0F172A]">
               <tr>
@@ -105,8 +105,8 @@ const EventList = () => {
             <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
               {currentEvents.map((event, index) => (
                 <tr
-                  key={event.EventUniqueName}
-                  className="hover:bg-[#1E293B] hover:text-black hover:dark:bg-gray-50"
+                  key={event.EventCode}
+                  className="hover:dark:bg-gray-50"
                 >
                   <td className="px-[20px] py-[10px] text-center text-lg whitespace-nowrap">
                     {indexOfFirstItem + index + 1}

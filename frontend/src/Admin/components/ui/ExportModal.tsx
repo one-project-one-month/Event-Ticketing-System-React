@@ -1,5 +1,7 @@
 import { X } from "lucide-react";
 import { useState } from "react";
+import {PurpleOutlineButton} from '@/Admin/components/ui/PurpleOutlineButton';
+import { YellowButton } from "@/Admin/components/ui/YellowButton";
 
 // Define allowed export formats
 type ExportFormat = "csv" | "xlsx" | "pdf";
@@ -49,11 +51,11 @@ export default function ExportModal({ open, onClose, onExport }: ExportModalProp
           <X size={22} />
         </button>
 
-        <h2 className="text-center text-2xl font-semibold text-[#151515]">
+        <h2 className="text-left text-2xl font-semibold text-[#151515]">
           Export <span className="pl-1">Data</span>
         </h2>
 
-        <p className="mb-6 mt-2 text-center text-[#9CA3AF] text-[16px] font-medium">
+        <p className="mb-6 mt-2 text-left text-[#9CA3AF] text-[16px] font-medium">
           Select export format:
         </p>
 
@@ -61,7 +63,7 @@ export default function ExportModal({ open, onClose, onExport }: ExportModalProp
           {exportOptions.map((option) => (
             <label
               key={option.value}
-              className="flex cursor-pointer items-center gap-4 rounded-xl border border-gray-200 px-4 py-3 transition hover:bg-gray-100"
+              className="flex cursor-pointer items-center gap-4 border border-transparent px-4 py-3 transition"
             >
               <input
                 type="radio"
@@ -72,27 +74,16 @@ export default function ExportModal({ open, onClose, onExport }: ExportModalProp
                 className="h-4 w-4 text-purple-600 accent-purple-600"
               />
               <img src={option.icon} alt={option.label} className="h-6 w-6" />
-              <span className="text-gray-800 font-medium text-sm">
+              <span className="text-gray-800 text-center font-medium text-sm">
                 {option.label}
               </span>
             </label>
           ))}
         </div>
 
-        <div className="mt-8 flex justify-between gap-4">
-          <button
-            onClick={onClose}
-            className="w-full rounded-xl border border-[#C4C4C4] bg-transparent py-2.5 text-[#6B7280] font-semibold hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleExport}
-            className="w-full rounded-xl bg-[#F28B38] py-2.5 text-white font-semibold hover:bg-[#df7e2f] transition"
-            disabled={!selectedFormat}
-          >
-            Export
-          </button>
+        <div className="mt-8 flex justify-center gap-10">
+          <PurpleOutlineButton text="Cancel" onClick={onClose} />
+            <YellowButton text="Update" type="submit" onClick={handleExport}/>
         </div>
       </div>
     </div>
