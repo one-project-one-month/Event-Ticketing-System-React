@@ -10,7 +10,7 @@ export default function DateTimePicker({
   onChange: (date: Date | null) => void;
 }) {
   const CustomInput = forwardRef<HTMLInputElement, any>(({ value, onClick }, ref) => (
-    <div className="relative w-[400px]">
+    <div className="relative w-full">
       <input
         ref={ref}
         type="text"
@@ -18,12 +18,12 @@ export default function DateTimePicker({
         value={value}
         placeholder="dd/mm/yyyy (hh:mm aa)"
         readOnly
-        className="w-full bg-[#F9F9FD] border border-[#E2E2EA] rounded-[10px] px-4 pr-10 py-3 text-[#6E6B8A] text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#6C2BD9]"
+        className="w-full bg-white border border-gray-300 rounded-[10px] px-6 pr-12 py-4 text-sm focus:border-blue-500 focus:ring-blue-500 text-gray-700 cursor-pointer"
       />
       <img
         src="/icons/CalendarBlank.svg"
         alt="calendar"
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none"
       />
     </div>
   ));
