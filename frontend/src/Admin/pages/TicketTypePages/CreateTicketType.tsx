@@ -28,13 +28,13 @@ export default function CreateTicketType() {
       }
     };
     fetchData();
-  })
+  }, [])
 
   const [form, setForm] = useState<createTicketTypeData>({
     eventCode: "",
     ticketTypeName: "",
     ticketprice: "",
-    ticketQuantity: "",
+    ticketQuantity: ""
   });
 
   const handleChange = (
