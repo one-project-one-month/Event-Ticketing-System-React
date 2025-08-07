@@ -45,7 +45,7 @@ export default function CreateEvent () {
             }
         };
         fetchData();
-    })
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,7 +58,7 @@ export default function CreateEvent () {
             }
         };
         fetchData();
-    })
+    }, [])
 
      const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -143,12 +143,18 @@ export default function CreateEvent () {
                     value={form.totalticketquantity} onChange={(e) => handleChange(e, "totalticketquantity")}/>
                 </div>
                 <div>
-                    <Label label="Start Date" required/>
-                    <DateTimePicker />
+                <Label label="Start Date" required/>
+                <DateTimePicker
+                value={form.startdate}
+                onChange={(date) => setForm((prev) => ({ ...prev, startdate: date || new Date() }))}
+                />
                 </div>
                 <div>
-                    <Label label="End Date" required/>
-                    <DateTimePicker  />
+                <Label label="End Date" required/>
+                <DateTimePicker
+                value={form.enddate}
+                onChange={(date) => setForm((prev) => ({ ...prev, enddate: date || new Date() }))}
+                />
                 </div>
                 <div>
                     <Checkbox
