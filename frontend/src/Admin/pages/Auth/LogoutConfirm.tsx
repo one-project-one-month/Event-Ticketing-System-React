@@ -7,14 +7,26 @@ import {
 } from "@/User/components/ui/dialog";
 
 import LogoutIcon from "@/Admin/data/Icons/logout.svg";
+import { useAdminAuth } from "@/Admin/data/AdminAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function LogoutConfirmation({
-  onConfirm,
   children,
 }: {
-  onConfirm: () => void;
   children: React.ReactNode;
 }) {
+  const { logout } = useAdminAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/admin/login"); // Redirect to login page
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -41,7 +53,7 @@ export default function LogoutConfirmation({
           <Button
             variant="destructive"
             size="lg"
-            onClick={onConfirm}
+            onClick={handleLogout}
             className="dark:bg-red-500"
           >
             Logout

@@ -15,7 +15,9 @@ export const getRefreshToken = () => {
 
   return {
     refreshToken,
-    refreshTokenExpireAt: refreshTokenExpireAt ? new Date(refreshTokenExpireAt) : null,
+    refreshTokenExpireAt: refreshTokenExpireAt
+      ? new Date(refreshTokenExpireAt)
+      : null,
   };
 };
 
@@ -23,9 +25,8 @@ export const saveTokens = (
   token: string,
   tokenExpiredAt: string,
   refreshToken: string,
-  refreshTokenExpireAt: string
+  refreshTokenExpireAt: string,
 ) => {
-
   sessionStorage.setItem("accessToken", token);
   sessionStorage.setItem("accessTokenExpireAt", tokenExpiredAt);
   sessionStorage.setItem("refreshToken", refreshToken);
@@ -37,4 +38,10 @@ export const clearTokens = () => {
   sessionStorage.removeItem("accessTokenExpireAt");
   sessionStorage.removeItem("refreshToken");
   sessionStorage.removeItem("refreshTokenExpireAt");
+
+  Object.keys(sessionStorage).forEach((key) => {
+    if (key.startsWith("accessToken") || key.startsWith("refreshToken")) {
+      sessionStorage.removeItem(key);
+    }
+  });
 };
