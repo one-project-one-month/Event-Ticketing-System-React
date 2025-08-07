@@ -23,41 +23,42 @@ export default function TicketTypeEditPage() {
     });
 
     useEffect(() => {
-      if(!code) return;
-      const fetchData = async () => {
-        setLoading(true);
-        const res = await getTicketTypeByCode(code);
-        if(res.isSuccess && res.data?.ticketType){
-          const event = res.data.ticketType;
+    if(!code) return;
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await getTicketTypeByCode(code);
+      if(res.isSuccess && res.data?.ticketType){
+        const event = res.data.ticketType;
 
-          setForm({
-            tickettypecode: event.ticketTypeCode,
-            tickettypename: event.ticketTypeName,
-            ticketprice: event.ticketprice,
-            tickettypquantity: event.ticketQuantity,
-            eventcode: event.eventCode,
-            eventname: event.eventName
-          });
-        }else{
-          console.error("Failed to fetch ticket type: ", res.message)
-        }
-        setLoading(false);
-      };
-      fetchData();
-      }, [code]);
-
-      const handleUpdate = async () => {
-        const res = await updateTicketType({
-            ticketTypeCode: form.tickettypecode,
-            ticketTypeName:form.tickettypename
+        setForm({
+          tickettypecode: event.ticketTypeCode,
+          tickettypename: event.ticketTypeName,
+          ticketprice: event.ticketprice,
+          tickettypquantity: event.ticketQuantity,
+          eventcode: event.eventCode,
+          eventname: event.eventName
         });
-        if(res.isSuccess){
-        setShowSuccess(true);
-        }
-        else{
-          alert
-        }
+      }else{
+        console.error("Failed to fetch ticket type: ", res.message)
+      }
+      setLoading(false);
     };
+      fetchData();
+    }, [code]);
+
+const handleUpdate = async () => {
+  const res = await updateTicketType({
+      ticketTypeCode: form.tickettypecode,
+      ticketTypeName:form.tickettypename
+    });
+
+    if(res.isSuccess){
+      setShowSuccess(true);
+    }
+    else{
+      alert
+    }
+  };
 
     return(
         <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
@@ -66,7 +67,7 @@ export default function TicketTypeEditPage() {
               <p className="text-center mt-20">Loading...</p>
             ) : (
               <>
-                  <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
+                <div className="grid grid-cols-2 mt-10 gap-x-25 gap-y-10">
                 <div>
                     <Label label="Ticket Type Name" required />
                     <TextInput
@@ -90,7 +91,7 @@ export default function TicketTypeEditPage() {
                 </div>
                 <div>
                   <Label label="Event Name" required />
-                  <TextInput
+                  <TextInput type="text"
                     value={form.eventname} 
                     disabled
                   />
