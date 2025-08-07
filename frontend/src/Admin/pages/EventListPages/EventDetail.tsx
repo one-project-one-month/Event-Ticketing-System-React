@@ -1,22 +1,40 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { eventListDemoData } from "@/Admin/data/eventListDemoData";
 import { TextInput } from "@/Admin/components/ui/TextInput";
 import { TextArea } from "@/Admin/components/ui/TextArea";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/Admin/components/ui/Checkbox";
 import { Label } from "@/Admin/components/ui/Label";
 import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
+import {getEventByCode} from '@/services/EventServices';
+import type { EventByCodeData } from "@/Admin/DataTypes/Event";
 
 export default function EventDetail() {
-  const { EventUniqueName } = useParams();
+  const { eventCode } = useParams<{ eventCode: string }>();
   const navigate = useNavigate();
-  const [event, setEvent] = useState<any>(null);
+  const [event, setEvents] = useState<EventByCodeData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const found = eventListDemoData.find((e) => e.EventUniqueName === EventUniqueName);
-    setEvent(found || null);
-  }, [EventUniqueName]);
+      const fetchTicketType = async () => {
+          if (!eventCode) {
+              setLoading(false);
+              return;
+          }
+          const res = await getEventByCode(eventCode);
+          console.log("API response:", res);
+          if (res.isSuccess && res.data?.event) {
+              console.log("Event fetched successfully:", res.data.event);
+              setEvents(res.data.event); 
+          } else {
+              console.error("Failed to fetch event:", res.message);
+              setEvents(null);
+          }
+          setLoading(false);
+      };
+      fetchTicketType();
+  }, [eventCode]);
 
+  if (loading) return <p className="text-center mt-20">Loading...</p>;
   if (!event) return <p className="text-center mt-20">Event not found.</p>;
 
   return (
@@ -26,35 +44,35 @@ export default function EventDetail() {
       <div className="grid grid-cols-2 gap-x-8 gap-y-5">
         <div>
           <Label label="Event Code" required />
-          <TextInput value={event.EventCode} readOnly />
+          <TextInput value={event.eventcode} readOnly />
         </div>
         <div>
           <Label label="Event Category Code" required />
-          <TextInput value={event.EventCategoryCode} readOnly />
+          <TextInput value={event.eventcategory} readOnly />
         </div>
         <div>
           <Label label="Event Name" required />
-          <TextInput value={event.EventName} readOnly />
+          <TextInput value={event.eventname} readOnly />
         </div>
         <div>
           <Label label="Unique Name" required />
-          <TextInput value={event.EventUniqueName} readOnly />
+          <TextInput value={event.uniquename} readOnly />
         </div>
         <div>
           <Label label="Business Owner Name" required />
-          <TextInput value={event.BusinessOwnerName} readOnly />
+          <TextInput value={event.businessownername} readOnly />
         </div>
         <div>
           <Label label="Venue Name" required />
-          <TextInput value={event.VenueName} readOnly />
+          <TextInput value={event.venuename} readOnly />
         </div>
         <div>
           <Label label="Venue Type" />
-          <TextInput value={event.VenueType} readOnly />
+          <TextInput value={event.venuetypename} readOnly />
         </div>
         <div>
           <Label label="Capacity" required />
-          <TextInput value={event.Capacity} readOnly />
+          <TextInput value={event.capacity} readOnly />
         </div>
       </div>
 
@@ -62,11 +80,11 @@ export default function EventDetail() {
       <div className="flex gap-10 mt-8">
         <div className="flex-1">
           <Label label="Description" required />
-          <TextArea rows={3} value={event.Description} readOnly />
+          <TextArea rows={3} value={event.description} readOnly />
         </div>
         <div className="flex-1">
           <Label label="Facilities" required />
-          <TextArea rows={3} value={event.Facilities} readOnly />
+          <TextArea rows={3} value={event.facilities} readOnly />
         </div>
       </div>
 
@@ -75,7 +93,7 @@ export default function EventDetail() {
         <div className="flex-1">
           <Label label="Addons" required />
           <div className="flex flex-wrap gap-2 mt-1">
-            {event.Addons?.map((addon: string, i: number) => (
+            {event.addons?.map((addon: string, i: number) => (
               <span
                 key={i}
                 className="border border-[#6C2BD9] text-[#6C2BD9] text-sm px-3 py-1 rounded-md"
@@ -88,12 +106,12 @@ export default function EventDetail() {
         <div className="flex-1">
           <Label label="Venue Images" required />
           <div className="flex gap-4 mt-1">
-            {event.Images?.map((img: string, i: number) => (
+            {event.venueImage?.map((img: string, i: number) => (
               <img
                 key={i}
                 src={img}
                 alt="Venue"
-                className="w-32 h-20 object-cover rounded-md border"
+                className="w-32 h-20 object-cover border"
               />
             ))}
           </div>
@@ -103,18 +121,18 @@ export default function EventDetail() {
       {/* Address full width */}
       <div className="mt-8">
         <Label label="Address" required />
-        <TextArea value={event.Address} readOnly rows={2} />
+        <TextArea value={event.address} readOnly rows={2} />
       </div>
 
       {/* Start Date & End Date in 2-column grid */}
       <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-8">
         <div>
           <Label label="Start Date" required />
-          <TextInput value={event.StartDate} readOnly />
+          <TextInput value={event.startdate} readOnly />
         </div>
         <div>
           <Label label="End Date" required />
-          <TextInput value={event.EndDate} readOnly />
+          <TextInput value={event.enddate} readOnly />
         </div>
       </div>
 
@@ -122,21 +140,21 @@ export default function EventDetail() {
       <div className="grid grid-cols-3 gap-x-8 gap-y-5 mt-8">
         <div>
           <Label label="Total Ticket Quantity" required />
-          <TextInput value={event.TotalTickets} readOnly />
+          <TextInput value={event.totalticketquantity} readOnly />
         </div>
         <div>
           <Label label="Ticket Sold" required />
-          <TextInput value={event.TicketsSold} readOnly />
+          <TextInput value={event.soldoutcount} readOnly />
         </div>
         <div>
           <Label label="Event Status" required />
-          <TextInput value={event.EventStatus} readOnly />
+          <TextInput value={event.eventstatus} readOnly />
         </div>
       </div>
 
       {/* Checkbox below with some top padding */}
       <div className="pt-5">
-        <Checkbox label="Active" checked={event.IsActive} />
+        <Checkbox label="Active" checked={event.isactive} />
       </div>
 
       <div className="mt-8 text-right">
