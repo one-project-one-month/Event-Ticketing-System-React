@@ -6,7 +6,7 @@ import { Button } from "@/User/components/ui/button";
 import { getEventTypes } from "@/services/EventTypeServices";
 import { deleteEventType } from "@/services/EventTypeServices";
 import { exportToCSV, exportToExcel, exportToPDF } from "@/Admin/utils/exportUtils";
-import type { EventTypeData } from "@/Admin/DataTypes/DataTypes";
+import type { EventTypeData } from "@/Admin/DataTypes/EventTypes";
 
 const EventType = () => {
   const [searchTerm, setSearchTerm] = useState("");
