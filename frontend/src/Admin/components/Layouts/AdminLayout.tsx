@@ -4,7 +4,7 @@ import AdminNavBar from "@/Admin/components/Layouts/AdminNavBar";
 
 export default function AdminLayout() {
   return (
-    <div className="flex h-screen flex-col bg-[#D8DFEC] dark:bg-[#1E293B]">
+    <div className="flex max-h-screen flex-col bg-[#D8DFEC] dark:bg-[#1E293B]">
       <AdminNavBar />
 
       <div className="flex flex-1 overflow-hidden">
