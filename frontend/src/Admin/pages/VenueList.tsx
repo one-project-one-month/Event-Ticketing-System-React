@@ -1,35 +1,36 @@
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import VenuePagination from "@/Admin/components/pages/venuetype/VenuePagination.tsx";
-import type { IVenueOverViewModel } from "@/Admin/DataTypes/DataTypes.ts";
 import VenueDataList from "@/Admin/components/pages/venue/VenueDataList.tsx";
+import { useEffect, useState } from "react";
+import { getVenues } from "@/services/VenueService.ts";
+import type { VenueData } from "@/Admin/DataTypes/VenueDataTypes.ts";
 
 const VenueList = () => {
-  const sampleVenues: IVenueOverViewModel[] = [
-    {
-      VenueCode: "VEN001",
-      VenueTypeCode: "TYPE01",
-      VenueName: "Grand Ballroom",
-      Capacity: 500,
-    },
-    {
-      VenueCode: "VEN002",
-      VenueTypeCode: "TYPE02",
-      VenueName: "Sunset Rooftop",
-      Capacity: 120,
-    },
-    {
-      VenueCode: "VEN003",
-      VenueTypeCode: "TYPE01",
-      VenueName: "Ocean View Hall",
-      Capacity: 300,
-    },
-    {
-      VenueCode: "VEN004",
-      VenueTypeCode: "TYPE03",
-      VenueName: "Conference Room A",
-      Capacity: 80,
-    },
-  ];
+  const [venues, setVenues] = useState<VenueData[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  useEffect(() => {
+    const fetchVenues = async () => {
+      const res = await getVenues();
+      if (res.isSuccess && Array.isArray(res.data?.venueList)) {
+        setVenues(res.data.venueList);
+      } else {
+        console.error("Failed to fetch venues:", res.message);
+      }
+    };
+
+    fetchVenues();
+  }, []);
+
+  const filteredVenues = venues.filter((venue) =>
+    venue.venueName.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentVenues = filteredVenues.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <section className={`figtreef mx-10`}>
@@ -37,12 +38,28 @@ const VenueList = () => {
       <ToolBar
         addNewPath={`/admin/venue/list/create`}
         onExport={() => {}}
-        onSearch={() => {}}
+        onSearch={(term) => {
+          setSearchTerm(term);
+          setCurrentPage(1);
+        }}
       />
+
       {/*  List */}
-      <VenueDataList venues={sampleVenues} />
+      <VenueDataList
+        venues={currentVenues}
+        additionalNumber={indexOfFirstItem}
+      />
       {/*  Pagination */}
-      <VenuePagination totalItems={sampleVenues.length} />
+      <VenuePagination
+        totalItems={filteredVenues.length}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        onPageChange={(page) => setCurrentPage(page)}
+        onItemsPerPageChange={(count) => {
+          setItemsPerPage(count);
+          setCurrentPage(1); // reset to page 1
+        }}
+      />
     </section>
   );
 };

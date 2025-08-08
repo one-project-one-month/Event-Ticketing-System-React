@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import {
   ChevronsLeft,
   ChevronLeft,
@@ -19,18 +16,21 @@ import {
 
 interface PaginationProps {
   totalItems: number;
+  currentPage: number;
+  itemsPerPage: number;
   itemsPerPageOptions?: number[];
+  onPageChange: (page: number) => void;
+  onItemsPerPageChange: (count: number) => void;
 }
 
 export default function VenuePagination({
   totalItems,
+  currentPage,
+  itemsPerPage,
   itemsPerPageOptions = [5, 10, 20, 50],
+  onPageChange,
+  onItemsPerPageChange,
 }: PaginationProps) {
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [itemsPerPage, setItemsPerPage] = React.useState(
-    itemsPerPageOptions[1],
-  );
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -55,13 +55,12 @@ export default function VenuePagination({
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      onPageChange(page);
     }
   };
 
   const handleItemsPerPageChange = (value: string) => {
-    setItemsPerPage(Number(value));
-    setCurrentPage(1); // Reset to first page when items per page changes
+    onItemsPerPageChange(Number(value));
   };
 
   return (

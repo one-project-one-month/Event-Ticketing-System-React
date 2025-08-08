@@ -1,11 +1,13 @@
-import type { IVenueOverViewModel } from "@/Admin/DataTypes/DataTypes";
 import { useState } from "react";
 import AdminDeleteDialog from "@/Admin/components/Layouts/AdminDeleteDialog";
+import type { VenueData } from "@/Admin/DataTypes/VenueDataTypes.ts";
 
 export default function VenueDataList({
   venues,
+  additionalNumber,
 }: {
-  venues: IVenueOverViewModel[];
+  venues: VenueData[];
+  additionalNumber?: number;
 }) {
   return (
     <section className="mt-5">
@@ -24,7 +26,11 @@ export default function VenueDataList({
         {/* Data Rows */}
         <div className="hide-scrollbar h-[29rem] overflow-y-scroll">
           {venues.map((venue, index) => (
-            <VenueRow key={venue.VenueCode} index={index + 1} {...venue} />
+            <VenueRow
+              key={venue.venueCode}
+              index={(additionalNumber ?? 0) + index + 1}
+              {...venue}
+            />
           ))}
         </div>
       </div>
@@ -34,33 +40,33 @@ export default function VenueDataList({
 
 function VenueRow({
   index,
-  VenueCode,
-  VenueName,
-  VenueTypeCode,
-  Capacity,
-}: IVenueOverViewModel & { index: number }) {
+  venueCode,
+  venueName,
+  venueTypeCode,
+  capacity,
+}: VenueData & { index: number }) {
   const [showDelete, setShowDelete] = useState(false);
 
   const handleDelete = () => {
-    console.log("Deleted!", VenueCode);
+    console.log("Deleted!", venueCode);
     setShowDelete(false);
   };
 
   return (
     <div className="mb-2 flex items-center bg-white px-6 py-4 text-[#333]">
       <div className="w-[10%] pl-14">{index}</div>
-      <div className="w-[35%]">{VenueName}</div>
-      <div className="w-[25%]">{VenueTypeCode}</div>
-      <div className="w-[15%]">{Capacity ?? "N/A"}</div>
+      <div className="w-[35%]">{venueName}</div>
+      <div className="w-[25%]">{venueTypeCode}</div>
+      <div className="w-[15%]">{capacity ?? "N/A"}</div>
       <div className="flex w-[11%] items-center justify-end gap-2">
-        <a href={`/admin/venue/${VenueCode}`}>
+        <a href={`/admin/venue/${venueCode}`}>
           <img
             src="/icons/Eye.svg"
             alt="View Data"
             className="cursor-pointer"
           />
         </a>
-        <a href={`/admin/venue/${VenueCode}/edit`}>
+        <a href={`/admin/venue/${venueCode}/edit`}>
           <img
             src="/icons/Edit.svg"
             alt="Edit Data"

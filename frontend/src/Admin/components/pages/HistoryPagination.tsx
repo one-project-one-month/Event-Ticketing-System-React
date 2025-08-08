@@ -29,7 +29,7 @@ export default function HistoryPagination({
       ))}
 
       <button
-        className="rounded-full bg-[#43319A] px-3 py-1 text-white"
+        className="cursor-pointer rounded-full bg-[#43319A] px-3 py-1 text-white"
         onClick={() => {
           if (currentPage < totalPages) onPageChange(currentPage + 1);
         }}
