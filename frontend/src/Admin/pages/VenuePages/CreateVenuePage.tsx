@@ -4,6 +4,8 @@ import { useState } from "react";
 import AdminActionDialog from "@/Admin/components/Layouts/AdminActionDialog.tsx";
 import AddonsInputGroup from "@/Admin/components/pages/venue/AddonInputGroup.tsx";
 import VenueImageUpload from "@/Admin/components/pages/venue/VenueImageUpload.tsx";
+import type { CreateVenueParams } from "@/Admin/DataTypes/VenueDataTypes";
+import { createVenue } from "@/services/VenueService";
 
 export default function CreateVenuePage() {
   const [venueName, setVenueName] = useState("");
@@ -14,6 +16,48 @@ export default function CreateVenuePage() {
   const [facilities, setFacilities] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addons, setAddons] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!venueName.trim() || !venueTypeCode.trim()) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const formData = new FormData();
+      images.forEach((file) => formData.append("VenueImage", file));
+
+      const query: CreateVenueParams = {
+        VenueName: venueName,
+        VenueTypeCode: venueTypeCode,
+        Capacity: Number(capacity),
+        Address: address,
+        Description: description,
+        Facilities: facilities,
+        Addons: addons,
+      };
+
+      const res = await createVenue({ query, formData });
+
+      if (res?.isSuccess) {
+        setIsOpen(true);
+        setTimeout(() => {
+          window.location.href = "/admin/venue";
+        }, 2000);
+      } else {
+        alert("Failed to create venue: " + (res?.message || "Unknown error"));
+      }
+    } catch (e: any) {
+      console.error("Error Creating Venue", e);
+      alert("Error creating Venue: " + (e.message || "Unknown error"));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="relative mt-10 ml-12 h-fit w-[65rem] rounded-md bg-white px-20 py-14">
@@ -88,7 +132,7 @@ export default function CreateVenuePage() {
 
         <div className={`flex justify-between`}>
           <AddonsInputGroup selectedAddons={addons} onChange={setAddons} />
-          <VenueImageUpload />
+          <VenueImageUpload images={images} setImages={setImages} />
         </div>
       </div>
 
@@ -104,8 +148,9 @@ export default function CreateVenuePage() {
           Cancel
         </button>
         <button
-          onClick={() => setIsOpen(true)}
-          className="h-12 w-32 cursor-pointer rounded-md bg-[#FC9B51] text-white hover:text-purple-300"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          className={`h-12 w-32 cursor-pointer rounded-md bg-[#FC9B51] text-white hover:text-purple-300 ${isSubmitting ? "cursor-not-allowed opacity-50" : ""}`}
         >
           Save
         </button>
@@ -114,7 +159,7 @@ export default function CreateVenuePage() {
       <AdminActionDialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        text="SAVED SUCCESSFULLY !"
+        text="SAVED SUCCESSFULLY ! RETURNING TO VENUE LIST..."
       />
     </section>
   );

@@ -1,13 +1,38 @@
-import { useRef, useState } from "react";
+import {
+  useRef,
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 
-export default function VenueImageUpload() {
-  const [images, setImages] = useState<File[]>([]);
+interface VenueImageUploadProps {
+  images: File[];
+  setImages: Dispatch<SetStateAction<File[]>>;
+}
+
+export default function VenueImageUpload({
+  images,
+  setImages,
+}: VenueImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
-      setImages((prev) => [...prev, ...filesArray]);
+      const validFiles: File[] = [];
+
+      filesArray.forEach((file) => {
+        if (file.size > 5 * 1024 * 1024) {
+          // 5MB in bytes
+          alert(`${file.name} is larger than 5MB and will not be added.`);
+        } else {
+          validFiles.push(file);
+        }
+      });
+
+      if (validFiles.length > 0) {
+        setImages((prev) => [...prev, ...validFiles]);
+      }
     }
   };
 
@@ -58,7 +83,10 @@ export default function VenueImageUpload() {
                 className="h-24 w-24 rounded object-cover"
               />
               <button
-                onClick={() => handleRemove(index)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemove(index);
+                }}
                 className="absolute top-1 right-1 cursor-pointer rounded bg-red-500 px-1 text-xs text-white"
               >
                 ✕

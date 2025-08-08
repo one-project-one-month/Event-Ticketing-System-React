@@ -36,7 +36,7 @@ const VenueList = () => {
     <section className={`figtreef mx-10`}>
       {/* Search Bar */}
       <ToolBar
-        addNewPath={`/admin/venue/list/create`}
+        addNewPath={`/admin/venue/create`}
         onExport={() => {}}
         onSearch={(term) => {
           setSearchTerm(term);
