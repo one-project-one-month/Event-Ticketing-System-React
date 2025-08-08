@@ -14,6 +14,9 @@ import type { BusinessOwnerData } from "@/Admin/DataTypes/BusinessOwner";
 import { getEventTypes } from "@/services/EventTypeServices";
 import { getBusinessOwners } from "@/services/BusinessOwnerServices";
 import {Checkbox} from '@/Admin/components/ui/Checkbox';
+import type {VenueData} from  "@/Admin/DataTypes/VenueDataTypes";
+import { getVenues } from "@/services/VenueService";
+
 
 export default function CreateEvent () {
     const navigate = useNavigate();
@@ -21,6 +24,7 @@ export default function CreateEvent () {
     const [error, setError] = useState("");
     const [eventTypeData, SetEventTypeData] = useState<EventTypeData[]>([]);
     const [businessOwnerData, SetBusinessOwnerData] = useState<BusinessOwnerData[]>([]);
+    const [venueData, SetVenueData] = useState<VenueData[]>([]);
 
     const [form, setForm] = useState<createEventData>({
         eventname: "",
@@ -55,6 +59,19 @@ export default function CreateEvent () {
             }else{
                 console.error("Failed to fetch Businessowners:", businessOwnerRes.message);
                 SetBusinessOwnerData([]);
+            }
+        };
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        const fetchData = async() => {
+            const venueRes  =  await getVenues();
+            if(venueRes.isSuccess && Array.isArray(venueRes.data?.venueList)){
+                SetVenueData(venueRes.data.venueList);
+            }else{
+                console.error("Failed to fetch Businessowners:", venueRes.message);
+                SetVenueData([]);
             }
         };
         fetchData();
@@ -134,8 +151,19 @@ export default function CreateEvent () {
                 </div>
                 <div>
                     <Label label="Venue Name" required />
-                    <TextInput placeholder="Enter venue name" 
-                    value={form.venuecode} onChange={(e) => handleChange(e, "venuecode")}/>
+                    <SelectBox value={form.venuecode} 
+                    onChange={(e) => 
+                        setForm({...form, venuecode : e.target.value})
+                    }>
+                        <option value="" className="text-center">---Select Venue---</option>
+                        {
+                            venueData.map((e) => (
+                                <option key={e.venueCode} value={e.venueCode}>
+                                    {e.venueName}
+                                </option>
+                            ))
+                        }
+                    </SelectBox>
                 </div>
                 <div>
                     <Label label="Total Ticket Quantity" required />
