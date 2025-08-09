@@ -17,7 +17,6 @@ import {Checkbox} from '@/Admin/components/ui/Checkbox';
 import type {VenueData} from  "@/Admin/DataTypes/VenueDataTypes";
 import { getVenues } from "@/services/VenueService";
 
-
 export default function CreateEvent () {
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
@@ -32,7 +31,7 @@ export default function CreateEvent () {
         eventcategorycode: "",
         businessownercode : "",
         venuecode: "",
-        totalticketquantity : 0,
+        totalticketquantity : "",
         startdate : new Date(),
         enddate : new Date(),
         isactive : false,
@@ -167,7 +166,7 @@ export default function CreateEvent () {
                 </div>
                 <div>
                     <Label label="Total Ticket Quantity" required />
-                    <TextInput placeholder="Enter total ticket quantity" 
+                    <TextInput type="number" placeholder="Enter total ticket quantity" 
                     value={form.totalticketquantity} onChange={(e) => handleChange(e, "totalticketquantity")}/>
                 </div>
                 <div>
