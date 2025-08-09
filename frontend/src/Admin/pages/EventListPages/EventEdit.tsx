@@ -138,7 +138,7 @@ useEffect(() => {
               <div>
                 <Label label="Total Ticket Quantity" required />
               <TextInput
-              value={"MapThisWithAPI"}
+              value={form.eventcategory}
               disabled
               />
               </div>
