@@ -7,12 +7,16 @@ import { Checkbox} from "@/Admin/components/ui/Checkbox";
 import { PurpleOutlineButton } from "@/Admin/components/ui/PurpleOutlineButton";
 import UpdateSuccessModal from "@/Admin/components/ui/UpdateSuccessModal";
 import { getEventByCode, updateEventType } from "@/services/EventServices";
+import { getEventStatusOptions } from "@/services/EventServices";
+import type { eventStatusOptionsData } from "@/Admin/DataTypes/Event";
+import { SelectBox } from "@/Admin/components/ui/SelectBox";
 
 export default function EventEditPage() {
   const { eventCode } = useParams<{ eventCode: string }>();
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [eventStatusData, SetEventStatusData] = useState<eventStatusOptionsData[]>([]);
 
   const [form, setForm] = useState({
     eventcode: "",
@@ -24,6 +28,7 @@ export default function EventEditPage() {
     totalticketquantity: 0,
     startdate: "",
     enddate: "",
+    eventStatus: "",
     isactive: false
   });
 
@@ -46,6 +51,7 @@ useEffect(() => {
           totalticketquantity : event.totalticketquantity,
           startdate : event.startdate,
           enddate : event.enddate,
+          eventStatus : event.eventstatus,
           isactive : event.isactive
         });
       }else{
@@ -56,10 +62,25 @@ useEffect(() => {
       fetchData();
     }, [eventCode]);
 
+    useEffect(() => {
+        const fetchData = async() => {
+            const eventStatusRes = await getEventStatusOptions();
+            if(eventStatusRes.isSuccess && Array.isArray(eventStatusRes.data?.eventStatusOptions)){
+                SetEventStatusData(eventStatusRes.data.eventStatusOptions);
+            }
+            else{
+                console.error("Failed to fetch Eventstatus Options: ", eventStatusRes.message);
+                SetEventStatusData([]);
+            }
+        };
+        fetchData();
+    }, [])
+
     const handleUpdate = async () => {
       const res = await updateEventType({
           eventCode: form.eventcode,
-          isactive:form.isactive
+          isactive:form.isactive,
+          eventStatus : form.eventStatus
         });
     
         if(res.isSuccess){
@@ -133,6 +154,22 @@ useEffect(() => {
               value={form.enddate} 
               disabled
               />
+              </div>
+              <div>
+                  <Label label="Event Status" required/>
+                  <SelectBox value={form.eventStatus} 
+                  onChange={(e) => 
+                      setForm({...form, eventStatus : e.target.value})
+                  }>
+                      <option value="" className="text-center">---Select Eventstatus---</option>
+                      {
+                          eventStatusData.map((e) => (
+                              <option key={e.value} value={e.value}>
+                                  {e.label}
+                              </option>
+                          ))
+                      }
+                  </SelectBox>  
               </div>
               <div>
                 <Checkbox

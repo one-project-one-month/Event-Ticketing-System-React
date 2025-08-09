@@ -52,5 +52,16 @@ export interface createEventData {
 
 export interface updateEventData {
     eventCode: string;
+    eventStatus:string;
     isactive : boolean;
 }
+
+export interface eventStatusOptionsData{
+  value: string;
+  label: string;
+}
+
+export type eventStatusResponse = ApiResponse<{
+  eventStatusOptions:eventStatusOptionsData;
+}>
+

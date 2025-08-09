@@ -3,7 +3,8 @@ import type {
   EventResponse,
   createEventData,
   EventByCode,
-  updateEventData
+  updateEventData,
+  eventStatusResponse
 } from "@/Admin/DataTypes/Event";
 
 
@@ -21,3 +22,6 @@ export const getEventByCode = (eventCode: string) =>
 
 export const deleteEvent = (eventCode: string) =>
   apiPost<{ eventType: EventResponse }>(`api/Event/Delete/${eventCode}`, {});
+
+export const getEventStatusOptions = () => 
+  apiGet<eventStatusResponse["data"]>("api/Event/EventStatusOptions");
