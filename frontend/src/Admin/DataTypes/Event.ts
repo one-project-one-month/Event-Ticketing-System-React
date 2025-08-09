@@ -44,7 +44,7 @@ export interface createEventData {
     eventcategorycode: string;
     businessownercode:string;
     venuecode:string;
-    totalticketquantity: number;
+    totalticketquantity: string;
     startdate: Date;
     enddate: Date;
     isactive: boolean;
