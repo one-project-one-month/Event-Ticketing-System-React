@@ -1,7 +1,7 @@
 import HistoryPagination from "@/Admin/components/pages/HistoryPagination.tsx";
 import { useState } from "react";
 
-interface Column<T> {
+export interface HistoryColumn<T> {
   label: string;
   key: keyof T;
   width?: string; // tailwind width classes
@@ -9,15 +9,16 @@ interface Column<T> {
 }
 
 interface HistoryTableProps<T> {
-  columns: Column<T>[];
+  columns: HistoryColumn<T>[];
   data: T[];
+  dataCodeName: keyof T;
   onActionClick?: (row: T) => void;
 }
 
-export default function HistoryTable<T extends object>({
+export function HistoryTable<T extends object>({
   columns,
   data,
-  onActionClick,
+  dataCodeName,
 }: HistoryTableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
@@ -75,13 +76,16 @@ export default function HistoryTable<T extends object>({
                 </div>
               ))}
               <div className="w-[10%] py-3 text-center">
-                <button onClick={() => onActionClick?.(row)} className="p-1">
+                <a
+                  href={`/admin/business/email/${row[dataCodeName]}`}
+                  className="p-1"
+                >
                   <img
                     src="/icons/Eye.svg"
                     alt="View"
                     className="inline-block cursor-pointer"
                   />
-                </button>
+                </a>
               </div>
             </div>
           ))}

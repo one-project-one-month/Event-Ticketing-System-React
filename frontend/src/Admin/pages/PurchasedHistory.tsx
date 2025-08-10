@@ -1,6 +1,6 @@
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle";
-import HistoryTable from "@/Admin/components/pages/HistoryTable.tsx";
+import { HistoryTable } from "@/Admin/components/pages/HistoryTable.tsx";
 
 const PurchasedHistory = () => {
   return (

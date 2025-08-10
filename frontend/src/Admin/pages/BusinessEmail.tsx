@@ -1,14 +1,17 @@
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle.tsx";
-import HistoryTable from "@/Admin/components/pages/HistoryTable.tsx";
+import {
+  type HistoryColumn,
+  HistoryTable,
+} from "@/Admin/components/pages/HistoryTable.tsx";
 import type { BusinessEmailData } from "@/Admin/DataTypes/BusinessEmail.ts";
 
-const BusinessEmail = () => {
+export const BusinessEmail = () => {
   const businessEmailColumns = [
     { key: "fullName", label: "Full Name" },
     { key: "phone", label: "Mobile No." },
     { key: "email", label: "Email" },
-  ];
+  ] satisfies HistoryColumn<BusinessEmailData>[];
 
   const businessEmailSample: BusinessEmailData[] = [
     {
@@ -56,10 +59,9 @@ const BusinessEmail = () => {
         <HistoryTable
           data={businessEmailSample}
           columns={businessEmailColumns}
+          dataCodeName={`businessEmailCode`}
         />
       </div>
     </section>
   );
 };
-
-export default BusinessEmail;

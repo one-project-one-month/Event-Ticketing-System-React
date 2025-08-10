@@ -12,7 +12,7 @@ import VenueListPage from "@/Admin/pages/VenueList";
 import EventTypePage from "@/Admin/pages/EventTypePages/EventType";
 import EventListPage from "@/Admin/pages/EventListPages/EventList";
 import BusinessOwnerPage from "@/Admin/pages/BusinessOwnerPages/BusinessOwner";
-import BusinessEmailPage from "@/Admin/pages/BusinessEmail";
+import { BusinessEmail as BusinessEmailPage } from "@/Admin/pages/BusinessEmail";
 import PurchasedHistoryPage from "@/Admin/pages/PurchasedHistory";
 import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
 import SettingPage from "@/Admin/pages/Setting";
@@ -37,6 +37,7 @@ import EditVenueTypePage from "@/Admin/pages/VenueTypePages/EditVenueType.tsx";
 import CreateVenuePage from "@/Admin/pages/VenuePages/CreateVenuePage.tsx";
 import ViewVenuePage from "@/Admin/pages/VenuePages/ViewVenuePage";
 import EditVenuePage from "@/Admin/pages/VenuePages/EditVenuePage.tsx";
+import BusinessEmailDetail from "@/Admin/components/pages/businessemail/BusinessEmailDetail.tsx";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -114,7 +115,13 @@ export const adminRouter = createBrowserRouter([
               { path: "create", Component: CreateBusinessOwnerPage },
             ],
           },
-          { path: "business/email", Component: BusinessEmailPage },
+          {
+            path: "business/email",
+            children: [
+              { index: true, Component: BusinessEmailPage },
+              { path: ":bEmailCode", Component: BusinessEmailDetail },
+            ],
+          },
           { path: "history/purchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },
           { path: "setting", Component: SettingPage },
