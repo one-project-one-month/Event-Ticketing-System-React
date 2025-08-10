@@ -25,8 +25,8 @@ export function useQRValidator() {
 
           const res = await getQrinfoByQrCode(qrCode);
 
-          if (res && res.isSuccess && res.data?.qrinfo) {
-            resolve({ valid: true, data: res.data.qrinfo });
+          if (res && res.isSuccess && res.data) {
+            resolve({ valid: true, data: res.data});
           } else {
             resolve({
               valid: false,
