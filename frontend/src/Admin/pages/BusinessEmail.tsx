@@ -60,6 +60,7 @@ export const BusinessEmail = () => {
           data={businessEmailSample}
           columns={businessEmailColumns}
           dataCodeName={`businessEmailCode`}
+          link={`/admin/business/email/`}
         />
       </div>
     </section>

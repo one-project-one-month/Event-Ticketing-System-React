@@ -1,17 +1,19 @@
 import HistoryPagination from "@/Admin/components/pages/HistoryPagination.tsx";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 export interface HistoryColumn<T> {
   label: string;
   key: keyof T;
   width?: string; // tailwind width classes
   align?: "left" | "center" | "right";
+  render?: (value: any, row: T) => ReactNode;
 }
 
 interface HistoryTableProps<T> {
   columns: HistoryColumn<T>[];
   data: T[];
   dataCodeName: keyof T;
+  link: string;
   onActionClick?: (row: T) => void;
 }
 
@@ -19,6 +21,7 @@ export function HistoryTable<T extends object>({
   columns,
   data,
   dataCodeName,
+  link,
 }: HistoryTableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
@@ -72,14 +75,13 @@ export function HistoryTable<T extends object>({
                         : "text-left"
                   }`}
                 >
-                  {String(row[col.key])}
+                  {col.render
+                    ? col.render(row[col.key], row)
+                    : String(row[col.key])}
                 </div>
               ))}
               <div className="w-[10%] py-3 text-center">
-                <a
-                  href={`/admin/business/email/${row[dataCodeName]}`}
-                  className="p-1"
-                >
+                <a href={`${link}${row[dataCodeName]}`} className="p-1">
                   <img
                     src="/icons/Eye.svg"
                     alt="View"
