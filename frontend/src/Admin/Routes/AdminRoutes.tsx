@@ -99,11 +99,11 @@ export const adminRouter = createBrowserRouter([
           {
             path: "event/list",
             children: [
-              {index: true, Component: EventListPage},
+              { index: true, Component: EventListPage },
               { path: ":eventCode", Component: EventDetailPage },
               { path: ":eventCode/edit", Component: EventEditPage },
-              {path:"create", Component: CreateEventPage}
-            ]
+              { path: "create", Component: CreateEventPage },
+            ],
           },
           {
             path: "business/owner",
@@ -114,7 +114,7 @@ export const adminRouter = createBrowserRouter([
               { path: "create", Component: CreateBusinessOwnerPage },
             ],
           },
-          { path: "businessemail", Component: BusinessEmailPage },
+          { path: "business/email", Component: BusinessEmailPage },
           { path: "history/purchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },
           { path: "setting", Component: SettingPage },
