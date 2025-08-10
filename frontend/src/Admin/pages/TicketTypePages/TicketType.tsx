@@ -55,6 +55,7 @@ const TicketType = () => {
       if (filteredTycketTypes.length === 0) return alert("No data to export.");
   
       const exportData = filteredTycketTypes.map((e) => ({
+        "Ticket Type ID" : e.ticketTypeId,
         "Ticket Code": e.ticketTypeCode,
         "Ticket Type Name": e.ticketTypeName,
         "Price": e.ticketprice,
