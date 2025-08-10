@@ -88,10 +88,10 @@ const TicketType = () => {
           addNewPath="/admin/ticket-type/create"
         />
 
-        <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px]">Ticket Type</h2>
-        <div className="overflow-auto rounded-[20px] border border-gray-200">
+        <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px] dark:text-white">Ticket Type</h2>
+        <div className="overflow-auto rounded-[20px] border border-gray-200 dark:bg-[#1E293B]">
             <table className="min-w-full divide-y divide-[#67648D]">
-                <thead className="bg-[#615CB8] padding-[20px]">
+                <thead className="bg-[#615CB8] padding-[20px] dark:bg-[#0F172A]">
                     <tr>
                       {["No", "Ticket Type Name", "Price", "Event Name", "Actions"].map((heading) => (
                         <th
@@ -104,7 +104,7 @@ const TicketType = () => {
                     </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-100 bg-white">
+                <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
                       {currentTicketType.map((event, index) => (
                 <tr key={event.ticketTypeId} className="hover:bg-gray-50">
                   <td className="px-[20px] py-[10px] text-center whitespace-nowrap text-lg">
