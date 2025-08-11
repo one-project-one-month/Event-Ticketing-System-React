@@ -76,7 +76,7 @@ const Dashboard = () => {
           </div>
 
           <div className={`mt-6 w-full`}>
-            <TicketSaleChart />
+            <TicketSaleChart data={dashboardData.ticketSales} />
           </div>
         </>
       )}

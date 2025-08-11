@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ResponsiveContainer,
   AreaChart,
@@ -10,25 +8,17 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useMemo } from "react";
+import type { DashboardTicketSale } from "@/Admin/DataTypes/Dashboard.ts";
 
-const ticketDataMonthly = [
-  { month: "Jan", value: 700 },
-  { month: "Feb", value: 400 },
-  { month: "Mar", value: 300 },
-  { month: "Apr", value: 800 },
-  { month: "May", value: 200 },
-  { month: "Jun", value: 600 },
-  { month: "Jul", value: 0 },
-  { month: "Aug", value: 0 },
-  { month: "Sep", value: 0 },
-  { month: "Oct", value: 0 },
-  { month: "Nov", value: 0 },
-  { month: "Dec", value: 0 },
-];
-
-function generateEvenTicks(data: { value: number }[], steps = 4) {
-  const max = Math.max(...data.map((d) => d.value));
+function generateEvenTicks(data: DashboardTicketSale[], steps = 4) {
+  if (!data || data.length === 0) return [0];
+  const max = Math.max(...data.map((d) => d.totalCount));
   const roundedMax = Math.ceil(max / 100) * 100;
+
+  // FIX: Handle the case where all data values are zero
+  if (roundedMax === 0) {
+    return [0, 100]; // Return a default scale to avoid duplicate [0, 0, 0] keys
+  }
 
   const step = Math.ceil(roundedMax / steps);
   const ticks = [];
@@ -38,11 +28,15 @@ function generateEvenTicks(data: { value: number }[], steps = 4) {
   return ticks;
 }
 
-export default function TicketSaleChart() {
-  const ticks = useMemo(() => generateEvenTicks(ticketDataMonthly), []);
+interface TicketSaleChartProps {
+  data: DashboardTicketSale[];
+}
+
+export default function TicketSaleChart({ data }: TicketSaleChartProps) {
+  const ticks = useMemo(() => generateEvenTicks(data), [data]);
 
   return (
-    <div className="h- w-full rounded-2xl bg-[#f6f4fb] p-4">
+    <div className="w-full rounded-2xl bg-[#f6f4fb] p-4">
       <div className="mb-4 flex items-start justify-between">
         <h2 className="text-xl font-semibold text-black">Ticket Sale</h2>
         <p className="rounded-md bg-[#5b3cc4] px-3 py-1 text-sm font-semibold text-white">
@@ -51,7 +45,7 @@ export default function TicketSaleChart() {
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={ticketDataMonthly}>
+        <AreaChart data={data}>
           <defs>
             <linearGradient id="colorTicket" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#5b3cc4" stopOpacity={0.3} />
@@ -59,20 +53,18 @@ export default function TicketSaleChart() {
             </linearGradient>
           </defs>
 
-          {/* ✅ Grid lines */}
           <CartesianGrid stroke="#e5e5e5" strokeDasharray="5 5" />
-
           <XAxis dataKey="month" axisLine={false} tickLine={false} />
           <YAxis
             axisLine={false}
             tickLine={false}
-            domain={[0, 900]}
+            domain={[0, "dataMax + 100"]}
             ticks={ticks}
           />
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="value"
+            dataKey="totalCount"
             stroke="#5b3cc4"
             fill="url(#colorTicket)"
             strokeWidth={2}
