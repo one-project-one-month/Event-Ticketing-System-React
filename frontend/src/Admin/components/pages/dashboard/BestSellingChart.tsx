@@ -1,11 +1,11 @@
-import {
-  TTCountType,
-  type DashboardResponseModel,
-} from "@/Admin/DataTypes/DataTypes";
 import { useRef, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import type { PieLabelProps } from "recharts/types/polar/Pie";
 import { ChevronDownIcon } from "lucide-react";
+import {
+  type DashboardResponseModel,
+  TTCountType,
+} from "@/Admin/DataTypes/Dashboard.ts";
 
 // --- Main Chart Component ---
 export const BestSellingChart = ({
@@ -17,41 +17,38 @@ export const BestSellingChart = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const chartDataSource = chartData.TicketCounts.find(
-    (data) => data.Type === timeframe,
-  );
+  const chartDataSource = Array.isArray(chartData?.ticketCounts)
+    ? chartData.ticketCounts.find((data) => data.type === timeframe)
+    : null;
 
   const handleTimeframeSelect = (selectedTimeframe: TTCountType) => {
     setTimeframe(selectedTimeframe);
     setIsDropdownOpen(false);
   };
 
-  const data = chartDataSource?.TTCounts || [];
-  const totalValue = data.reduce((sum, entry) => sum + entry.TotalCount, 0);
+  const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1"];
+
+  const data = (chartDataSource?.ttCounts ?? []).map((entry, idx) => ({
+    ...entry,
+    color: entry.color || COLORS[idx % COLORS.length], // fallback colour
+  }));
+  const totalValue = data.reduce(
+    (sum, entry) => sum + (entry.totalCount || 0),
+    0,
+  );
 
   // Custom label renderer for the pie chart slices
   const renderCustomizedLabel = (props: PieLabelProps) => {
-    const { cx, cy, midAngle, outerRadius, payload, index } = props;
-    if (
-      !cx ||
-      !cy ||
-      !outerRadius ||
-      !midAngle ||
-      !payload ||
-      index === undefined
-    )
-      return null;
+    const { cx, cy, midAngle, outerRadius, payload } = props;
+    if (!cx || !cy || !outerRadius || !midAngle || !payload) return null;
 
     const RADIAN = Math.PI / 180;
-    // Position the label more towards the center of the slice's mass
     const radius = outerRadius * 0.7;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-    const percentage = (
-      ((payload.TotalCount as number) / totalValue) *
-      100
-    ).toFixed(2);
+    // FIX 1: Use the correct case 'totalCount' from the payload.
+    const percentage = ((payload.totalCount as number) / totalValue) * 100;
 
     return (
       <text
@@ -62,10 +59,18 @@ export const BestSellingChart = ({
         dominantBaseline="central"
         className="pointer-events-none font-bold"
       >
-        {`${percentage}%`}
+        {`${percentage.toFixed(0)}%`}
       </text>
     );
   };
+
+  if (!Array.isArray(chartData?.ticketCounts) || data.length === 0) {
+    return (
+      <div className="p-6 text-center text-slate-500">
+        No chart data available
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-h-[22rem] w-full max-w-2xl rounded-2xl bg-slate-50 p-6 font-sans">
@@ -132,7 +137,7 @@ export const BestSellingChart = ({
                 outerRadius="100%"
                 fill="#8884d8"
                 paddingAngle={3}
-                dataKey="TotalCount"
+                dataKey="totalCount"
                 labelLine={false}
                 label={renderCustomizedLabel}
               >
@@ -151,16 +156,16 @@ export const BestSellingChart = ({
         {/* Custom Legend */}
         <div className="flex flex-col justify-center space-y-4">
           {data.map((entry) => (
-            <div key={entry.Label} className="flex items-start space-x-4">
+            <div key={entry.label} className="flex items-start space-x-4">
               <div
                 className="mt-1 h-5 w-2 flex-shrink-0 rounded-sm"
                 style={{ backgroundColor: entry.color }}
               />
               <div>
                 <p className="text-2xl font-bold text-slate-800">
-                  {entry.TotalCount.toLocaleString()}
+                  {entry.totalCount.toLocaleString()}
                 </p>
-                <p className="text-base text-slate-500">{entry.Label}</p>
+                <p className="text-base text-slate-500">{entry.label}</p>
               </div>
             </div>
           ))}
