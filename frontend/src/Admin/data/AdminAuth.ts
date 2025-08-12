@@ -18,8 +18,15 @@ export function useAdminAuth() {
     tokenExpiresAt: string,
     refreshToken: string,
     refreshTokenExpiresAt: string,
+    requirePasswordChange: boolean,
   ) => {
-    saveTokens(token, tokenExpiresAt, refreshToken, refreshTokenExpiresAt);
+    saveTokens(
+      token,
+      tokenExpiresAt,
+      refreshToken,
+      refreshTokenExpiresAt,
+      requirePasswordChange,
+    );
     setIsAuthenticated(true);
   };
 
@@ -31,7 +38,6 @@ export function useAdminAuth() {
       }
     } catch (error) {
       console.error("Logout error:", error);
-      // Even if the API call fails, we still want to clear local tokens
     } finally {
       clearTokens();
       setIsAuthenticated(false);

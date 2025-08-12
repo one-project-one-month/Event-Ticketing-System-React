@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { getAuthToken } from "@/Admin/utils/authTokenUtils"; 
+import { getAuthToken } from "@/Admin/utils/authTokenUtils";
 
 export function ProtectedAdminRoute() {
   const { token, tokenExpireAt } = getAuthToken();
@@ -7,7 +7,7 @@ export function ProtectedAdminRoute() {
   const isAuthenticated =
     !!token && tokenExpireAt && new Date() < new Date(tokenExpireAt);
 
-    console.log("ProtectedAdminRoute tokens:", { token, tokenExpireAt });
+  //console.log("ProtectedAdminRoute tokens:", { token, tokenExpireAt });
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" />;
 }

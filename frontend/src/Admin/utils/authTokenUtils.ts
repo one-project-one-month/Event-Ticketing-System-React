@@ -38,6 +38,7 @@ export const clearTokens = () => {
   sessionStorage.removeItem("accessTokenExpireAt");
   sessionStorage.removeItem("refreshToken");
   sessionStorage.removeItem("refreshTokenExpireAt");
+  sessionStorage.removeItem("requirePasswordChange");
 
   Object.keys(sessionStorage).forEach((key) => {
     if (key.startsWith("accessToken") || key.startsWith("refreshToken")) {
