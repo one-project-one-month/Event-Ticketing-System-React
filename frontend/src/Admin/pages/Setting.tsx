@@ -8,7 +8,7 @@ import {
   getAdminData,
   updateAdminData,
   updateAdminProfileImage,
-} from "@/services/AdminServices"; // <-- added
+} from "@/services/AdminServices"; 
 import { AxiosError } from "axios";
 
 interface JwtPayload {
@@ -18,11 +18,6 @@ interface JwtPayload {
 
 const Setting = () => {
   const [adminData, setAdminData] = useState<AdminData | null>(null);
-  const [form, setForm] = useState({
-    adminCode: "",
-    fullName: "",
-    phoneNo: "",
-  });
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -46,11 +41,6 @@ const Setting = () => {
 
         if (res.isSuccess && res.data?.admin) {
           setAdminData(res.data.admin);
-          setForm({
-            adminCode: res.data.admin.adminCode,
-            fullName: res.data.admin.fullName,
-            phoneNo: res.data.admin.phoneNo,
-          });
         }
       } catch (err) {
         const error = err as AxiosError | Error;
@@ -82,9 +72,9 @@ const Setting = () => {
       setSuccess(false);
 
       const detailsRes = await updateAdminData({
-        adminCode: form.adminCode,
-        fullName: form.fullName,
-        phoneNo: form.phoneNo,
+        adminCode: adminData.adminCode,
+        fullName: adminData.fullName,
+        phoneNo: adminData.phoneNo,
       });
 
       if (!detailsRes.isSuccess) throw new Error(detailsRes.message);
@@ -98,7 +88,7 @@ const Setting = () => {
 
       if (selectedImage) {
         const imgRes = await updateAdminProfileImage(payload);
-        if (!imgRes?.isSuccess) throw new Error(imgRes?.message);
+        if (imgRes?.isError) throw new Error(imgRes?.message);
       }
 
       setSuccess(true);
@@ -204,8 +194,8 @@ const Setting = () => {
             {isEditing ? (
               <Input
                 name="fullName"
-                value={form.fullName}
-                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                value={adminData.fullName}
+                onChange={(e) => setAdminData({ ...adminData, fullName: e.target.value })}
                 className="mt-1 text-xl font-semibold text-[#030812]"
               />
             ) : (
@@ -232,8 +222,8 @@ const Setting = () => {
             {isEditing ? (
               <Input
                 name="phoneNo"
-                value={form.phoneNo}
-                onChange={(e) => setForm({ ...form, phoneNo: e.target.value })}
+                value={adminData.phoneNo}
+                onChange={(e) => setAdminData({ ...adminData, phoneNo: e.target.value })}
                 className="mt-1"
               />
             ) : (

@@ -1,4 +1,5 @@
 import { apiGet, apiPost } from "@/types/apiClient";
+import Api from "@/types/Api";
 import type {
   UpdateAdminRequest,
   AdminResponse,
@@ -13,12 +14,16 @@ export const updateAdminData = (payload: UpdateAdminRequest) =>
 
 export const updateAdminProfileImage = (payload: UploadProfileImageRequest) => {
   const formData = new FormData();
-  formData.append("adminCode", payload.AdminCode);
-  formData.append("fullName", payload.FullName);
-  formData.append("phoneNo", payload.Phone);
-  formData.append("profileImage", payload.ProfileImage as File);
+  formData.append("AdminCode", payload.AdminCode);
+  formData.append("FullName", payload.FullName);
+  formData.append("Phone", payload.Phone);
+  if (payload.ProfileImage) {
+    formData.append("ProfileImage", payload.ProfileImage);
+  }
 
-  return apiPost<AdminResponse>("/api/Admin/EditProfileImage", formData).then(
-    (res) => res.data,
-  );
+  return Api.post<AdminResponse>("/api/Admin/EditProfileImage", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }).then((res) => res.data);
 };
