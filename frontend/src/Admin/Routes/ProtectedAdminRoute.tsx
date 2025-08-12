@@ -7,7 +7,5 @@ export function ProtectedAdminRoute() {
   const isAuthenticated =
     !!token && tokenExpireAt && new Date() < new Date(tokenExpireAt);
 
-    console.log("ProtectedAdminRoute tokens:", { token, tokenExpireAt });
-
   return isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" />;
 }
