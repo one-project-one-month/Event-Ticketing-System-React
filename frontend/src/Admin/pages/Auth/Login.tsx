@@ -22,13 +22,13 @@ export default function AdminLoginPage() {
       const response = await Login({ userName: username, password });
 
       if (response.isSuccess && response.data) {
-        if(response.data.requirePasswordChange == true){
-          login(
+        login(
           response.data.token,
           response.data.tokenExpiresAt,
           response.data.refreshToken,
           response.data.refreshTokenExpiresAt,
         );
+        if(response.data.requirePasswordChange == true){
           navigate("/admin/reset-password")
         }
         else{
