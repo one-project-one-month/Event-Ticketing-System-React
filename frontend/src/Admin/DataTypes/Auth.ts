@@ -10,6 +10,7 @@ export interface LoginResponseData{
     tokenExpiresAt:string;
     refreshToken:string;
     refreshTokenExpiresAt:string;
+    requirePasswordChange: boolean;
 }
 
 export type LoginResponse = ApiResponse<LoginResponseData>;
@@ -24,3 +25,11 @@ export interface RefreshTokenResponseData {
     refreshToken:string;
     refreshTokenExpiresAt:string;
 }
+
+export interface ChangePasword{
+    username: string,
+    currentPassword: string,
+    newPassword: string
+}
+
+export type ChangePasswordResponse = ApiResponse<ChangePasword>;
