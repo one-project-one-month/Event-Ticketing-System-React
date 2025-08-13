@@ -38,3 +38,9 @@ export interface ChangePasword {
 }
 
 export type ChangePasswordResponse = ApiResponse<ChangePasword>;
+
+export type LogoutResponseData = ApiResponse<null>;
+
+export interface LogoutRequestData {
+  refreshToken: string;
+}

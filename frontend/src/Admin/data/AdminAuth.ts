@@ -24,8 +24,7 @@ export function useAdminAuth() {
       token,
       tokenExpiresAt,
       refreshToken,
-      refreshTokenExpiresAt,
-      requirePasswordChange,
+      refreshTokenExpiresAt
     );
     setIsAuthenticated(true);
   };
