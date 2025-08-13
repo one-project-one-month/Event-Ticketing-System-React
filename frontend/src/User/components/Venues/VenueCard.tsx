@@ -3,7 +3,7 @@ import { House, MapPin, Users } from "lucide-react";
 import placeholderImage from "@/User/assets/sample-venue.png";
 
 const VenueCard = ({
-  venueId,
+  venuecode,
   imagePath,
   buildingName,
   name,
@@ -38,8 +38,8 @@ const VenueCard = ({
         <div className="absolute right-4 bottom-8 w-fit">
           <a
             className="float-right cursor-pointer rounded bg-white px-2.5 py-1.5 text-black transition-colors duration-300 hover:bg-[#103263] hover:text-white"
-            href="/venue/venuedetails"
-            key={venueId}
+            href={`/venue/venuedetails/${venuecode}`}
+            key={venuecode}
           >
             View Details
           </a>

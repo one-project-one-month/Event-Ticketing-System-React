@@ -40,7 +40,7 @@ export default function OverviewList({
       <div className="flex flex-row items-center justify-between gap-6">
         {type === "E"
           ? events.slice(0, 3).map((event) => (
-              <EventCard
+              <EventCard eventcode={event.eventcode}
                 key={event.eventcode}
                 imageUrl={`${baseURL}/${event.venueimage}`}
                 title={event.eventname}
@@ -50,7 +50,7 @@ export default function OverviewList({
           : venues.slice(0, 3).map((venue) => (
               <VenueCard
                 key={venue.venuecode}
-                venueId={venue.venueid}
+                venuecode={venue.venuecode}
                 imagePath={`${baseURL}/${venue.venueimage}`}
                 buildingName={venue.venuename}
                 name={venue.venuetypename}

@@ -6,10 +6,12 @@ const EventCard = ({
   title,
   location,
   imageUrl,
+  eventcode
 }: {
   title: string;
   location: string;
   imageUrl: string;
+  eventcode:string;
 }) => {
   return (
     <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md font-['figtree'] shadow-gray-800 transition-shadow hover:shadow-md dark:border">
@@ -28,7 +30,7 @@ const EventCard = ({
             <MapPin /> {location}
           </p>
           <NavLink
-            to={"/events/eventinfo"}
+            to={`/events/eventinfo/${eventcode}`}
             className="rounded-sm border border-black bg-white p-1 font-semibold text-black transition-colors hover:bg-[#071739] hover:text-white"
           >
             View Details

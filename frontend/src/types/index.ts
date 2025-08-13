@@ -22,7 +22,7 @@ export interface ITotalCount {
 }
 
 export interface IVenueCard {
-  venueId: string;
+  venuecode: string;
   imagePath: string;
   buildingName: string;
   name: string;
