@@ -40,8 +40,8 @@ export const adminSiteConfig = {
       icon: MapPin,
       hasDropdown: true,
       children: [
-        { title: "Venue Type", href: "/admin/venue/type", icon: LocateIcon },
-        { title: "Venue List", href: "/admin/venue/list", icon: List },
+        { title: "Venue Type", href: "/admin/venue-type", icon: LocateIcon },
+        { title: "Venue List", href: "/admin/venue", icon: List },
       ],
     },
     {

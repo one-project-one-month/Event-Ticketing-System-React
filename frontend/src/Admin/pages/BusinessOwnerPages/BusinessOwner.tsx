@@ -56,6 +56,7 @@ const BusinessOwner = () => {
       if (filteredBusinessOwner.length === 0) return alert("No data to export.");
   
     const exportData = filteredBusinessOwner.map(e => ({
+      "Business Owner ID" : e.businessownerid,
       "Category Name": e.fullName,
       "Email":e.email,
       "Phone Number": e.phone
@@ -88,10 +89,10 @@ const BusinessOwner = () => {
           addNewPath="/admin/business/owner/create"
         />
 
-        <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px]">Business Owner</h2>
+        <h2 className="text-[30px] font-semibold text-[#43319A] gap-[48px] dark:text-white">Business Owner</h2>
         <div className="overflow-auto rounded-[20px] border border-gray-200">
             <table className="min-w-full divide-y divide-[#67648D]">
-                <thead className="bg-[#615CB8] padding-[20px]">
+                <thead className="bg-[#615CB8] padding-[20px] dark:bg-[#0F172A]">
                     <tr>
                       {["No", "Full Name", "Email", "Phone Number", "Actions"].map((heading) => (
                         <th
@@ -104,7 +105,7 @@ const BusinessOwner = () => {
                     </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-100 bg-white">
+                <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
                       {currentTicketType.map((event, index) => (
                 <tr key={event.businessownercode} className="hover:bg-gray-50">
                   <td className="px-[20px] py-[10px] text-center whitespace-nowrap text-lg">

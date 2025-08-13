@@ -2,12 +2,11 @@ import HeroSection from "@/User/components/Home/HeroSection";
 import OverviewList from "@/User/components/Home/OverviewList";
 import TotalCountContainer from "@/User/components/Home/TotalCountContainer";
 
-
 const Home = () => {
   return (
     <div>
       <HeroSection />
-      <div className="h-[90vh] w-screen"></div>
+      <div className="h-[45rem] w-screen"></div>
       {/* Event List */}
       <OverviewList title="Event" viewLink="/events" fetchLink="#" type="E" />
       {/* Total Details */}

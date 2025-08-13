@@ -83,7 +83,7 @@ export default function ExportModal({ open, onClose, onExport }: ExportModalProp
 
         <div className="mt-8 flex justify-center gap-10">
           <PurpleOutlineButton text="Cancel" onClick={onClose} />
-            <YellowButton text="Update" type="submit" onClick={handleExport}/>
+            <YellowButton text="Export" type="submit" onClick={handleExport}/>
         </div>
       </div>
     </div>

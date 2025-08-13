@@ -6,7 +6,7 @@ import { Button } from "@/User/components/ui/button";
 import { getEventTypes } from "@/services/EventTypeServices";
 import { deleteEventType } from "@/services/EventTypeServices";
 import { exportToCSV, exportToExcel, exportToPDF } from "@/Admin/utils/exportUtils";
-import type { EventTypeData } from "@/Admin/DataTypes/DataTypes";
+import type { EventTypeData } from "@/Admin/DataTypes/EventTypes";
 
 const EventType = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -55,6 +55,7 @@ const EventType = () => {
     if (filteredEventTypes.length === 0) return alert("No data to export.");
 
   const exportData = filteredEventTypes.map(e => ({
+    "Event Category ID" : e.eventCategoryid,
     "Event Category Code": e.eventCategorycode,
     "Category Name": e.categoryname,
     "Created Date": new Date(e.createdat).toLocaleDateString(),
@@ -86,11 +87,11 @@ const EventType = () => {
           addNewPath="/admin/event/type/create"
         />
 
-        <h2 className="text-[30px] font-semibold text-[#43319A]">Event Type</h2>
+        <h2 className="text-[30px] font-semibold text-[#43319A] dark:text-white">Event Type</h2>
 
-        <div className="overflow-auto rounded-[20px] border border-gray-200">
+        <div className="overflow-auto rounded-[20px] border border-gray-200 dark:bg-[#1E293B]">
           <table className="min-w-full divide-y divide-[#67648D]">
-            <thead className="bg-[#615CB8]">
+            <thead className="bg-[#615CB8] dark:[#0F172A] dark:bg-[#0F172A]">
               <tr>
                 {["No", "Category Name", "Created Date", "Actions"].map(heading => (
                   <th
@@ -103,7 +104,7 @@ const EventType = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
               {currentEventType.map((event, index) => (
                 <tr key={event.eventCategoryid} className="hover:bg-gray-50">
                   <td className="px-[20px] py-[10px] text-center whitespace-nowrap text-lg">

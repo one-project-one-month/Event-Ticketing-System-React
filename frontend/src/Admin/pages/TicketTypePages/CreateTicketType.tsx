@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput } from "@/Admin/components/ui/TextInput";
 import { Label } from "@/Admin/components/ui/Label";
 import { YellowButton } from "@/Admin/components/ui/YellowButton";
@@ -7,17 +7,34 @@ import { useNavigate } from "react-router-dom";
 import SaveSuccessModal from "@/Admin/components/ui/SaveSuccessModal";
 import { createTicketType } from "@/services/TicketTypeServices";
 import type { createTicketTypeData } from "@/Admin/DataTypes/TicketTypes";
+import { SelectBox } from "@/Admin/components/ui/SelectBox";
+import type { EventData } from "@/Admin/DataTypes/Event";
+import {getEvents} from '@/services/EventServices';
 
 export default function CreateTicketType() {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
+  const [data, setData] = useState<EventData[]>([]);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res =  await getEvents();
+      if(res.isSuccess && Array.isArray(res.data?.eventList)){
+          setData(res.data.eventList);
+      }else {
+          console.error("Failed to fetch Ticket Types:", res.message);
+          setData([]);
+      }
+    };
+    fetchData();
+  }, [])
 
   const [form, setForm] = useState<createTicketTypeData>({
     eventCode: "",
     ticketTypeName: "",
     ticketprice: "",
-    ticketQuantity: "",
+    ticketQuantity: ""
   });
 
   const handleChange = (
@@ -77,11 +94,19 @@ export default function CreateTicketType() {
         </div>
         <div>
           <Label label="Event Code" required />
-          <TextInput
-            placeholder="Enter event code"
-            value={form.eventCode}
-            onChange={(e) => handleChange(e, "eventCode")}
-          />
+          <SelectBox value={form.eventCode}
+          onChange={(e) => 
+            setForm({...form, eventCode: e.target.value})
+          }>
+            <option value="" className="text-center">---Select Event---</option>
+            {
+              data.map((e) => (
+                <option key = {e.eventcode} value={e.eventcode}>
+                  {e.eventname}
+                </option>
+              )
+            )}
+          </SelectBox>
         </div>
       </div>
 

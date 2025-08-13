@@ -31,6 +31,12 @@ import CreateBusinessOwnerPage from "../pages/BusinessOwnerPages/CreateBusinessO
 import ForgotPasswordPage from "@/Admin/pages/Auth/ForgotPassword";
 import ResetPasswordPage from "@/Admin/pages/Auth/ResetPassword";
 import ResetSuccess from "../pages/Auth/ResetSuccess";
+import CreateVenueTypePage from "@/Admin/pages/VenueTypePages/CreateVenueType.tsx";
+import ViewVenueTypePage from "@/Admin/pages/VenueTypePages/ViewVenueType.tsx";
+import EditVenueTypePage from "@/Admin/pages/VenueTypePages/EditVenueType.tsx";
+import CreateVenuePage from "@/Admin/pages/VenuePages/CreateVenuePage.tsx";
+import ViewVenuePage from "@/Admin/pages/VenuePages/ViewVenuePage";
+import EditVenuePage from "@/Admin/pages/VenuePages/EditVenuePage.tsx";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -63,8 +69,24 @@ export const adminRouter = createBrowserRouter([
               { path: "create", Component: CreateTicketTypePage },
             ],
           },
-          { path: "venuetype", Component: VenueTypePage },
-          { path: "venuelist", Component: VenueListPage },
+          {
+            path: "venue-type",
+            children: [
+              { index: true, Component: VenueTypePage },
+              { path: "create", Component: CreateVenueTypePage },
+              { path: ":venueTypeCode", Component: ViewVenueTypePage },
+              { path: ":venueTypeCode/edit", Component: EditVenueTypePage },
+            ],
+          },
+          {
+            path: "venue",
+            children: [
+              { index: true, Component: VenueListPage },
+              { path: "create", Component: CreateVenuePage },
+              { path: ":venueCode", Component: ViewVenuePage },
+              { path: ":venueCode/edit", Component: EditVenuePage },
+            ],
+          },
           {
             path: "event/type",
             children: [
@@ -77,11 +99,11 @@ export const adminRouter = createBrowserRouter([
           {
             path: "event/list",
             children: [
-              { index: true, Component: EventListPage },
-              { path: ":EventUniqueName", Component: EventDetailPage },
-              { path: ":eventId/edit", Component: EventEditPage },
-              { path: "create", Component: CreateEventPage },
-            ],
+              {index: true, Component: EventListPage},
+              { path: ":eventCode", Component: EventDetailPage },
+              { path: ":eventCode/edit", Component: EventEditPage },
+              {path:"create", Component: CreateEventPage}
+            ]
           },
           {
             path: "business/owner",
@@ -93,7 +115,7 @@ export const adminRouter = createBrowserRouter([
             ],
           },
           { path: "businessemail", Component: BusinessEmailPage },
-          { path: "historypurchased", Component: PurchasedHistoryPage },
+          { path: "history/purchased", Component: PurchasedHistoryPage },
           { path: "historyverification", Component: VerificationHistoryPage },
           { path: "setting", Component: SettingPage },
         ],

@@ -21,6 +21,14 @@ export interface ITotalCount {
   label: string;
 }
 
+export interface IVenueCard {
+  venueId: string;
+  imagePath: string;
+  buildingName: string;
+  name: string;
+  capacity: number;
+  address: string;
+}
 // ADMIN Types
 export type NavItemChild = {
   title: string;
