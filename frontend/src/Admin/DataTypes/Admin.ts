@@ -9,6 +9,19 @@ export interface AdminData {
   profileImageUrl?: string;
 }
 
+export interface AdminDataByCodeData{
+  adminCode: string;
+  username: string;
+  fullName: string;
+  email: string;
+  phoneNo: string;
+  profileImage: string;
+}
+
+export type AdminDataByCodeResponse = ApiResponse<{
+  admin:AdminDataByCodeData;
+}>
+
 export interface UpdateAdminRequest {
   adminCode: string;
   phoneNo: string;

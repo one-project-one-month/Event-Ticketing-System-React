@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import type { AdminData } from "@/Admin/DataTypes/Admin";
+import type { AdminDataByCodeData } from "@/Admin/DataTypes/Admin";
 import { getAuthToken } from "../utils/authTokenUtils";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
 import {
-  getAdminData,
+  getAdminDataByCode,
   updateAdminData,
   updateAdminProfileImage,
 } from "@/services/AdminServices"; 
 import { AxiosError } from "axios";
-
 interface JwtPayload {
   sub: string;
   unique_name: string;
 }
 
+
 const Setting = () => {
-  const [adminData, setAdminData] = useState<AdminData | null>(null);
+  const [adminData, setAdminData] = useState<AdminDataByCodeData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
@@ -37,7 +37,7 @@ const Setting = () => {
         console.log(decoded);
         const adminCode = decoded.sub;
 
-        const res = await getAdminData(adminCode);
+        const res = await getAdminDataByCode(adminCode);
 
         if (res.isSuccess && res.data?.admin) {
           setAdminData(res.data.admin);
@@ -103,6 +103,11 @@ const Setting = () => {
     return (
       <div className="mx-[210px] max-w-lg p-6">
         <div className="rounded-lg bg-red-100 p-4 text-red-500">
+          <img
+                src={`${baseURL}/${adminData?.profileImage}`}
+                alt="profile image"
+                className="w-32 h-20 object-cover rounded-md border"
+              />
           Error loading profile: {error}
         </div>
       </div>
@@ -144,7 +149,7 @@ const Setting = () => {
           <div className="mr-10 flex flex-row">
             <div className="mb-4 h-32 w-32 overflow-hidden rounded-full border-2 border-gray-200">
               <img
-                src={adminData.profileImageUrl}
+                src={`${baseURL}/${adminData?.profileImage}`}
                 alt="Profile"
                 className="h-full w-full object-cover"
               />

@@ -4,10 +4,14 @@ import type {
   UpdateAdminRequest,
   AdminResponse,
   UploadProfileImageRequest,
+  AdminDataByCodeResponse
 } from "@/Admin/DataTypes/Admin";
 
 export const getAdminData = (adminCode: string) =>
   apiGet<AdminResponse["data"]>(`api/Admin/Edit/${adminCode}`);
+
+export const getAdminDataByCode = (adminCode: string) =>
+  apiGet<AdminDataByCodeResponse["data"]>(`api/Admin/Edit/${adminCode}`)
 
 export const updateAdminData = (payload: UpdateAdminRequest) =>
   apiPost<AdminResponse>(`/api/Admin/Update`, payload);
