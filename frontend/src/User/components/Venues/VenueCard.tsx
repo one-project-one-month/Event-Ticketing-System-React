@@ -1,5 +1,6 @@
 import type { IVenueCard } from "@/types";
 import { House, MapPin, Users } from "lucide-react";
+import placeholderImage from "@/User/assets/sample-venue.png";
 
 const VenueCard = ({
   venueId,
@@ -13,14 +14,17 @@ const VenueCard = ({
     <div className="relative h-[31rem] w-[28rem] overflow-hidden rounded-lg bg-[#071739] font-['figtree'] text-white">
       <div className="h-1/2 w-full">
         <img
-          src={imagePath}
+          src={imagePath || placeholderImage}
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = placeholderImage;
+          }}
           alt={buildingName}
           className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
         />
       </div>
       {/* Venue Detail Overview */}
       <div className="p-5">
-        <div className="">
+        <div>
           <p className="mb-2.5 text-2xl font-bold uppercase">{buildingName}</p>
           <div className="grid grid-cols-2 grid-cols-[24px_1fr] gap-2">
             <House />

@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import EventCard from "@/User/components/Events/EventCard";
 import VenueCard from "../Venues/VenueCard";
+import type {HomeResponseData} from "@/User/DataTypes/Home";
 
 interface IOverviewList {
   title: string;
   viewLink: string;
   fetchLink: string;
   type: "E" | "V";
+  response : HomeResponseData["data"];
 }
 
 export default function OverviewList({
@@ -14,12 +16,16 @@ export default function OverviewList({
   viewLink,
   fetchLink,
   type,
+  response
 }: IOverviewList) {
-  // TODO: Implment data fetching
-  console.log(fetchLink);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+  const events = response?.topThreeEvents.events ?? [];
+  const venues = response?.topThreeVenues.venues ?? [];
+
   return (
     <section className="mx-12 mb-14 p-14 pt-5 pb-0">
-      {/* Title and View all */}
+      {/* Title + View all */}
       <div className="mt-16 mb-8 flex flex-row items-center justify-between">
         <h3 className="text-4xl font-bold">{title}</h3>
         <Link
@@ -29,23 +35,27 @@ export default function OverviewList({
           View All
         </Link>
       </div>
-      {/* Event List */}
+
+      {/* Cards */}
       <div className="flex flex-row items-center justify-between gap-6">
         {type === "E"
-          ? Array.from({ length: 3 }).map((_, index) => (
-              <EventCard key={index} title="Sample Title" location="Yangon" />
+          ? events.slice(0, 3).map((event) => (
+              <EventCard
+                key={event.eventcode}
+                imageUrl={`${baseURL}/${event.venueimage}`}
+                title={event.eventname}
+                location={event.address}
+              />
             ))
-          : Array.from({ length: 3 }).map((_, index) => (
+          : venues.slice(0, 3).map((venue) => (
               <VenueCard
-                key={index}
-                venueId={`${_}`}
-                imagePath={
-                  "https://i.pinimg.com/736x/1b/96/13/1b961339b8b62a6db978e8d8b611336e.jpg"
-                }
-                buildingName="Sample Building"
-                name="Sample Name"
-                capacity={300}
-                address="An Address.................."
+                key={venue.venuecode}
+                venueId={venue.venueid}
+                imagePath={`${baseURL}/${venue.venueimage}`}
+                buildingName={venue.venuename}
+                name={venue.venuetypename}
+                capacity={venue.capacity}
+                address={venue.address}
               />
             ))}
       </div>
