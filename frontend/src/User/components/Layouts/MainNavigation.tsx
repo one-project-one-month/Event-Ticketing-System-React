@@ -8,9 +8,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/User/components/ui/navigation-menu";
 import { ModeToggle } from "../mode-toggle";
-import { useState } from "react";
-import { Input } from "../ui/input";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import SearchFormOverlay from "./SearchFormOverlay";
 
 import { Icons } from "../Icons";
 import { siteConfig } from "@/User/config/site";
@@ -22,7 +21,6 @@ interface MainNavigationProps {
 }
 
 const MainNavigation = ({ items }: MainNavigationProps) => {
-  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className={`hidden w-full items-center justify-between gap-6 lg:flex`}>
@@ -49,37 +47,25 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
                           "rounded-none border-b-2 border-transparent hover:border-white",
                           "px-3 py-5",
                           "transition-colors duration-200",
-                        )}
-                      >
+                        )}>
                         {item.icon && (
                           <item.icon
                             className="size-4 text-white"
-                            aria-hidden="true"
-                          />
+                            aria-hidden="true"/>
                         )}
                         <span className="sr-only">Search</span>
                       </button>
                     </DialogTrigger>
                     <DialogContent
-                      className="top-16 p-0 sm:max-w-md"
-                      showCloseButton={false}
-                    >
-                      <div className="flex items-center px-4 py-2">
-                        <Icons.search className="text-muted-foreground size-5" />
-                        <Input
-                          type="search"
-                          placeholder="Search events..."
-                          className="border-0 shadow-none focus-visible:ring-0"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </NavigationMenuItem>
+                      className="p-0 sm:max-w-4xl w-full h-[80vh] max-h-[90vh] overflow-y-auto 
+                                bg-transparent border-none shadow-none flex items-center justify-center"
+                      showCloseButton={false}>
+                    <SearchFormOverlay />
+                </DialogContent>
+                </Dialog>
+              </NavigationMenuItem>
               );
             }
-
             return (
               <NavigationMenuItem key={item.title}>
                 <Link to={String(item.href)}>
