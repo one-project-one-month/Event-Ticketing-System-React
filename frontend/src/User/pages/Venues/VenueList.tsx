@@ -48,7 +48,7 @@ const Venue = () => {
             <VenueCard
               key={venue.venueCode}
               venuecode={venue.venueCode}
-              buildingName={venue.venuetypename}
+              buildingName={venue.venueName}
               imagePath={
                 venue.venueimage?.filter(Boolean)?.[0]
                   ? `${baseURL}/${venue.venueimage.filter(Boolean)[0]}`
