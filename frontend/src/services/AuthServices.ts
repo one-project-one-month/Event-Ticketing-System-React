@@ -4,8 +4,10 @@ import type {
   LoginRequestData,
   RefreshTokenResponseData,
   ChangePasword,
-  ChangePasswordResponse
-} from '@/Admin/DataTypes/Auth';
+  ChangePasswordResponse,
+  LogoutRequestData,
+  LogoutResponseData
+} from "@/Admin/DataTypes/Auth";
 
 export const Login = (payload: LoginRequestData) =>
   apiPost<LoginResponseData>(`api/Auth/Login`, payload);
@@ -13,5 +15,8 @@ export const Login = (payload: LoginRequestData) =>
 export const RefreshToken = (payload: { refreshToken: string }) =>
   apiPost<RefreshTokenResponseData>(`api/Auth/RefreshToken`, payload);
 
-export const FirstTimeChangePassword = (payload : ChangePasword) => 
+export const FirstTimeChangePassword = (payload: ChangePasword) =>
   apiPost<ChangePasswordResponse>(`api/Auth/ChangePasswordFirstLogin`, payload);
+
+export const Logout = (payload: LogoutRequestData) =>
+  apiPost<LogoutResponseData>(`api/Auth/Logout`, payload);

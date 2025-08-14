@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { getAuthToken } from "@/Admin/utils/authTokenUtils"; 
+import { getAuthToken } from "@/Admin/utils/authTokenUtils";
 
 export function ProtectedAdminRoute() {
   const { token, tokenExpireAt } = getAuthToken();

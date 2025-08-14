@@ -3,7 +3,9 @@ import {
   getAuthToken,
   saveTokens,
   clearTokens,
+  getRefreshToken,
 } from "@/Admin/utils/authTokenUtils";
+import { Logout } from "@/services/AuthServices";
 
 export function useAdminAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -15,15 +17,30 @@ export function useAdminAuth() {
     token: string,
     tokenExpiresAt: string,
     refreshToken: string,
-    refreshTokenExpiresAt: string
+    refreshTokenExpiresAt: string,
+    requirePasswordChange: boolean,
   ) => {
-  saveTokens(token, tokenExpiresAt, refreshToken, refreshTokenExpiresAt);
-  setIsAuthenticated(true);
+    saveTokens(
+      token,
+      tokenExpiresAt,
+      refreshToken,
+      refreshTokenExpiresAt
+    );
+    setIsAuthenticated(true);
   };
 
-  const logout = () => {
-    clearTokens();
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      const { refreshToken } = getRefreshToken();
+      if (refreshToken) {
+        await Logout({ refreshToken });
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearTokens();
+      setIsAuthenticated(false);
+    }
   };
 
   useEffect(() => {

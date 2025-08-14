@@ -10,7 +10,6 @@ import { Button } from "@/User/components/ui/button";
 import { useAdminAuth } from "@/Admin/data/AdminAuth";
 import LogoutIcon from "@/Admin/data/Icons/logout.svg";
 export default function LogoutConfirmation({
-  onConfirm,
   children,
 }: {
   onConfirm?: () => void;
