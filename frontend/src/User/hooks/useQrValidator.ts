@@ -21,16 +21,16 @@ export function useQRValidator() {
       img.onload = async () => {
         try {
           const result = await reader.decodeFromImageElement(img);
-          const qrText = result.getText().trim();
+          const qrCode = result.getText().trim();
 
-          const res = await getQrinfoByQrCode(qrText);
+          const res = await getQrinfoByQrCode(qrCode);
 
-          if (res && res.isSuccess && res.data?.qrinfo) {
-            resolve({ valid: true, data: res.data.qrinfo });
+          if (res && res.isSuccess && res.data) {
+            resolve({ valid: true, data: res.data});
           } else {
             resolve({
               valid: false,
-              error: res.message || `No ticket found for QR "${qrText}"`,
+              error: res.message || `No ticket found for QR "${qrCode}"`,
             });
           }
         } catch (error) {

@@ -56,6 +56,7 @@ const BusinessOwner = () => {
       if (filteredBusinessOwner.length === 0) return alert("No data to export.");
   
     const exportData = filteredBusinessOwner.map(e => ({
+      "Business Owner ID" : e.businessownerid,
       "Category Name": e.fullName,
       "Email":e.email,
       "Phone Number": e.phone

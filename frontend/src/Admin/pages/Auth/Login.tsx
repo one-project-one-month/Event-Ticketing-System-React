@@ -5,12 +5,14 @@ import { Card, CardContent } from "@/User/components/ui/card";
 import { User, Lock, CheckCircle } from "lucide-react";
 import { Button } from "@/User/components/ui/button";
 import { Input } from "@/User/components/ui/input";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const { login } = useAdminAuth();
 
@@ -25,9 +27,15 @@ export default function AdminLoginPage() {
           response.data.tokenExpiresAt,
           response.data.refreshToken,
           response.data.refreshTokenExpiresAt,
+          response.data.requirePasswordChange
         );
+        if(response.data.requirePasswordChange == true){
+          navigate("/admin/reset-password")
+        }
+        else{
         setShowSuccess(true);
         setError("");
+        }
       } else {
         setError(response.message || "Invalid credentials");
       }

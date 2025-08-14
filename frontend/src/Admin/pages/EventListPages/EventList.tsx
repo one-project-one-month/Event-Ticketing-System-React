@@ -60,6 +60,7 @@ const handleDelete = async (eventCode: string) => {
     if (filteredEvents.length === 0) return alert("No data to export.");
 
     const exportData = filteredEvents.map((e) => ({
+      "Event Code" : e.eventcode,
       "Event Name": e.eventname,
       "Event Unique Name": e.uniquename,
       "Business Owner Name": e.businessownername,

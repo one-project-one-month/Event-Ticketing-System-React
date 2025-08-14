@@ -1,16 +1,22 @@
 import axios from "axios";
-import { getAuthToken, getRefreshToken, saveTokens, clearTokens } from "@/Admin/utils/authTokenUtils";
+import {
+  getAuthToken,
+  getRefreshToken,
+  saveTokens,
+  clearTokens,
+} from "@/Admin/utils/authTokenUtils";
 import { RefreshToken } from "@/services/AuthServices";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  headers: { "Content-Type": "application/json" },
 });
 
 let isRefreshing = false;
 let failedQueue: (() => void)[] = [];
 
 const processQueue = () => {
-  failedQueue.forEach(cb => cb());
+  failedQueue.forEach((cb) => cb());
   failedQueue = [];
 };
 
@@ -38,9 +44,12 @@ api.interceptors.response.use(
 
       const { refreshToken, refreshTokenExpireAt } = getRefreshToken();
 
-      if (!refreshToken || (refreshTokenExpireAt && new Date() > refreshTokenExpireAt)) {
+      if (
+        !refreshToken ||
+        (refreshTokenExpireAt && new Date() > refreshTokenExpireAt)
+      ) {
         clearTokens();
-        window.location.href = "/admin/login"; 
+        window.location.href = "/admin/login";
         return Promise.reject(error);
       }
 
@@ -52,7 +61,7 @@ api.interceptors.response.use(
             res.data.token,
             res.data.tokenExpiresAt,
             res.data.refreshToken,
-            res.data.refreshTokenExpiresAt
+            res.data.refreshTokenExpiresAt,
           );
 
           processQueue();
@@ -74,10 +83,12 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
-export const apiGet = <T>(url: string) => api.get<T>(url).then(res => res.data);
-export const apiPost = <T>(url: string, data?: any) => api.post<T>(url, data).then(res => res.data);
+export const apiGet = <T>(url: string) =>
+  api.get<T>(url).then((res) => res.data);
+export const apiPost = <T>(url: string, data?: any) =>
+  api.post<T>(url, data).then((res) => res.data);
 
 export default api;

@@ -55,6 +55,7 @@ const EventType = () => {
     if (filteredEventTypes.length === 0) return alert("No data to export.");
 
   const exportData = filteredEventTypes.map(e => ({
+    "Event Category ID" : e.eventCategoryid,
     "Event Category Code": e.eventCategorycode,
     "Category Name": e.categoryname,
     "Created Date": new Date(e.createdat).toLocaleDateString(),
