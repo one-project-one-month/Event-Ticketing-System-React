@@ -35,14 +35,16 @@ const TicketDetail = () => {
     setTransaction((prev) => ({ ...prev, [key]: e.target.value }));
   };
 
-  const fetchUserEventByCode = async (id: string) => {
-    const res = await getUserEventByCode(id);
+  const fetchUserEventByCode = async (eventcode: string) => {
+    const res = await getUserEventByCode(eventcode);
     if (res.isSuccess && res.data != null) {
+      console.log("User events: ", res.data);
       setTicketTypes(res.data.ticketTypes);
       setEventName(res.data.eventname);
       res.data.ticketTypes.length > 0 &&
         setType(res.data.ticketTypes[0].tickettypecode);
     } else {
+      console.log("Userevent error: ", res.message)
       setTicketTypes([]);
     }
   };
@@ -54,19 +56,19 @@ const TicketDetail = () => {
       !transaction.fullName ||
       !transaction.gender ||
       !transaction.ticketQuantity ||
-      !transaction.ticketTypeCode ||
+      // !transaction.ticketTypeCode ||
       !transaction.phone
     ) {
       setError("please fill all field");
       return;
     }
-
+    console.log("Email : ", transaction.email);
     const res = await GetVerifyCode({ email: transaction.email });
     if (res.isSuccess) {
       setShowVerifyDialog(true);
     } else {
       setShowVerifyDialog(false);
-      setError("something is wring");
+      setError("something is wrong");
     }
   };
 
