@@ -11,7 +11,11 @@ export interface UserVenueData{
 }
 
 export type UserVenueDataResponse = ApiResponse<{
-    venueList : UserVenueData[]
+    venueList : UserVenueData[],
+    totalRowCount: number,
+    pageNo: number,
+    pageSize: number,
+    totalPages: number
 }>
 
 export interface UserVenueDataByCode {

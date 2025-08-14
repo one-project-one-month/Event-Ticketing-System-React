@@ -4,8 +4,8 @@ import type {
     UserVenueDataByCodeResponse
 } from "@/User/DataTypes/Venue";
 
-export const getEvents = (pageNo : number) => 
+export const getUserVenues = (pageNo : number) => 
   apiGet<UserVenueDataResponse["data"]>(`api/Venue/UserVenueList/${pageNo}`);
 
-export const getEventByCode = (venueCode: string) =>
+export const getUserVenueByCode = (venueCode: string) =>
   apiGet<UserVenueDataByCodeResponse["data"]>(`api/Venue/UserVenueDetail/${venueCode}`);

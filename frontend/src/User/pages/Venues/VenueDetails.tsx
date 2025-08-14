@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getEventByCode } from "@/services/UserVenueService";
+import { getUserVenueByCode } from "@/services/UserVenueService";
 import type { UserVenueDataByCode } from "@/User/DataTypes/Venue";
 import SampleVenue from "@/User/assets/sample-venue-1.png";
 import VenueDialog from "@/User/components/Venues/VenueDialog";
@@ -16,7 +16,7 @@ const VenueDetails = () => {
   useEffect(() => {
     if (!venuecode) return;
     const fetchData = async () => {
-      const res = await getEventByCode(venuecode);
+      const res = await getUserVenueByCode(venuecode);
       if(res.isSuccess && res.data?.venue){
         console.log("VenueData: ", res.data.venue);
         setVenueData(res.data.venue);
