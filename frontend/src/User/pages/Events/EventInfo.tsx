@@ -1,6 +1,5 @@
 import { getUserEventByCode } from "@/services/UserEventServices";
 import type {
-  UserEventByCodeResponse,
   UserEventDataByCode,
 } from "@/User/DataTypes/Event";
 import {
@@ -13,7 +12,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 const TicketInfo = () => {
-  const { id } = useParams();
+  const { eventcode } = useParams<{ eventcode: string }>();
   const [data, setData] = useState<UserEventDataByCode | null>(null);
   const [date, setDate] = useState<string[]>([]);
   const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -44,8 +43,8 @@ const TicketInfo = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      fetchUserEventByCode(id);
+    if (eventcode) {
+      fetchUserEventByCode(eventcode);
     }
   }, []);
   return (
@@ -100,7 +99,7 @@ const TicketInfo = () => {
               </div>
               <div className="w-full">
                 <NavLink
-                  to={"/events/ticketdetails/" + data?.eventcode}
+                  to={`/events/ticketdetails/${data?.eventcode}`}
                   className="float-end rounded-full bg-gradient-to-r from-[#3985F3] via-[#2DB5DE] to-[#2066C9] px-8 py-5 text-4xl font-semibold"
                 >
                   Get Your Ticket Now

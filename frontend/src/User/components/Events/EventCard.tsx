@@ -3,13 +3,11 @@ import { NavLink } from "react-router-dom";
 import placeholderImage from "/yw-event-img/event.png";
 
 const EventCard = ({
-  code,
   title,
   location,
   imageUrl,
   eventcode
 }: {
-  code: string;
   title: string;
   location: string;
   imageUrl: string;

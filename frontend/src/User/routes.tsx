@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, Component: EventPage },
           { path: "eventinfo/:eventcode", Component: EventInfoPage },
-          { path: "ticketdetails", Component: TicketDetailPage },
+          { path: "ticketdetails/:eventcode", Component: TicketDetailPage },
         ],
       },
       {
