@@ -8,4 +8,4 @@ export const getUserEvents = (page_number: number) =>
   apiGet<UserEventResponse["data"]>("api/Event/UserEvents/" + page_number);
 
 export const getUserEventByCode = (eventcode: string) =>
-  apiGet<UserEventByCodeResponse["data"]>("api/Event/UserEventDetails/" + eventcode);
+  apiGet<UserEventByCodeResponse["data"]>(`api/Event/UserEventDetails/${eventcode}`);
