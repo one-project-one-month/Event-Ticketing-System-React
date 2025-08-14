@@ -29,9 +29,9 @@ const VenueDetails = () => {
     <div>
       <VenuePhoto
         imagePaths={
-          venueData?.venueImage?.length
-            ? venueData.venueImage
-            : [SampleVenue]
+        venueData?.venueImage?.filter(Boolean)?.length
+          ? venueData.venueImage.filter(Boolean)
+          : [SampleVenue]
         }
       />
 

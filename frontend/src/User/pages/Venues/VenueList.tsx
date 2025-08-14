@@ -9,7 +9,7 @@ const Venue = () => {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   const fetchVenues = async (page: number) => {
     try {
       setLoading(true);
@@ -49,7 +49,10 @@ const Venue = () => {
               key={venue.venueCode}
               venuecode={venue.venueCode}
               buildingName={venue.venuetypename}
-              imagePath={venue.venueimage?.[0] || ""}
+              imagePath={
+                venue.venueimage?.filter(Boolean)?.[0]
+                  ? `${baseURL}/${venue.venueimage.filter(Boolean)[0]}`
+                  : ""}
               name={venue.venuetypename}
               capacity={venue.capacity}
               address={venue.address}
