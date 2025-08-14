@@ -21,8 +21,8 @@ const EventPostList = ({
           <EventCard
             title={e.eventname}
             location={e.address}
-            code={e.eventcode}
-            image={e.venueimage[0]}
+            eventcode={e.eventcode}
+            imageUrl={e.venueimage[0]}
           />
         ))}
       </div>

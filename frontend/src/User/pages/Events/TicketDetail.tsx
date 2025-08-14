@@ -10,11 +10,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const TicketDetail = () => {
-  const { id } = useParams();
-  if (!id) return null;
+  const { eventcode } = useParams<{ eventcode: string }>();
+  if (!eventcode) return null;
   const [quantity, setQuantity] = useState<number>(1);
   const [transaction, setTransaction] = useState<ProcessTransactionPayload>({
-    eventCode: id as string,
+    eventCode: eventcode as string,
     fullName: "",
     phone: "",
     email: "",
@@ -71,7 +71,7 @@ const TicketDetail = () => {
   };
 
   useEffect(() => {
-    fetchUserEventByCode(id as string);
+    fetchUserEventByCode(eventcode as string);
   }, []);
 
   return (
