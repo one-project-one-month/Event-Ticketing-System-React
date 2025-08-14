@@ -2,17 +2,21 @@ import React, { useRef, useState, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
 import ThankYouDialog from "./ThankYouDialog";
+import { VerifyCode } from "@/services/VerifyCode";
 
 const VerifyDialog = ({
   show,
   setShow,
+  email,
 }: {
   show: boolean;
+  email: string;
   setShow: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [otpCode, setOtpCode] = useState(Array(5).fill(""));
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [isVerified, setVerified] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const handleOtpChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -28,6 +32,19 @@ const VerifyDialog = ({
       inputRefs.current[index - 1].focus();
     }
   };
+
+  const handleVerify = async () => {
+    const res = await VerifyCode({
+      email,
+      verificationCode: otpCode.join(""),
+    });
+    if (res.isSuccess) {
+      setVerified(true);
+    } else {
+      setError("error while verifying");
+    }
+  };
+
   if (isVerified) return <ThankYouDialog />;
   return (
     <div
@@ -72,10 +89,9 @@ const VerifyDialog = ({
           Resend Code
         </Button>
       </p>
+      <p>{error && error}</p>
       <Button
-        onClick={() => {
-          setVerified(true);
-        }}
+        onClick={handleVerify}
         className="w-fit cursor-pointer rounded-md bg-white px-12 py-5 text-black transition-colors duration-500 hover:bg-[#103263] hover:text-white"
       >
         Verify

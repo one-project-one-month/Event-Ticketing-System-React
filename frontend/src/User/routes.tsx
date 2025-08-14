@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
         Component: EventRootLayout,
         children: [
           { index: true, Component: EventPage },
-          { path: "eventinfo", Component: EventInfoPage },
-          { path: "ticketdetails", Component: TicketDetailPage },
+          { path: "eventinfo/:id", Component: EventInfoPage },
+          { path: "ticketdetails/:id", Component: TicketDetailPage },
         ],
       },
       {

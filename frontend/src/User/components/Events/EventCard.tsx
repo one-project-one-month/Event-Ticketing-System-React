@@ -2,16 +2,20 @@ import { MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const EventCard = ({
+  code,
   title,
   location,
+  image,
 }: {
+  code: string;
   title: string;
   location: string;
+  image: string;
 }) => {
   return (
     <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md font-['figtree'] shadow-gray-800 transition-shadow hover:shadow-md dark:border">
       <img
-        src="yw-event-img/event.png"
+        src={image}
         alt=""
         className="z-0 h-full w-full object-cover object-center"
       />
@@ -22,7 +26,7 @@ const EventCard = ({
             <MapPin /> {location}
           </p>
           <NavLink
-            to={"/events/eventinfo"}
+            to={`/events/eventinfo/${code}`}
             className="rounded-sm border border-black bg-white p-1 font-semibold text-black transition-colors hover:bg-[#071739] hover:text-white"
           >
             View Details

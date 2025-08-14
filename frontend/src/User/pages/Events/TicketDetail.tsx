@@ -1,19 +1,84 @@
 //import ThankYouDialog from "@/User/components/Events/ThankYouDialog";
+import { getUserEventByCode } from "@/services/UserEventServices";
+import { GetVerifyCode } from "@/services/VerifyCode";
 import VerifyDialog from "@/User/components/Events/VerifyDialog";
 import { Button } from "@/User/components/ui/button";
+import type { TicketType } from "@/User/DataTypes/Event";
+import { type ProcessTransactionPayload } from "@/User/DataTypes/Transaction";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const TicketDetail = () => {
+  const { id } = useParams();
+  if (!id) return null;
   const [quantity, setQuantity] = useState<number>(1);
-  const [type, setType] = useState("VVIP");
+  const [transaction, setTransaction] = useState<ProcessTransactionPayload>({
+    eventCode: id as string,
+    fullName: "",
+    phone: "",
+    email: "",
+    gender: "",
+    ticketTypeCode: "",
+    ticketQuantity: quantity,
+  });
   const [showVerifyDialog, setShowVerifyDialog] = useState<boolean>(false);
+  const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
+  const [type, setType] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [eventName, setEventName] = useState<string>("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: keyof ProcessTransactionPayload,
+  ) => {
+    setTransaction((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const fetchUserEventByCode = async (id: string) => {
+    const res = await getUserEventByCode(id);
+    if (res.isSuccess && res.data != null) {
+      setTicketTypes(res.data.ticketTypes);
+      setEventName(res.data.eventname);
+      res.data.ticketTypes.length > 0 &&
+        setType(res.data.ticketTypes[0].tickettypecode);
+    } else {
+      setTicketTypes([]);
+    }
+  };
+
+  const handleConfirm = async () => {
+    if (
+      !transaction.email ||
+      !transaction.eventCode ||
+      !transaction.fullName ||
+      !transaction.gender ||
+      !transaction.ticketQuantity ||
+      !transaction.ticketTypeCode ||
+      !transaction.phone
+    ) {
+      setError("please fill all field");
+      return;
+    }
+
+    const res = await GetVerifyCode({ email: transaction.email });
+    if (res.isSuccess) {
+      setShowVerifyDialog(true);
+    } else {
+      setShowVerifyDialog(false);
+      setError("something is wring");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserEventByCode(id as string);
+  }, []);
+
   return (
     <div className="relative flex items-center justify-center py-10">
       <div className="grid w-[75%] grid-cols-2 rounded-sm border bg-[url('/yw-event-img/detail-bg.png')] bg-cover bg-center shadow-sm">
         <div className="items-left flex flex-col justify-end ps-20 pb-20 text-8xl font-extrabold text-white text-shadow-2xs">
-          <h2>EDM</h2>
-          <h2>FESTIVAL</h2>
+          <h2>{eventName}</h2>
         </div>
         <div className="items-left flex flex-col justify-evenly gap-3 bg-white/10 p-20 text-white backdrop-blur-sm">
           <div className="flex flex-col">
@@ -26,6 +91,7 @@ const TicketDetail = () => {
                 id="name"
                 placeholder="Full Name"
                 className="w-full border-s-2 border-black bg-white ps-1 text-black outline-none"
+                onChange={(e) => handleChange(e, "fullName")}
               />
             </div>
           </div>
@@ -39,6 +105,7 @@ const TicketDetail = () => {
                 id="phone"
                 placeholder="Phone Number"
                 className="w-full border-s-2 border-black bg-white ps-1 text-black outline-none"
+                onChange={(e) => handleChange(e, "phone")}
               />
             </div>
           </div>
@@ -52,6 +119,7 @@ const TicketDetail = () => {
                 id="email"
                 placeholder="Email"
                 className="w-full border-s-2 border-black bg-white ps-1 text-black outline-none"
+                onChange={(e) => handleChange(e, "email")}
               />
             </div>
           </div>
@@ -63,7 +131,9 @@ const TicketDetail = () => {
                   type="radio"
                   id="male"
                   name="gender"
+                  value="male"
                   className="input-radio"
+                  onChange={(e) => handleChange(e, "gender")}
                 />
                 <label htmlFor="male">Male</label>
               </div>
@@ -71,8 +141,10 @@ const TicketDetail = () => {
                 <input
                   type="radio"
                   id="female"
+                  value="female"
                   name="gender"
                   className="input-radio"
+                  onChange={(e) => handleChange(e, "gender")}
                 />
                 <label htmlFor="female">Female</label>
               </div>
@@ -80,8 +152,10 @@ const TicketDetail = () => {
                 <input
                   type="radio"
                   id="other"
+                  value="other"
                   name="gender"
                   className="input-radio"
+                  onChange={(e) => handleChange(e, "gender")}
                 />
                 <label htmlFor="other">Other</label>
               </div>
@@ -91,27 +165,16 @@ const TicketDetail = () => {
           <div>
             <p>Ticket Type</p>
             <div className="mt-3 grid grid-cols-3 gap-2">
-              <div
-                className={`radio-tab rounded-md font-semibold text-gray-500 ${type == "VVIP" ? "bg-[#071739] text-white" : "bg-white"}`}
-                onClick={() => setType("VVIP")}
-              >
-                <p>VVIP</p>
-                <p>80000ks</p>
-              </div>
-              <div
-                className={`radio-tab rounded-md font-semibold text-gray-500 ${type == "VIP" ? "bg-[#071739] text-white" : "bg-white"}`}
-                onClick={() => setType("VIP")}
-              >
-                <p>VIP</p>
-                <p>50000ks</p>
-              </div>
-              <div
-                className={`radio-tab rounded-md font-semibold text-gray-500 ${type == "Standard" ? "bg-[#071739] text-white" : "bg-white"}`}
-                onClick={() => setType("Standard")}
-              >
-                <p>Standard</p>
-                <p>10000ks</p>
-              </div>
+              {ticketTypes.map((ticketType) => (
+                <div
+                  key={ticketType.tickettypecode}
+                  className={`radio-tab rounded-md font-semibold text-gray-500 ${type == ticketType.tickettypecode ? "bg-[#071739] text-white" : "bg-white"}`}
+                  onClick={() => setType(ticketType.tickettypecode)}
+                >
+                  <p>{ticketType.tickettypename}</p>
+                  <p>{ticketType.ticketprice}ks</p>
+                </div>
+              ))}
             </div>
           </div>
           <div>
@@ -119,27 +182,46 @@ const TicketDetail = () => {
             <div className="justify-left mt-3 flex items-center gap-1">
               <Button
                 className="cursor-pointer"
-                onClick={() => quantity > 1 && setQuantity((prev) => prev - 1)}
+                onClick={() => {
+                  transaction.ticketQuantity > 1 &&
+                    setTransaction((prev) => ({
+                      ...prev,
+                      ticketQuantity: prev.ticketQuantity - 1,
+                    }));
+                }}
               >
                 <Minus />
               </Button>
               <input
                 type="number"
-                value={quantity}
+                value={transaction.ticketQuantity}
                 className="no-spinner w-12 border-b-2 p-1 text-center text-xl font-semibold text-white outline-none"
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) =>
+                  setTransaction((prev) => ({
+                    ...prev,
+                    ticketQuantity: Number(e.target.value),
+                  }))
+                }
               />
               <Button
                 className="cursor-pointer"
-                onClick={() => setQuantity((prev) => prev + 1)}
+                onClick={() =>
+                  setTransaction((prev) => ({
+                    ...prev,
+                    ticketQuantity: prev.ticketQuantity + 1,
+                  }))
+                }
               >
                 <Plus />
               </Button>
             </div>
           </div>
-          <div className="flex justify-end py-10">
+          <p className="h-3 text-center text-xl font-semibold text-red-500">
+            {error && error}
+          </p>
+          <div className="flex justify-end py-5">
             <Button
-              onClick={() => setShowVerifyDialog(true)}
+              onClick={handleConfirm}
               className="w-full cursor-pointer rounded-md bg-[#071739] p-8 text-2xl text-white hover:bg-white hover:text-[#071739]"
             >
               Confirm
@@ -150,7 +232,11 @@ const TicketDetail = () => {
       <div
         className={`fixed top-0 flex h-full w-full items-center justify-center backdrop-opacity-30 ${showVerifyDialog ? "block" : "hidden"}`}
       >
-        <VerifyDialog show={showVerifyDialog} setShow={setShowVerifyDialog} />
+        <VerifyDialog
+          show={showVerifyDialog}
+          setShow={setShowVerifyDialog}
+          email={transaction.email}
+        />
       </div>
     </div>
   );
