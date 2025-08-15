@@ -1,6 +1,7 @@
 import { apiGet, apiPost } from "@/types/apiClient.ts";
 import type {
   CreateVenueType,
+  EditVenueType,
   VenueTypeByCode,
   VenueTypeResponse,
 } from "@/Admin/DataTypes/VenueType.ts";
@@ -14,6 +15,13 @@ export const getVenueTypeByCode = (venueTypeCode: string) =>
 export const createVenueType = (payload: CreateVenueType) => {
   return apiPost<{ venueType: VenueTypeResponse }>(
     "api/VenueType/Create",
+    payload,
+  );
+};
+
+export const updateVenueType = (payload: EditVenueType) => {
+  return apiPost<{ venueType: VenueTypeResponse }>(
+    "api/VenueType/Update",
     payload,
   );
 };

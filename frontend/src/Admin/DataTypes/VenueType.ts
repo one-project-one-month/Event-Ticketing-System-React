@@ -17,3 +17,8 @@ export type VenueTypeByCode = ApiResponse<{
 export interface CreateVenueType {
   venueTypeName: string;
 }
+
+export interface EditVenueType {
+  venueTypeName: string;
+  venueTypeCode: string;
+}
