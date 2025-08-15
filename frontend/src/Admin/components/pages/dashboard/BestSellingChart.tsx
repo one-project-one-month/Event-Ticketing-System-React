@@ -18,7 +18,9 @@ export const BestSellingChart = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const chartDataSource = Array.isArray(chartData?.ticketCounts)
-    ? chartData.ticketCounts.find((data) => data.type === timeframe)
+    ? chartData.ticketCounts.find(
+        (data) => data.ticketCountPeriod === timeframe,
+      )
     : null;
 
   const handleTimeframeSelect = (selectedTimeframe: TTCountType) => {

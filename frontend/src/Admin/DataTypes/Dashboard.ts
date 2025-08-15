@@ -15,7 +15,7 @@ export interface TTCount {
 
 // Corresponds to the C# class DashboardTTCount
 export interface DashboardTTCount {
-  type: TTCountType;
+  ticketCountPeriod: TTCountType;
   ttCounts: TTCount[];
 }
 
