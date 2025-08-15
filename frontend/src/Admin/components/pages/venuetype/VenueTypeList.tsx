@@ -1,11 +1,14 @@
-import type { IVenueType, IVenueTypeUI } from "@/Admin/DataTypes/DataTypes.ts";
+import type { IVenueTypeUI } from "@/Admin/DataTypes/DataTypes.ts";
 import { useState } from "react";
 import AdminDeleteDialog from "@/Admin/components/Layouts/AdminDeleteDialog.tsx";
+import type { VenueTypeData } from "@/Admin/DataTypes/VenueType.ts";
 
 export default function VenueTypeList({
   venueTypes,
+  additionalNumber = 0,
 }: {
-  venueTypes: IVenueType[];
+  venueTypes: VenueTypeData[];
+  additionalNumber?: number;
 }) {
   return (
     <section className="mt-5">
@@ -24,10 +27,11 @@ export default function VenueTypeList({
         <div className={`hide-scrollbar h-[29rem] overflow-y-scroll`}>
           {venueTypes.map((venueType, index) => (
             <VenueTypeRow
-              CreatedAt={venueType.CreatedAt}
-              VenueTypeCode={venueType.VenueTypeCode}
-              VenueTypename={venueType.VenueTypename}
-              index={index + 1}
+              key={venueType.venueTypeCode} // ✅ add key
+              CreatedAt={venueType.createdAt}
+              VenueTypeCode={venueType.venueTypeCode}
+              VenueTypename={venueType.venueTypename}
+              index={additionalNumber + index + 1} // ✅ add offset
             />
           ))}
         </div>
@@ -48,6 +52,7 @@ function VenueTypeRow({
     console.log("Deleted!");
     setShowDelete(false);
   };
+
   return (
     <div className="mb-2 flex items-center bg-white px-6 py-4 text-[#333]">
       <div className="w-[10%] pl-14">{index}</div>
