@@ -14,6 +14,7 @@ const EventPostList = ({
   events: UserEventData[];
   eventPerPage: number;
 }) => {
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   return (
     <>
       <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-x-7">
@@ -22,7 +23,7 @@ const EventPostList = ({
             title={e.eventname}
             location={e.address}
             eventcode={e.eventcode}
-            imageUrl={e.venueimage[0]}
+            imageUrl={`${baseURL}/${e.venueimage[0]}`}
           />
         ))}
       </div>

@@ -3,27 +3,36 @@ import { Button } from "../ui/button";
 import { X } from "lucide-react";
 import ThankYouDialog from "./ThankYouDialog";
 import { VerifyCode } from "@/services/VerifyCode";
+import { makeTransaction } from "@/services/TransactionService";
+import type { ProcessTransactionPayload } from "@/User/DataTypes/Transaction";
+
+interface VerifyDialogProps {
+  show: boolean;
+  email: string;
+  setShow: React.Dispatch<SetStateAction<boolean>>;
+  transactionPayload: ProcessTransactionPayload; // added this
+}
+
+type Step =
+  | "VERIFYING"       // entering OTP
+  | "TICKETSENDING"   // transaction API is in progress
+  | "SUCCESS"         // ticket sent success
+  | "FAIL";           // ticket sending failed
 
 const VerifyDialog = ({
   show,
   setShow,
   email,
-}: {
-  show: boolean;
-  email: string;
-  setShow: React.Dispatch<SetStateAction<boolean>>;
-}) => {
+  transactionPayload
+}: VerifyDialogProps) => {
   const OTP_LENGTH = 6;
   const [otpCode, setOtpCode] = useState(Array(OTP_LENGTH).fill(""));
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const [isVerified, setVerified] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [step, setStep] = useState<Step>("VERIFYING");
 
-  const handleOtpChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // only digits
+  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
     const newOtp = [...otpCode];
     newOtp[index] = value;
     setOtpCode(newOtp);
@@ -56,19 +65,42 @@ const VerifyDialog = ({
   };
 
   const handleVerify = async () => {
+    setError("");
+    // Step 1: Verify OTP
     const res = await VerifyCode({
       email,
       verificationCode: otpCode.join(""),
     });
-    if (res.isSuccess) {
-      setVerified(true);
-    } else {
+
+    if (!res.isSuccess) {
       setError("Error while verifying");
+      return;
+    }
+
+    // Step 2: Show "sending ticket" message
+    setStep("TICKETSENDING");
+
+    // Step 3: Call transaction API
+    const tranRes = await makeTransaction(transactionPayload);
+    if (tranRes.isSuccess) {
+      setStep("SUCCESS");
+    } else {
+      setStep("FAIL");
     }
   };
 
-  if (isVerified) return <ThankYouDialog />;
+  // Different UI based on step
+  if (step === "TICKETSENDING") {
+    return <ThankYouDialog message="Tickets are sending in your email..." />;
+  }
+  if (step === "SUCCESS") {
+    return <ThankYouDialog message="Ticket Sent successfully. Check your email" />;
+  }
+  if (step === "FAIL") {
+    return <ThankYouDialog message="Ticket sending failed, please check your inputs again" />;
+  }
 
+  // Default is VERIFYING
   return (
     <div
       className={`flex h-[80%] w-[50%] flex-col items-center justify-between rounded bg-gradient-to-t from-[#071739] to-[#103263] p-10 py-20 text-white shadow-sm transition-transform ${

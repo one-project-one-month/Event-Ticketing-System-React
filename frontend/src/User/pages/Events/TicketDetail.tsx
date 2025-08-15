@@ -1,4 +1,3 @@
-//import ThankYouDialog from "@/User/components/Events/ThankYouDialog";
 import { getUserEventByCode } from "@/services/UserEventServices";
 import { GetVerifyCode } from "@/services/VerifyCode";
 import VerifyDialog from "@/User/components/Events/VerifyDialog";
@@ -56,7 +55,7 @@ const TicketDetail = () => {
       !transaction.fullName ||
       !transaction.gender ||
       !transaction.ticketQuantity ||
-      // !transaction.ticketTypeCode ||
+      !transaction.ticketTypeCode ||
       !transaction.phone
     ) {
       setError("please fill all field");
@@ -165,20 +164,44 @@ const TicketDetail = () => {
           </div>
 
           <div>
-            <p>Ticket Type</p>
-            <div className="mt-3 grid grid-cols-3 gap-2">
-              {ticketTypes.map((ticketType) => (
-                <div
-                  key={ticketType.tickettypecode}
-                  className={`radio-tab rounded-md font-semibold text-gray-500 ${type == ticketType.tickettypecode ? "bg-[#071739] text-white" : "bg-white"}`}
-                  onClick={() => setType(ticketType.tickettypecode)}
-                >
-                  <p>{ticketType.tickettypename}</p>
-                  <p>{ticketType.ticketprice}ks</p>
-                </div>
-              ))}
+            <label htmlFor="ticketType" className="text-xl font-semibold">
+              Ticket Type
+            </label>
+            <div className="mt-2">
+              <select
+                id="ticketType"
+                className="w-full bg-white text-center rounded-[10px] border p-3 text-black"
+                value={transaction.ticketTypeCode}
+                onChange={(e) => {
+                  const selectedCode = e.target.value;
+                  setTransaction((prev) => ({
+                    ...prev,
+                    ticketTypeCode: selectedCode,
+                  }));
+                  setType(selectedCode);
+                }}>
+                <option value="">--- Select Ticket Type ---</option>
+                {ticketTypes.map((ticketType) => (
+                  <option
+                    key={ticketType.tickettypecode}
+                    value={ticketType.tickettypecode}>
+                    {ticketType.tickettypename}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            {type && (
+              <p className="mt-2 text-lg font-semibold">
+                Price:{" "}
+                {
+                  ticketTypes.find((t) => t.tickettypecode === type)?.ticketprice
+                }{" "}
+                ks
+              </p>
+            )}
           </div>
+
           <div>
             <p>Quantity</p>
             <div className="justify-left mt-3 flex items-center gap-1">
@@ -238,6 +261,7 @@ const TicketDetail = () => {
           show={showVerifyDialog}
           setShow={setShowVerifyDialog}
           email={transaction.email}
+          transactionPayload={transaction} 
         />
       </div>
     </div>

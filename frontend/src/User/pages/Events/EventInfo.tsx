@@ -15,6 +15,7 @@ const TicketInfo = () => {
   const { eventcode } = useParams<{ eventcode: string }>();
   const [data, setData] = useState<UserEventDataByCode | null>(null);
   const [date, setDate] = useState<string[]>([]);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   const dateFormatter = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     month: "short",
@@ -54,7 +55,7 @@ const TicketInfo = () => {
         <div className="z-10 flex w-full flex-col items-center justify-start">
           <div className="w-ful flex w-[30%] flex-col items-center px-5">
             <img
-              src={data?.venueimage[0]}
+              src={`${baseURL}/${data?.venueimage?.[0]}`}
               alt=""
               className="h-[500px] w-full rounded-md object-cover object-center"
             />

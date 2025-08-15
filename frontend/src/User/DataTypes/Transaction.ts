@@ -1,3 +1,5 @@
+import type { ApiResponse } from "@/types/ApiResponse";
+
 export interface ProcessTransactionPayload {
   eventCode: string;
   fullName: string;
@@ -7,3 +9,7 @@ export interface ProcessTransactionPayload {
   ticketTypeCode: string;
   ticketQuantity: number;
 }
+
+export type TransactionResponse = ApiResponse<{
+  response : ProcessTransactionPayload;
+}>

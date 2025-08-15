@@ -4,36 +4,18 @@ export interface SearchEventData{
     eventid: string,
     eventcode: string,
     eventname: string,
-    categorycode: string,
-    startdate: string,
-    enddate: Date,
-    isactive: boolean,
-    eventstatus: string,
-    businessownercode: string,
-    totalticketquantity: number,
-    soldoutcount: number,
-    createdby: string,
-    createdat: Date,
-    modifiedby: string,
-    modifiedat: string,
-    eventimage : string
+    address : string,
+    venueimage : string
 }
 
 export interface SearchVenueData{
     venueid: string,
     venuecode: string,
     venuename: string,
-    venuetypecode: string,
-    venuedescription: string,
-    venueaddress: string,
-    venuecapacity: number,
-    venuefacilities: string,
-    venueaddons: string,
-    createdby: string,
-    createdat: Date,
-    modifiedby: string,
-    modifiedat: string,
+    venuetypename: string,
+    capacity : number,
     venueimage : string[],
+    address : string
 }
 
 export type SearchDataResponse = ApiResponse<{

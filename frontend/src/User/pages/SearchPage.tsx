@@ -18,8 +18,8 @@ const SearchPage = () => {
   const [venues, setVenues] = useState<any[]>([]);
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(1);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-  // Fetch results automatically on page load
   useEffect(() => {
     const fetchResults = async () => {
       setMessage("");
@@ -75,7 +75,6 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
-      {/* Only Results */}
       {message && <p className="text-center text-red-500">{message}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -84,19 +83,19 @@ const SearchPage = () => {
             <EventCard
               key={`event-${idx}`}
               title={item.eventname}
-              location={item.categorycode}
-              imageUrl={item.eventimage}
+              location={item.address}
+              imageUrl={`${baseURL}/${item.venueimage?.[0]}`}
               eventcode={item.eventcode}
             />
           ) : (
             <VenueCard
               key={`venue-${idx}`}
               venuecode={item.venuecode}
-              imagePath={item.venueimage?.[0]}
+              imagePath={`${baseURL}/${item.venueimage?.[0]}`}
               buildingName={item.venuename}
-              name={item.venuetypecode}
-              capacity={item.venuecapacity}
-              address={item.venueaddress}
+              name={item.venuetypename}
+              capacity={item.capacity}
+              address={item.address}
             />
           )
         )}
