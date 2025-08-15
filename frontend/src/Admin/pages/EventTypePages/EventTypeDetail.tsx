@@ -19,8 +19,7 @@ export default function EventTypeDetail() {
       const res = await getEventTypeByCode(eventCategorycode);
 
       if (res.isSuccess && res.data?.event) {
-        console
-        setEvents(res.data.event ? [res.data.event] : []); 
+        setEvents(res.data.event ? [res.data.event] : []);
       } else {
         console.error("Failed to fetch event type:", res.message);
         setEvents([]);
@@ -32,16 +31,24 @@ export default function EventTypeDetail() {
     fetchEventType();
   }, [eventCategorycode]);
 
-  if (loading) return <p className="text-center mt-20">Loading...</p>;
-  if (!events.length) return <p className="text-center mt-20 text-red-500">No event category found.</p>;
+  if (loading) return <p className="mt-20 text-center">Loading...</p>;
+  if (!events.length)
+    return (
+      <p className="mt-20 text-center text-red-500">No event category found.</p>
+    );
 
   return (
-    <div className="p-20 bg-white rounded-md max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-[#233B75]">Event Category Information</h1>
+    <div className="mx-auto max-w-6xl rounded-md bg-white p-20">
+      <h1 className="mb-6 text-3xl font-bold text-[#233B75]">
+        Event Category Information
+      </h1>
 
       <div className="space-y-20">
         {events.map((event, index) => (
-          <div key={index} className="grid grid-cols-2 gap-x-25 gap-y-10 border-b mt-10 pb-5">
+          <div
+            key={index}
+            className="mt-10 grid grid-cols-2 gap-x-25 gap-y-10 border-b pb-5"
+          >
             <div>
               <Label label="Event Code" required />
               <TextInput value={event.eventCategorycode} readOnly />
