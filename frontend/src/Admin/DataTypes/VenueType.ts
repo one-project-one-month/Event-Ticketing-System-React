@@ -13,3 +13,7 @@ export type VenueTypeResponse = ApiResponse<{
 export type VenueTypeByCode = ApiResponse<{
   venueTypeEdit: VenueTypeData;
 }>;
+
+export interface CreateVenueType {
+  venueTypeName: string;
+}

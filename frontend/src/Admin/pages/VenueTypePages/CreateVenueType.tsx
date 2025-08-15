@@ -1,11 +1,41 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle.tsx";
 import AdminInputLabel from "@/Admin/components/Layouts/AdminInputLabel.tsx";
-import { useState } from "react";
-import AdminActionDialog from "@/Admin/components/Layouts/AdminActionDialog.tsx";
+import SaveSuccessModal from "@/Admin/components/ui/SaveSuccessModal";
+import type { CreateVenueType } from "@/Admin/DataTypes/VenueType";
+import { createVenueType } from "@/services/VenueTypeService.ts";
 
 export default function CreateVenueTypePage() {
+  const navigate = useNavigate();
   const [venueTypeName, setVenueTypeName] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSave = async () => {
+    setError("");
+
+    if (!venueTypeName.trim()) {
+      setError("Venue type name is required.");
+      return;
+    }
+
+    const payload: CreateVenueType = {
+      venueTypeName: venueTypeName.trim(),
+    };
+
+    try {
+      const response = await createVenueType(payload);
+
+      if (response.isSuccess) {
+        setShowSuccess(true);
+      } else {
+        setError(response.message || "Failed to create venue type.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred.");
+    }
+  };
 
   return (
     <section
@@ -15,10 +45,11 @@ export default function CreateVenueTypePage() {
       <div className={`flex flex-col justify-start gap-3`}>
         <AdminTitle>Venue Type Information</AdminTitle>
         <p className={`text-[#43319A]`}>
-          Please fill in all required fields to create a new admin account.
+          Please fill in all required fields to create a new venue type.
         </p>
       </div>
-      {/*  Form */}
+
+      {/* Form */}
       <div className={`mt-8`}>
         <AdminInputLabel
           label={`Venue Type Name`}
@@ -29,28 +60,33 @@ export default function CreateVenueTypePage() {
           placeholder={"Enter Venue Name"}
           required={true}
         />
+        {error && <p className="mt-2 text-red-500">{error}</p>}
       </div>
-      {/*  Buttons */}
+
+      {/* Buttons */}
       <div className={`absolute right-20 bottom-14 flex flex-row gap-6`}>
         <button
-          onClick={() => {
-            window.history.back();
-          }}
+          onClick={() => navigate(-1)}
           className={`h-12 w-32 cursor-pointer rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300`}
         >
           Cancel
         </button>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={handleSave}
           className={`h-12 w-32 cursor-pointer rounded-md bg-[#FC9B51] text-white hover:text-purple-300`}
         >
           Save
         </button>
       </div>
-      <AdminActionDialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        text={"SAVED SUCCESSFULLY !"}
+
+      {/* Success Dialog */}
+      <SaveSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        onConfirm={() => {
+          setShowSuccess(false);
+          navigate(-1); // Go back to previous route
+        }}
       />
     </section>
   );
