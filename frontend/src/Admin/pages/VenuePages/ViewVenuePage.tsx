@@ -1,20 +1,47 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle.tsx";
 import AdminInputLabel from "@/Admin/components/Layouts/AdminInputLabel.tsx";
-import { useState } from "react";
 import AddonsInputGroup from "@/Admin/components/pages/venue/AddonInputGroup.tsx";
 import VenueImageUpload from "@/Admin/components/pages/venue/VenueImageUpload.tsx";
+import { getVenueByCode } from "@/services/VenueService.ts";
+import type { FullVenueData } from "@/Admin/DataTypes/VenueDataTypes.ts";
 
 export default function ViewVenuePage() {
-  const [venueCode, setVenueCode] = useState("VN001");
-  const [venueName, setVenueName] = useState("Ocean View Hall");
-  const [venueTypeCode, setVenueTypeCode] = useState("TYPE01");
-  const [capacity, setCapacity] = useState<number | "">(200);
-  const [address, setAddress] = useState("123 Bay Street, Yangon");
-  const [description, setDescription] = useState(
-    "Spacious hall with sea view.",
-  );
-  const [facilities, setFacilities] = useState("Wi-Fi, Projector, Parking");
-  const [addons, setAddons] = useState<string[]>(["Catering", "Decoration"]);
+  const { venueCode } = useParams<{ venueCode: string }>();
+  const [venue, setVenue] = useState<FullVenueData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchVenue = async () => {
+      if (!venueCode) {
+        setError("Venue code is missing.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await getVenueByCode(venueCode);
+        if (res.isSuccess && res.data?.venue) {
+          setVenue(res.data.venue);
+        } else {
+          setError(res.message || "Venue not found.");
+        }
+      } catch (err) {
+        console.error("Error fetching venue:", err);
+        setError("An error occurred while fetching venue data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVenue();
+  }, [venueCode]);
+
+  if (loading) return <p className="mt-20 text-center">Loading...</p>;
+  if (error) return <p className="mt-20 text-center text-red-500">{error}</p>;
+  if (!venue) return <p className="mt-20 text-center">Venue not found.</p>;
 
   return (
     <section className="relative mt-10 ml-12 h-fit w-[65rem] rounded-md bg-white px-20 py-14">
@@ -30,81 +57,78 @@ export default function ViewVenuePage() {
       <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-6">
         <AdminInputLabel
           label="Venue Code"
-          value={venueCode}
-          name="venueCode"
-          type="text"
-          onChange={(v) => setVenueCode(v)}
-          placeholder="Enter Venue Code"
+          value={venue.venueCode}
           readonly
+          name={""}
+          onChange={() => {}}
+          type={""}
+          placeholder={""}
         />
-
         <AdminInputLabel
           label="Venue Name"
-          value={venueName}
-          name="venueName"
-          type="text"
-          onChange={(v) => setVenueName(v)}
-          placeholder="Enter Venue Name"
+          value={venue.venueName}
           readonly
+          name={""}
+          onChange={() => {}}
+          type={""}
+          placeholder={""}
         />
-
         <AdminInputLabel
           label="Venue Type Code"
-          value={venueTypeCode}
-          name="venueTypeCode"
-          type="text"
-          onChange={(v) => setVenueTypeCode(v)}
-          placeholder="Enter Type Code"
+          value={venue.venueTypeCode}
           readonly
+          name={""}
+          onChange={() => {}}
+          type={""}
+          placeholder={""}
         />
-
         <AdminInputLabel
           label="Capacity"
-          value={capacity}
-          name="capacity"
-          type="number"
-          onChange={(v) => setCapacity(Number(v))}
-          placeholder="Enter Capacity"
+          value={venue.capacity}
           readonly
+          name={""}
+          onChange={() => {}}
+          type={""}
+          placeholder={""}
         />
-
         <AdminInputLabel
           label="Address"
-          value={address}
-          name="address"
+          value={venue.address}
           type="textarea"
-          onChange={(v) => setAddress(v)}
-          placeholder="Enter Address"
           readonly
+          name={""}
+          onChange={() => {}}
+          placeholder={""}
         />
-
         <AdminInputLabel
           label="Description"
-          value={description}
-          name="description"
+          value={venue.description}
           type="textarea"
-          onChange={(v) => setDescription(v)}
-          placeholder="Enter Description"
           readonly
+          name={""}
+          onChange={() => {}}
+          placeholder={""}
         />
-
         <AddonsInputGroup
-          selectedAddons={addons}
-          onChange={setAddons}
+          selectedAddons={venue.addons}
           readonly
+          onChange={() => {}}
         />
-
         <AdminInputLabel
           label="Facilities"
-          value={facilities}
-          name="facilities"
+          value={venue.facilities}
           type="textarea"
-          onChange={(v) => setFacilities(v)}
-          placeholder="Enter Facilities"
+          readonly
+          name={""}
+          onChange={() => {}}
+          placeholder={""}
+        />
+        <VenueImageUpload
+          images={[]}
+          setImages={() => {}}
+          initialUrls={Array.isArray(venue.venueImage) ? venue.venueImage : []}
           readonly
         />
-
-        <VenueImageUpload />
       </div>
 
       {/* Back Button */}

@@ -20,8 +20,16 @@ export default function AddonsInputGroup({
   onChange,
   readonly = false,
 }: AddonsInputGroupProps) {
-  const [checked, setChecked] = useState<string[]>(selectedAddons || []);
-  const [otherText, setOtherText] = useState("");
+  // Split default options and others
+  const defaultChecked = selectedAddons.filter((a) =>
+    defaultOptions.includes(a),
+  );
+  const otherInitial = selectedAddons
+    .filter((a) => !defaultOptions.includes(a))
+    .join(", ");
+
+  const [checked, setChecked] = useState<string[]>(defaultChecked);
+  const [otherText, setOtherText] = useState<string>(otherInitial);
 
   const handleCheckboxChange = (value: string) => {
     if (checked.includes(value)) {
@@ -36,9 +44,11 @@ export default function AddonsInputGroup({
       .split(",")
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
+
     const result = checked.includes("Others")
       ? [...checked.filter((i) => i !== "Others"), ...others]
-      : checked;
+      : [...checked, ...others.filter((o) => !checked.includes(o))];
+
     onChange(result);
   }, [checked, otherText]);
 
@@ -47,6 +57,7 @@ export default function AddonsInputGroup({
       <label className="text-xl text-[#615CB8]">
         Addon <span className="text-red-400">*</span>
       </label>
+
       <div className="grid grid-cols-2 gap-4">
         {defaultOptions.map((option) => (
           <div className="flex flex-row items-center" key={option}>
@@ -72,7 +83,7 @@ export default function AddonsInputGroup({
         <input
           type="text"
           value={otherText}
-          readOnly={!checked.includes("Others")}
+          readOnly={readonly || (!checked.includes("Others") && !otherText)}
           onChange={(e) => setOtherText(e.target.value)}
           placeholder="Enter additional addons (separated by commas)"
           className="w-96 rounded border px-3 py-2"

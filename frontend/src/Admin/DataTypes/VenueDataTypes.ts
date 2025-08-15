@@ -30,3 +30,19 @@ export interface CreateVenueRequest {
   query: CreateVenueParams;
   formData: FormData;
 }
+
+export interface FullVenueData {
+  venueCode: string;
+  venueTypeCode: string;
+  venueName: string;
+  capacity: number;
+  address: string;
+  description: string;
+  addons: string[];
+  facilities: string;
+  venueImage: string;
+}
+
+export type VenueDataByCode = ApiResponse<{
+  venue: FullVenueData;
+}>;

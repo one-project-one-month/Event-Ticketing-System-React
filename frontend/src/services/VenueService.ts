@@ -2,6 +2,7 @@ import { apiGet, apiPostFormWithQuery } from "@/types/apiClient";
 import type {
   CreateVenueParams,
   CreateVenueRequest,
+  VenueDataByCode,
   VenueResponse,
 } from "@/Admin/DataTypes/VenueDataTypes.ts";
 
@@ -29,8 +30,8 @@ export const createVenue = (payload: CreateVenueRequest) => {
 // export const updateTicketType = (payload: updateTicketTypeData) =>
 //   apiPost<{ TicketType: TicketTypeResponse }>(`api/TicketType/Update`, payload);
 //
-// export const getTicketTypeByCode = (code: string) =>
-//   apiGet<TicketTypeByCode["data"]>(`api/TicketType/Edit/${code}`);
+export const getVenueByCode = (code: string) =>
+  apiGet<VenueDataByCode["data"]>(`api/Venue/Edit/${code}`);
 //
 // export const deleteTicketType = (code: string) =>
 //   apiPost<{ TicketType: TicketTypeResponse }>(
