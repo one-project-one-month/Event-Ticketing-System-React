@@ -4,6 +4,11 @@ import VenueTypeList from "@/Admin/components/pages/venuetype/VenueTypeList.tsx"
 import VenuePagination from "@/Admin/components/pages/venuetype/VenuePagination.tsx";
 import { getVenueTypes } from "@/services/VenueTypeService.ts";
 import type { VenueTypeData } from "@/Admin/DataTypes/VenueType.ts";
+import {
+  exportToCSV,
+  exportToExcel,
+  exportToPDF,
+} from "@/Admin/utils/exportUtils";
 
 const VenueType = () => {
   const [venueTypes, setVenueTypes] = useState<VenueTypeData[]>([]);
@@ -35,12 +40,34 @@ const VenueType = () => {
     indexOfLastItem,
   );
 
+  const handleExport = (format: string) => {
+    if (filteredVenueTypes.length === 0) return alert("No data to export.");
+
+    const exportData = filteredVenueTypes.map((e) => ({
+      "Venue Type Code": e.venueTypeCode,
+      "Venue Type Name": e.venueTypename,
+      "Created Date": e.createdAt || "Created Date is not provided!",
+    }));
+
+    switch (format) {
+      case "csv":
+        exportToCSV(exportData, "venueType.csv");
+        break;
+      case "xlsx":
+        exportToExcel(exportData, "venueType.xlsx");
+        break;
+      case "pdf":
+        exportToPDF(exportData, "venueType.pdf");
+        break;
+    }
+  };
+
   return (
     <section className="figtreef mx-10">
       {/* Search Bar */}
       <ToolBar
         addNewPath={`/admin/venue-type/create`}
-        onExport={() => {}}
+        onExport={handleExport}
         onSearch={(term) => {
           setSearchTerm(term);
           setCurrentPage(1);
