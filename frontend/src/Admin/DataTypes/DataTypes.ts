@@ -1,15 +1,6 @@
+import type { VenueTypeData } from "@/Admin/DataTypes/VenueType.ts";
 
-
-// endregion
-
-// region Ticket Types
-export interface IVenueType {
-  VenueTypeCode: string;
-  VenueTypename: string;
-  CreatedAt: string;
-}
-
-export interface IVenueTypeUI extends IVenueType {
+export interface IVenueTypeUI extends VenueTypeData {
   index: number;
 }
 

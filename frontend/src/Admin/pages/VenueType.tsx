@@ -51,6 +51,15 @@ const VenueType = () => {
       <VenueTypeList
         venueTypes={currentVenueTypes}
         additionalNumber={indexOfFirstItem}
+        onDeleteSuccess={async () => {
+          // Refetch venue types
+          const res = await getVenueTypes();
+          if (res.isSuccess && Array.isArray(res.data?.venueTypeList)) {
+            setVenueTypes(res.data.venueTypeList);
+          } else {
+            console.error("Failed to fetch venue types:", res.message);
+          }
+        }}
       />
 
       {/* Pagination */}
