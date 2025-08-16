@@ -1,3 +1,5 @@
+import type { ApiResponse } from "@/types/ApiResponse.ts";
+
 export interface VerificationCodeData {
   verificationId: string;
   verificationCode: string;
@@ -10,3 +12,5 @@ export interface VerificationCodeData {
   modifiedat?: string;
   deleteflag: boolean;
 }
+
+export type VerificationCodeResponse = ApiResponse<{ verificationCodes: VerificationCodeData[] }>
