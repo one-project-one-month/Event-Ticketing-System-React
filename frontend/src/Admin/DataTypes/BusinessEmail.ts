@@ -1,3 +1,5 @@
+import type { ApiResponse } from "@/types/ApiResponse.ts";
+
 export interface BusinessEmailData {
   businessEmailId: string;
   businessEmailCode: string;
@@ -7,3 +9,5 @@ export interface BusinessEmailData {
   createdby: string;
   createdat: string;
 }
+
+export type BusinessEmailResponse = ApiResponse<{ businessEmailList: BusinessEmailData[] }>

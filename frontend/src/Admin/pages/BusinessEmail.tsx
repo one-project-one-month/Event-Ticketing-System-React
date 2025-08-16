@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle.tsx";
 import {
@@ -5,51 +6,71 @@ import {
   HistoryTable,
 } from "@/Admin/components/pages/HistoryTable.tsx";
 import type { BusinessEmailData } from "@/Admin/DataTypes/BusinessEmail.ts";
+import { getBusinessEmailList } from "@/services/BusinessEmailService.ts";
+import {
+  exportToCSV,
+  exportToExcel,
+  exportToPDF,
+} from "@/Admin/utils/exportUtils.ts";
 
 export const BusinessEmail = () => {
+  const [emails, setEmails] = useState<BusinessEmailData[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const businessEmailColumns = [
     { key: "fullName", label: "Full Name" },
     { key: "phone", label: "Mobile No." },
     { key: "email", label: "Email" },
   ] satisfies HistoryColumn<BusinessEmailData>[];
 
-  const businessEmailSample: BusinessEmailData[] = [
-    {
-      businessEmailId: "1",
-      businessEmailCode: "BE001",
-      fullName: "Aung Myat Min",
-      phone: "09123456789",
-      email: "aungmyatmin@example.com",
-      createdby: "admin",
-      createdat: "2025-08-10",
-    },
-    {
-      businessEmailId: "2",
-      businessEmailCode: "BE002",
-      fullName: "John Smith",
-      phone: "09876543210",
-      email: "johnsmith@example.com",
-      createdby: "admin",
-      createdat: "2025-08-09",
-    },
-    {
-      businessEmailId: "3",
-      businessEmailCode: "BE003",
-      fullName: "Jane Doe",
-      phone: "09911223344",
-      email: "janedoe@example.com",
-      createdby: "admin",
-      createdat: "2025-08-08",
-    },
-  ];
+  useEffect(() => {
+    const fetchEmails = async () => {
+      const res = await getBusinessEmailList();
+      if (res.isSuccess && Array.isArray(res.data?.businessEmailList)) {
+        setEmails(res.data.businessEmailList);
+      } else {
+        console.error("Failed to fetch business emails:", res.message);
+      }
+    };
+
+    fetchEmails();
+  }, []);
+
+  const filteredEmails = emails.filter((email) =>
+    email.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  const handleExport = (format: string) => {
+    if (filteredEmails.length === 0) return alert("No data to export.");
+
+    const exportData = filteredEmails.map((e) => ({
+      "Full Name": e.fullName,
+      Email: e.email,
+      "Phone Number": e.phone,
+    }));
+
+    switch (format) {
+      case "csv":
+        exportToCSV(exportData, "business-emails.csv");
+        break;
+      case "xlsx":
+        exportToExcel(exportData, "business-emails.xlsx");
+        break;
+      case "pdf":
+        exportToPDF(exportData, "business-emails.pdf");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <section className={`mx-auto w-[70rem]`}>
       {/* Search Bar */}
       <ToolBar
         addNewPath={``}
-        onExport={() => {}}
-        onSearch={() => {}}
+        onExport={handleExport}
+        onSearch={(term) => setSearchTerm(term)}
         hideAddNew={true}
       />
 
@@ -57,7 +78,7 @@ export const BusinessEmail = () => {
       <div className={`mt-5`}>
         <AdminTitle>Business Email</AdminTitle>
         <HistoryTable
-          data={businessEmailSample}
+          data={filteredEmails}
           columns={businessEmailColumns}
           dataCodeName={`businessEmailCode`}
           link={`/admin/business/email/`}
