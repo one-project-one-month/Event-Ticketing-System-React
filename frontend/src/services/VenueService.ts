@@ -1,4 +1,4 @@
-import { apiGet, apiPostFormWithQuery } from "@/types/apiClient";
+import { apiGet, apiPost, apiPostFormWithQuery } from "@/types/apiClient";
 import type {
   CreateVenueParams,
   CreateVenueRequest,
@@ -46,9 +46,6 @@ export const updateVenue = (payload: CreateVenueRequest) => {
 
 export const getVenueByCode = (code: string) =>
   apiGet<VenueDataByCode["data"]>(`api/Venue/Edit/${code}`);
-//
-// export const deleteTicketType = (code: string) =>
-//   apiPost<{ TicketType: TicketTypeResponse }>(
-//     `api/TicketType/Delete/${code}`,
-//     {},
-//   );
+
+export const deleteVenue = (code: string) =>
+  apiPost<{ venue: VenueResponse }>(`api/Venue/Delete/${code}`, {});

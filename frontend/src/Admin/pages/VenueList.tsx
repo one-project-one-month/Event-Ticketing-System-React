@@ -11,16 +11,16 @@ const VenueList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  useEffect(() => {
-    const fetchVenues = async () => {
-      const res = await getVenues();
-      if (res.isSuccess && Array.isArray(res.data?.venueList)) {
-        setVenues(res.data.venueList);
-      } else {
-        console.error("Failed to fetch venues:", res.message);
-      }
-    };
+  const fetchVenues = async () => {
+    const res = await getVenues();
+    if (res.isSuccess && Array.isArray(res.data?.venueList)) {
+      setVenues(res.data.venueList);
+    } else {
+      console.error("Failed to fetch venues:", res.message);
+    }
+  };
 
+  useEffect(() => {
     fetchVenues();
   }, []);
 
@@ -48,7 +48,9 @@ const VenueList = () => {
       <VenueDataList
         venues={currentVenues}
         additionalNumber={indexOfFirstItem}
+        onVenueDeleted={fetchVenues}
       />
+
       {/*  Pagination */}
       <VenuePagination
         totalItems={filteredVenues.length}

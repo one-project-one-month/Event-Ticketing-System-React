@@ -9,7 +9,7 @@ interface VenueImageUploadProps {
   images: File[];
   setImages: Dispatch<SetStateAction<File[]>>;
   readonly?: boolean;
-  initialUrls?: string[]; // existing images from backend
+  initialUrls?: string[];
 }
 
 export default function VenueImageUpload({

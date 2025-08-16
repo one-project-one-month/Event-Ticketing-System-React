@@ -5,7 +5,6 @@ import type {
   VenueTypeByCode,
   VenueTypeResponse,
 } from "@/Admin/DataTypes/VenueType.ts";
-import type { EventTypeResponse } from "@/Admin/DataTypes/EventTypes.ts";
 
 export const getVenueTypes = () =>
   apiGet<VenueTypeResponse["data"]>("api/VenueType/List");
@@ -28,7 +27,7 @@ export const updateVenueType = (payload: EditVenueType) => {
 };
 
 export const deleteVenueType = (venueTypeCode: string) =>
-  apiPost<{ eventType: EventTypeResponse }>(
+  apiPost<{ venueType: VenueTypeResponse }>(
     `api/VenueType/Delete/${venueTypeCode}`,
     {},
   );

@@ -1,20 +1,22 @@
 import { useState } from "react";
 import AdminDeleteDialog from "@/Admin/components/Layouts/AdminDeleteDialog";
 import type { VenueData } from "@/Admin/DataTypes/VenueDataTypes.ts";
+import { deleteVenue } from "@/services/VenueService.ts";
 
 export default function VenueDataList({
   venues,
   additionalNumber,
+  onVenueDeleted,
 }: {
   venues: VenueData[];
   additionalNumber?: number;
+  onVenueDeleted: () => void;
 }) {
   return (
     <section className="mt-5">
       <h1 className="text-3xl font-semibold text-[#103263]">Venue List</h1>
 
       <div className="my-5 flex h-[33rem] w-full flex-col overflow-hidden rounded-md bg-[#F8F8FF]">
-        {/* Header Row */}
         <div className="flex h-16 items-center bg-[#615CB8] px-6 text-lg font-semibold text-gray-300">
           <div className="w-[10%] pl-14">No</div>
           <div className="w-[35%]">Venue Name</div>
@@ -23,13 +25,13 @@ export default function VenueDataList({
           <div className="w-[10%] text-right">Action</div>
         </div>
 
-        {/* Data Rows */}
         <div className="hide-scrollbar h-[29rem] overflow-y-scroll">
           {venues.map((venue, index) => (
             <VenueRow
               key={venue.venueCode}
               index={(additionalNumber ?? 0) + index + 1}
               {...venue}
+              onDeleted={onVenueDeleted}
             />
           ))}
         </div>
@@ -44,12 +46,24 @@ function VenueRow({
   venueName,
   venueTypeCode,
   capacity,
-}: VenueData & { index: number }) {
+  onDeleted,
+}: VenueData & { index: number; onDeleted: () => void }) {
   const [showDelete, setShowDelete] = useState(false);
 
-  const handleDelete = () => {
-    console.log("Deleted!", venueCode);
-    setShowDelete(false);
+  const handleDelete = async () => {
+    try {
+      const res = await deleteVenue(venueCode);
+      if (res.isSuccess) {
+        onDeleted();
+      } else {
+        alert(res.message || "Failed to delete venue");
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Error deleting venue");
+    } finally {
+      setShowDelete(false);
+    }
   };
 
   return (
