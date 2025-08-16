@@ -10,4 +10,10 @@ export interface BusinessEmailData {
   createdat: string;
 }
 
-export type BusinessEmailResponse = ApiResponse<{ businessEmailList: BusinessEmailData[] }>
+export type BusinessEmailResponse = ApiResponse<{
+  businessEmailList: BusinessEmailData[];
+}>;
+
+export type BusinessEmailByCode = ApiResponse<{
+  businessEmail: BusinessEmailData;
+}>;
