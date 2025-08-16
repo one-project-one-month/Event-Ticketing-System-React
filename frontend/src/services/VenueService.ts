@@ -26,10 +26,24 @@ export const createVenue = (payload: CreateVenueRequest) => {
   );
 };
 
-//
-// export const updateTicketType = (payload: updateTicketTypeData) =>
-//   apiPost<{ TicketType: TicketTypeResponse }>(`api/TicketType/Update`, payload);
-//
+export const updateVenue = (payload: CreateVenueRequest) => {
+  const formData = new FormData();
+
+  const files = payload.formData.getAll("VenueImage");
+
+  files.forEach((file) => {
+    if (file instanceof File) {
+      formData.append("VenueImage", file);
+    }
+  });
+
+  return apiPostFormWithQuery<null, CreateVenueParams>(
+    "api/Venue/Update",
+    payload.query,
+    formData,
+  );
+};
+
 export const getVenueByCode = (code: string) =>
   apiGet<VenueDataByCode["data"]>(`api/Venue/Edit/${code}`);
 //
