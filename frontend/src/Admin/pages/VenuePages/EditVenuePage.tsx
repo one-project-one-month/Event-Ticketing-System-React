@@ -108,6 +108,7 @@ export default function EditVenuePage() {
             label="Venue Name"
             value={venueName}
             name="venueName"
+            readonly
             type="text"
             onChange={(v) => setVenueName(v)}
             placeholder="Enter Venue Name"
@@ -117,6 +118,7 @@ export default function EditVenuePage() {
             label="Venue Type Code"
             value={venueTypeCode}
             name="venueTypeCode"
+            readonly
             type="text"
             onChange={(v) => setVenueTypeCode(v)}
             placeholder="Enter Type Code"
@@ -130,6 +132,7 @@ export default function EditVenuePage() {
             value={capacity}
             name="capacity"
             type="number"
+            readonly
             onChange={(v) => setCapacity(Number(v))}
             placeholder="Enter Capacity"
           />

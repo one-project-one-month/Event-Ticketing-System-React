@@ -28,6 +28,26 @@ const VenueList = () => {
     venue.venueName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  const handleExport = () => {
+    const headers = ["Venue Code", "Venue Name", "Type", "Capacity"];
+    const rows = venues.map((v) => [
+      v.venueCode,
+      v.venueName,
+      v.venueTypeCode,
+      v.capacity,
+    ]);
+
+    const csvContent = [headers, ...rows].map((e) => e.join(",")).join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "venues.csv");
+    link.click();
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentVenues = filteredVenues.slice(indexOfFirstItem, indexOfLastItem);
@@ -37,7 +57,7 @@ const VenueList = () => {
       {/* Search Bar */}
       <ToolBar
         addNewPath={`/admin/venue/create`}
-        onExport={() => {}}
+        onExport={handleExport}
         onSearch={(term) => {
           setSearchTerm(term);
           setCurrentPage(1);
