@@ -96,7 +96,7 @@ export default function CreateBusinessOwner() {
         onClose={() => setShowSuccess(false)}
         onConfirm={() => {
           setShowSuccess(false);
-          navigate("/admin/event/type");
+          navigate("/admin/business/owner");
         }}
       />
     </div>

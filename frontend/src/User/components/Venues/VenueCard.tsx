@@ -14,7 +14,7 @@ const VenueCard = ({
     <div className="relative h-[31rem] w-[28rem] overflow-hidden rounded-lg bg-[#071739] font-['figtree'] text-white">
       <div className="h-1/2 w-full">
         <img
-          src={imagePath || placeholderImage}
+          src={imagePath ? imagePath : placeholderImage}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).src = placeholderImage;
           }}

@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, Settings, LogOutIcon } from "lucide-react";
 import { adminSiteConfig } from "@/Admin/config/site.ts";
 import type { AdminNavItem } from "@/types";
 import LogoutConfirmation from "@/Admin/pages/Auth/LogoutConfirm";
+import {clearTokens} from '@/Admin/utils/authTokenUtils';
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function AdminSidebar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("admin-token");
+    clearTokens();
     navigate("/admin/login");
   };
 

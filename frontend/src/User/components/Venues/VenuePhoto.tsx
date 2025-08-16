@@ -1,5 +1,5 @@
 // VenuePhoto.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CArrowRight from "../icons/CArrowRight";
 import SampleVenue from "@/User/assets/sample-venue-1.png";
 
@@ -9,7 +9,15 @@ interface VenuePhotoProps {
 
 export default function VenuePhoto({ imagePaths }: VenuePhotoProps) {
   const [imgIndex, setImgIndex] = useState(0);
-  const [images, setImages] = useState(imagePaths);
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!imagePaths || imagePaths.length === 0) {
+      setImages([SampleVenue]);
+    } else {
+      setImages(imagePaths);
+    }
+  }, [imagePaths]);
 
   const handleImageError = (index: number) => {
     setImages((prev) =>
@@ -18,20 +26,17 @@ export default function VenuePhoto({ imagePaths }: VenuePhotoProps) {
   };
 
   const rightClickHandler = () => {
-    setImgIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const leftClickHandler = () => {
-    setImgIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
+
+  if (!images || images.length === 0) return null;
 
   return (
     <div>
-      {/* Image */}
       <div className="flex h-[35rem] w-full flex-row overflow-hidden rounded-lg">
         <img
           src={images[imgIndex]}
@@ -41,7 +46,6 @@ export default function VenuePhoto({ imagePaths }: VenuePhotoProps) {
         />
       </div>
 
-      {/* Controls */}
       <div className="mt-4 flex flex-row items-center justify-center gap-2">
         <CArrowRight
           className="[&>*]transition-colors [&>*]duration-300 size-8 rotate-180"

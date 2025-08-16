@@ -38,7 +38,7 @@ const Home = () => {
         <TotalCountContainer
           counts={[
             { count: homeData.homeStatus.completedEvents, label: "Completed Events" },
-            { count: homeData.homeStatus.activeEvents, label: "Events Active" },
+            { count: homeData.homeStatus.activeEvents, label: "Active Events" },
             { count: homeData.homeStatus.totalVenues, label: "Venues" },
             { count: homeData.homeStatus.ticketsSoldPercentage, label: "Tickets Sold", format: "percent" },
           ]}

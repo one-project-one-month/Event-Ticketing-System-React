@@ -9,6 +9,7 @@ import EventInfoPage from "./pages/Events/EventInfo";
 import TicketDetailPage from "./pages/Events/TicketDetail";
 import VenueDetailsPage from "./pages/Venues/VenueDetails";
 import CheckQr from "./pages/CheckQr";
+import SearchPage from "./pages/SearchPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, Component: EventPage },
           { path: "eventinfo/:eventcode", Component: EventInfoPage },
-          { path: "ticketdetails", Component: TicketDetailPage },
+          { path: "ticketdetails/:eventcode", Component: TicketDetailPage },
         ],
       },
       {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
         path: "checkqr",
         Component: CheckQr,
       },
+      {
+        path: "search",
+        Component : SearchPage,
+      }
     ],
   },
 ]);

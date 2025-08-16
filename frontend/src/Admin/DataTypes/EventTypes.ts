@@ -4,7 +4,7 @@ export interface EventTypeData {
     eventCategorycode: string;
     categoryname: string;
     createdby: string;
-    createdat: Date;
+    createdat: string;
 }
 
 export type EventTypeResponse = ApiResponse<{

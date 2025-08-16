@@ -31,7 +31,7 @@ const EventCard = ({
           </p>
           <NavLink
             to={`/events/eventinfo/${eventcode}`}
-            className="rounded-sm border border-black bg-white p-1 font-semibold text-black transition-colors hover:bg-[#071739] hover:text-white"
+            className="rounded-[5px] border border-black bg-white p-1 text-black transition-colors hover:bg-[#071739] hover:text-white"
           >
             View Details
           </NavLink>

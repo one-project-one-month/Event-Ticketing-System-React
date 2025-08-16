@@ -5,7 +5,7 @@ export interface TopThreeEventData{
     eventcode: string,
     eventname: string,
     address: string,
-    venueimage: string
+    venueimage: string[]
 }
 
 export interface TopThreeVenueData{
@@ -14,7 +14,7 @@ export interface TopThreeVenueData{
     venuename: string,
     venuetypename:string,
     capacity: number,
-    venueimage: string,
+    venueimage: string[],
     address: string
 }
 

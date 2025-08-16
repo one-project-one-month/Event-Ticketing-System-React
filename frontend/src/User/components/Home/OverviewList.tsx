@@ -42,7 +42,7 @@ export default function OverviewList({
           ? events.slice(0, 3).map((event) => (
               <EventCard eventcode={event.eventcode}
                 key={event.eventcode}
-                imageUrl={`${baseURL}/${event.venueimage}`}
+                imageUrl={`${baseURL}/${event.venueimage?.[0]}`}
                 title={event.eventname}
                 location={event.address}
               />
@@ -51,7 +51,7 @@ export default function OverviewList({
               <VenueCard
                 key={venue.venuecode}
                 venuecode={venue.venuecode}
-                imagePath={`${baseURL}/${venue.venueimage}`}
+                imagePath={`${baseURL}/${venue.venueimage?.[0]}`}
                 buildingName={venue.venuename}
                 name={venue.venuetypename}
                 capacity={venue.capacity}
