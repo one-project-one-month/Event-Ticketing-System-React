@@ -39,6 +39,7 @@ import ViewVenuePage from "@/Admin/pages/VenuePages/ViewVenuePage";
 import EditVenuePage from "@/Admin/pages/VenuePages/EditVenuePage.tsx";
 import BusinessEmailDetail from "@/Admin/components/pages/businessemail/BusinessEmailDetail.tsx";
 import VerificationCodeDetail from "@/Admin/components/pages/verificationcode/VerificationCodeDetail.tsx";
+import PurchasedHistoryDetailPage from "@/Admin/pages/PurchasedHistoryPages/PurchasedHistoryDetailPage.tsx";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -127,7 +128,10 @@ export const adminRouter = createBrowserRouter([
             path: "history/purchased",
             children: [
               { index: true, Component: PurchasedHistoryPage },
-              { path: ":purchasedCode", Component: PurchasedHistoryDetailPage },
+              {
+                path: ":transactionCode",
+                Component: PurchasedHistoryDetailPage,
+              },
             ],
           },
           {

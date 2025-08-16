@@ -7,6 +7,11 @@ import {
 } from "@/Admin/components/pages/HistoryTable.tsx";
 import type { TransactionHistory } from "@/Admin/DataTypes/PurchasedHistory.ts";
 import { getPurchasedHistoryList } from "@/services/PurchasedHistoryService.ts";
+import {
+  exportToCSV,
+  exportToExcel,
+  exportToPDF,
+} from "@/Admin/utils/exportUtils.ts";
 
 const PurchasedHistory = () => {
   const [transactions, setTransactions] = useState<TransactionHistory[]>([]);
@@ -51,6 +56,36 @@ const PurchasedHistory = () => {
     },
   ];
 
+  // --- Export Function ---
+  const handleExport = (format: string) => {
+    if (filteredTransactions.length === 0) {
+      return alert("No data to export.");
+    }
+
+    const exportData = filteredTransactions.map((t) => ({
+      Email: t.email,
+      "Event Name": t.eventName,
+      "Ticket Type Name": t.ticketTypeName,
+      "Transaction Date": new Date(t.transactionDate).toLocaleDateString(
+        "en-GB",
+      ),
+    }));
+
+    switch (format) {
+      case "csv":
+        exportToCSV(exportData, "purchasedHistory.csv");
+        break;
+      case "xlsx":
+        exportToExcel(exportData, "purchasedHistory.xlsx");
+        break;
+      case "pdf":
+        exportToPDF(exportData, "purchasedHistory.pdf");
+        break;
+      default:
+        break;
+    }
+  };
+
   if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
   if (error) return <p className="p-6 text-red-600">{error}</p>;
 
@@ -59,7 +94,7 @@ const PurchasedHistory = () => {
       {/* Search Bar */}
       <ToolBar
         addNewPath=""
-        onExport={() => {}}
+        onExport={handleExport}
         onSearch={(term) => setSearchTerm(term)}
         hideAddNew={true}
       />
@@ -71,7 +106,7 @@ const PurchasedHistory = () => {
           data={filteredTransactions}
           columns={transactionColumns}
           dataCodeName="transactionCode"
-          link="/admin/purchased/"
+          link="/admin/history/purchased/"
         />
       </div>
     </section>
