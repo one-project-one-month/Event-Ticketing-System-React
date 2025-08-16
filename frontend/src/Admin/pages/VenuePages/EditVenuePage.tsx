@@ -22,7 +22,7 @@ export default function EditVenuePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [initialUrls, setInitialUrls] = useState<string[]>([]);
-  const [deletedImages, setDeletedImages] = useState<string[]>([]);
+  const [deletedImages] = useState<string[]>([]);
 
   // Load existing venue
   useEffect(() => {

@@ -123,7 +123,13 @@ export const adminRouter = createBrowserRouter([
               { path: ":bEmailCode", Component: BusinessEmailDetail },
             ],
           },
-          { path: "history/purchased", Component: PurchasedHistoryPage },
+          {
+            path: "history/purchased",
+            children: [
+              { index: true, Component: PurchasedHistoryPage },
+              { path: ":purchasedCode", Component: PurchasedHistoryDetailPage },
+            ],
+          },
           {
             path: "history/verification",
             children: [

@@ -108,5 +108,3 @@ export const VerificationHistory = () => {
     </section>
   );
 };
-
-export default VerificationHistory;

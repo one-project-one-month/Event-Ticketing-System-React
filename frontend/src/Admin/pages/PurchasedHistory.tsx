@@ -1,22 +1,78 @@
+import { useEffect, useState } from "react";
 import ToolBar from "@/Admin/components/ui/ToolBar.tsx";
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle";
-import { HistoryTable } from "@/Admin/components/pages/HistoryTable.tsx";
+import {
+  HistoryTable,
+  type HistoryColumn,
+} from "@/Admin/components/pages/HistoryTable.tsx";
+import type { TransactionHistory } from "@/Admin/DataTypes/PurchasedHistory.ts";
+import { getPurchasedHistoryList } from "@/services/PurchasedHistoryService.ts";
 
 const PurchasedHistory = () => {
+  const [transactions, setTransactions] = useState<TransactionHistory[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // --- Fetch Data ---
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const res = await getPurchasedHistoryList();
+        if (res.isSuccess && Array.isArray(res.data?.transactionList)) {
+          setTransactions(res.data.transactionList);
+        } else {
+          setError(res.message || "Failed to fetch purchased history.");
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Error fetching purchased history.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
+  // --- Filter ---
+  const filteredTransactions = transactions.filter((t) =>
+    t.email.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  // --- Table Columns ---
+  const transactionColumns: HistoryColumn<TransactionHistory>[] = [
+    { key: "email", label: "Email" },
+    { key: "eventName", label: "Event Name" },
+    { key: "ticketTypeName", label: "Ticket Type Name" },
+    {
+      key: "transactionDate",
+      label: "Transaction Date",
+      render: (value) => new Date(value).toLocaleDateString("en-GB"),
+    },
+  ];
+
+  if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
+  if (error) return <p className="p-6 text-red-600">{error}</p>;
+
   return (
-    <section className={`mx-auto w-[70rem]`}>
+    <section className="mx-auto w-[70rem]">
       {/* Search Bar */}
       <ToolBar
-        addNewPath={``}
+        addNewPath=""
         onExport={() => {}}
-        onSearch={() => {}}
+        onSearch={(term) => setSearchTerm(term)}
         hideAddNew={true}
       />
 
-      {/*  Data Table and Title */}
-      <div className={`mt-5`}>
+      {/* Data Table and Title */}
+      <div className="mt-5">
         <AdminTitle>Purchased History</AdminTitle>
-        <HistoryTable />
+        <HistoryTable
+          data={filteredTransactions}
+          columns={transactionColumns}
+          dataCodeName="transactionCode"
+          link="/admin/purchased/"
+        />
       </div>
     </section>
   );
