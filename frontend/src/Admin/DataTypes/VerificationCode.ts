@@ -14,3 +14,5 @@ export interface VerificationCodeData {
 }
 
 export type VerificationCodeResponse = ApiResponse<{ verificationCodes: VerificationCodeData[] }>
+
+export type VerificationCodeByCode = ApiResponse<{ verificationCode: VerificationCodeData }>
