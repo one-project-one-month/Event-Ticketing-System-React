@@ -39,6 +39,16 @@ export interface ChangePasword {
 
 export type ChangePasswordResponse = ApiResponse<ChangePasword>;
 
+export interface SettingChangePasswordPayload {
+  adminCode: string;
+  userName: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+export type SettingChangePasswordResponse = ApiResponse<null>;
+
 export type LogoutResponseData = ApiResponse<null>;
 
 export interface LogoutRequestData {

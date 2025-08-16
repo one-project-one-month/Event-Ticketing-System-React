@@ -4,14 +4,16 @@ import type {
   UpdateAdminRequest,
   AdminResponse,
   UploadProfileImageRequest,
-  AdminDataByCodeResponse
+  AdminDataByCodeResponse,
+  createAdminData,
+  AdminListResponse,
 } from "@/Admin/DataTypes/Admin";
 
 export const getAdminData = (adminCode: string) =>
   apiGet<AdminResponse["data"]>(`api/Admin/Edit/${adminCode}`);
 
 export const getAdminDataByCode = (adminCode: string) =>
-  apiGet<AdminDataByCodeResponse["data"]>(`api/Admin/Edit/${adminCode}`)
+  apiGet<AdminDataByCodeResponse["data"]>(`api/Admin/Edit/${adminCode}`);
 
 export const updateAdminData = (payload: UpdateAdminRequest) =>
   apiPost<AdminResponse>(`/api/Admin/Update`, payload);
@@ -31,3 +33,15 @@ export const updateAdminProfileImage = (payload: UploadProfileImageRequest) => {
     },
   }).then((res) => res.data);
 };
+
+export const getAdmin = () =>
+  apiGet<AdminListResponse["data"]>("api/Admin/List");
+
+export const createAdmin = (payload: createAdminData) =>
+  apiPost<{ admin: AdminResponse }>("api/Admin/Create", payload);
+
+export const updateAdminInfo = (payload: UpdateAdminRequest) =>
+  apiPost<AdminResponse>("api/Admin/Update", payload);
+
+export const DeleteAdmin = (payload: { adminCode: string; password: string }) =>
+  apiPost<AdminResponse>("api/Admin/Delete", payload);

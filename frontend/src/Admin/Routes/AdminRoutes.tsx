@@ -5,7 +5,10 @@ import AdminLoginPage from "@/Admin/pages/Auth/Login";
 
 // Admin pages
 import AdminDashboardPage from "@/Admin/pages/Dashboard";
-import AdminPage from "@/Admin/pages/Admin";
+import AdminListPage from "@/Admin/pages/AdminListPages/AdminList";
+import CreateAdminPage from "@/Admin/pages/AdminListPages/CreateAdmin";
+import UpdateAdminPage from "@/Admin/pages/AdminListPages/UpdateAdmin";
+import DeleteAdminPage from "@/Admin/pages/AdminListPages/DeleteAdmin";
 import TicketTypePage from "@/Admin/pages/TicketTypePages/TicketType";
 import VenueTypePage from "@/Admin/pages/VenueType";
 import VenueListPage from "@/Admin/pages/VenueList";
@@ -16,6 +19,7 @@ import BusinessEmailPage from "@/Admin/pages/BusinessEmail";
 import PurchasedHistoryPage from "@/Admin/pages/PurchasedHistory";
 import VerificationHistoryPage from "@/Admin/pages/VerificationHistory";
 import SettingPage from "@/Admin/pages/Setting";
+import SettingChangePasswordPage from "@/Admin/pages/ChangePassword";
 import EventDetailPage from "../pages/EventListPages/EventDetail";
 import EventEditPage from "../pages/EventListPages/EventEdit";
 import CreateEventPage from "../pages/EventListPages/CreateEvent";
@@ -37,6 +41,7 @@ import EditVenueTypePage from "@/Admin/pages/VenueTypePages/EditVenueType.tsx";
 import CreateVenuePage from "@/Admin/pages/VenuePages/CreateVenuePage.tsx";
 import ViewVenuePage from "@/Admin/pages/VenuePages/ViewVenuePage";
 import EditVenuePage from "@/Admin/pages/VenuePages/EditVenuePage.tsx";
+import AdminDetailPage from "../pages/AdminListPages/AdminDetail";
 
 export const adminRouter = createBrowserRouter([
   {
@@ -49,6 +54,12 @@ export const adminRouter = createBrowserRouter([
   },
   { path: "/admin/reset-password", Component: ResetPasswordPage },
   { path: "/admin/reset-success", Component: ResetSuccess },
+  { path: ":adminCode/delete", Component: DeleteAdminPage },
+
+  {
+    path: ":adminCode/change-password",
+    Component: SettingChangePasswordPage,
+  },
   {
     path: "/admin",
     Component: ProtectedAdminRoute,
@@ -59,7 +70,15 @@ export const adminRouter = createBrowserRouter([
         children: [
           { index: true, Component: AdminDashboardPage },
           { path: "dashboard", Component: AdminDashboardPage },
-          { path: "admin", Component: AdminPage },
+          {
+            path: "admin",
+            children: [
+              { index: true, Component: AdminListPage },
+              { path: ":adminCode", Component: AdminDetailPage },
+              { path: "create", Component: CreateAdminPage },
+              { path: ":adminCode/edit", Component: UpdateAdminPage },
+            ],
+          },
           {
             path: "ticket-type",
             children: [
@@ -99,11 +118,11 @@ export const adminRouter = createBrowserRouter([
           {
             path: "event/list",
             children: [
-              {index: true, Component: EventListPage},
+              { index: true, Component: EventListPage },
               { path: ":eventCode", Component: EventDetailPage },
               { path: ":eventCode/edit", Component: EventEditPage },
-              {path:"create", Component: CreateEventPage}
-            ]
+              { path: "create", Component: CreateEventPage },
+            ],
           },
           {
             path: "business/owner",
