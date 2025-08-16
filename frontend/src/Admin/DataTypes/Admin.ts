@@ -9,7 +9,18 @@ export interface AdminData {
   profileImageUrl?: string;
 }
 
-export interface AdminDataByCodeData{
+export interface AdminDataList {
+  adminCode: string;
+  fullName: string;
+  email: string;
+  phoneNo: string;
+}
+
+export type AdminListResponse = ApiResponse<{
+  adminList: AdminDataList[];
+}>;
+
+export interface AdminDataByCodeData {
   adminCode: string;
   username: string;
   fullName: string;
@@ -19,8 +30,8 @@ export interface AdminDataByCodeData{
 }
 
 export type AdminDataByCodeResponse = ApiResponse<{
-  admin:AdminDataByCodeData;
-}>
+  admin: AdminDataByCodeData;
+}>;
 
 export interface UpdateAdminRequest {
   adminCode: string;
@@ -38,3 +49,11 @@ export interface UploadProfileImageRequest {
 export type AdminResponse = ApiResponse<{
   admin: AdminData;
 }>;
+
+export type createAdminData = {
+  username: string;
+  email: string;
+  phoneNo: string;
+  password: string;
+  fullName: string;
+};

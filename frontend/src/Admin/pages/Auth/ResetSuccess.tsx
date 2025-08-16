@@ -30,7 +30,7 @@ export default function ResetSuccess() {
           <Button
             className="h-10 w-full bg-[#43319A] font-medium text-white hover:bg-[#030812]/90"
             onClick={() => {
-              navigate("/admin/dashboard");
+              navigate("/admin/login");
             }}
           >
             LOGIN
