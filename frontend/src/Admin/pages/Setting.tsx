@@ -120,7 +120,7 @@ const Setting = () => {
       <div className="mx-[210px] max-w-lg p-6">
         <div className="rounded-lg bg-red-100 p-4 text-red-500">
           <img
-            src={`${baseURL}/${adminData?.profileImage}`}
+            src={`${baseURL}/${adminData?.profileImage}` || avatar}
             alt="profile image"
             className="h-20 w-32 rounded-md border object-cover"
           />
