@@ -20,6 +20,7 @@ const EventType = () => {
       const res = await getEventTypes();
 
       if (res.isSuccess && Array.isArray(res.data?.eventCategories)) {
+        console.log("Event Type :", res)
         setData(res.data.eventCategories);
       } else {
         console.error("Failed to fetch Event Types:", res.message);
@@ -114,7 +115,7 @@ const EventType = () => {
                     {event.categoryname}
                   </td>
                   <td className="px-[10px] py-[10px] text-center whitespace-nowrap font-medium text-lg">
-                    {new Date(event.createdat).toLocaleDateString()}
+                    {event.createdat}
                   </td>
                   <td className="px-[10px] py-[10px] whitespace-nowrap flex justify-center items-center gap-[6px]">
                     <Button

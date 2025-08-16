@@ -1,41 +1,51 @@
-import SampleVenue from "@/User/assets/sample-venue-1.png";
-import { useState } from "react";
+// VenuePhoto.tsx
+import { useState, useEffect } from "react";
 import CArrowRight from "../icons/CArrowRight";
+import SampleVenue from "@/User/assets/sample-venue-1.png";
 
-export default function VenuePhoto() {
-  const imagePaths = [
-    SampleVenue,
-    "https://www.tiogagardens.com/media/1207/llgrounds.jpg",
-  ];
+interface VenuePhotoProps {
+  imagePaths: string[];
+}
+
+export default function VenuePhoto({ imagePaths }: VenuePhotoProps) {
   const [imgIndex, setImgIndex] = useState(0);
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!imagePaths || imagePaths.length === 0) {
+      setImages([SampleVenue]);
+    } else {
+      setImages(imagePaths);
+    }
+  }, [imagePaths]);
+
+  const handleImageError = (index: number) => {
+    setImages((prev) =>
+      prev.map((img, i) => (i === index ? SampleVenue : img))
+    );
+  };
 
   const rightClickHandler = () => {
-    if (imgIndex == imagePaths.length - 1) {
-      setImgIndex(0);
-    } else {
-      setImgIndex(imgIndex + 1);
-    }
+    setImgIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const leftClickHandler = () => {
-    if (imgIndex == 0) {
-      setImgIndex(imagePaths.length - 1);
-    } else {
-      setImgIndex(imgIndex - 1);
-    }
+    setImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
+
+  if (!images || images.length === 0) return null;
 
   return (
     <div>
-      {/* Image */}
       <div className="flex h-[35rem] w-full flex-row overflow-hidden rounded-lg">
         <img
-          src={imagePaths[imgIndex]}
+          src={images[imgIndex]}
           alt="Venue Photo"
+          onError={() => handleImageError(imgIndex)}
           className="h-full w-full object-cover"
         />
       </div>
-      {/* control */}
+
       <div className="mt-4 flex flex-row items-center justify-center gap-2">
         <CArrowRight
           className="[&>*]transition-colors [&>*]duration-300 size-8 rotate-180"
@@ -43,7 +53,7 @@ export default function VenuePhoto() {
           onClick={leftClickHandler}
         />
         <p>
-          {imgIndex + 1} / {imagePaths.length}
+          {imgIndex + 1} / {images.length}
         </p>
         <CArrowRight
           className="[&>*]transition-colors [&>*]duration-300 size-8"

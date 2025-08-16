@@ -13,6 +13,7 @@ export default function EventDetail() {
   const navigate = useNavigate();
   const [event, setEvents] = useState<EventByCodeData | null>(null);
   const [loading, setLoading] = useState(true);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
       const fetchTicketType = async () => {
@@ -109,7 +110,7 @@ export default function EventDetail() {
             {event.venueImage?.map((img: string, i: number) => (
               <img
                 key={i}
-                src={img}
+                src={`${baseURL}/${img}`}
                 alt="Venue"
                 className="w-32 h-20 object-cover border"
               />

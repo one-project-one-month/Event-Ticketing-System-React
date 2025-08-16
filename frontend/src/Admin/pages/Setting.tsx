@@ -46,6 +46,7 @@ const Setting = () => {
         const res = await getAdminDataByCode(adminCode);
 
         if (res.isSuccess && res.data?.admin) {
+          console.log("Admin data: ", res);
           setAdminData(res.data.admin);
         }
       } catch (err) {
@@ -158,7 +159,7 @@ const Setting = () => {
           <div className="mr-10 flex flex-row">
             <div className="relative size-25 overflow-hidden rounded-full border-2 border-gray-200">
               <img
-                src={`${baseURL}/${adminData?.profileImage}` || avatar}
+                src={`${baseURL.replace(/\/$/, "")}/${adminData?.profileImage}`}
                 alt="Profile"
                 className="size-full object-cover"
               />
