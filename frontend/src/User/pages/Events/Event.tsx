@@ -1,7 +1,6 @@
 import { NavLink, useSearchParams } from "react-router-dom";
 import EventPostList from "@/User/components/Events/EventPostList";
 import { useEffect, useState } from "react";
-import type { EventData } from "@/Admin/DataTypes/Event";
 import { getUserEvents } from "@/services/UserEventServices";
 import type { UserEventData } from "@/User/DataTypes/Event";
 import ArrowRight from "@/User/assets/icons/arrow-right.svg";

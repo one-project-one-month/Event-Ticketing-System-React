@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EventCard from "./EventCard";
 import type { UserEventData } from "@/User/DataTypes/Event";
 
