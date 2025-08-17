@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 
 const TicketDetail = () => {
   const { eventcode } = useParams<{ eventcode: string }>();
-  if (!eventcode) return null;
   const [quantity, setQuantity] = useState<number>(1);
   const [transaction, setTransaction] = useState<ProcessTransactionPayload>({
     eventCode: eventcode as string,
@@ -26,6 +25,8 @@ const TicketDetail = () => {
   const [type, setType] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
+
+  if (!eventcode) return null;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -43,7 +44,7 @@ const TicketDetail = () => {
       res.data.ticketTypes.length > 0 &&
         setType(res.data.ticketTypes[0].tickettypecode);
     } else {
-      console.log("Userevent error: ", res.message)
+      console.log("Userevent error: ", res.message);
       setTicketTypes([]);
     }
   };
@@ -170,7 +171,7 @@ const TicketDetail = () => {
             <div className="mt-2">
               <select
                 id="ticketType"
-                className="w-full bg-white text-center rounded-[10px] border p-3 text-black"
+                className="w-full rounded-[10px] border bg-white p-3 text-center text-black"
                 value={transaction.ticketTypeCode}
                 onChange={(e) => {
                   const selectedCode = e.target.value;
@@ -179,12 +180,14 @@ const TicketDetail = () => {
                     ticketTypeCode: selectedCode,
                   }));
                   setType(selectedCode);
-                }}>
+                }}
+              >
                 <option value="">--- Select Ticket Type ---</option>
                 {ticketTypes.map((ticketType) => (
                   <option
                     key={ticketType.tickettypecode}
-                    value={ticketType.tickettypecode}>
+                    value={ticketType.tickettypecode}
+                  >
                     {ticketType.tickettypename}
                   </option>
                 ))}
@@ -195,7 +198,8 @@ const TicketDetail = () => {
               <p className="mt-2 text-lg font-semibold">
                 Price:{" "}
                 {
-                  ticketTypes.find((t) => t.tickettypecode === type)?.ticketprice
+                  ticketTypes.find((t) => t.tickettypecode === type)
+                    ?.ticketprice
                 }{" "}
                 ks
               </p>
@@ -261,7 +265,7 @@ const TicketDetail = () => {
           show={showVerifyDialog}
           setShow={setShowVerifyDialog}
           email={transaction.email}
-          transactionPayload={transaction} 
+          transactionPayload={transaction}
         />
       </div>
     </div>
