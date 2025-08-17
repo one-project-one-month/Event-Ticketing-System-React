@@ -1,5 +1,5 @@
 import { useState, type HTMLInputTypeAttribute } from "react";
-import { createBusinessOwner } from "@/services/BusinessOwnerServices";
+import { createBusinessEmail } from "@/services/BusinessOwnerServices";
 import type { createBusinessOwnerData } from "@/Admin/DataTypes/BusinessOwner";
 
 export default function VenueForm({ openDialog }: { openDialog: () => void }) {
@@ -19,7 +19,7 @@ export default function VenueForm({ openDialog }: { openDialog: () => void }) {
 
     try {
       setLoading(true);
-      const res = await createBusinessOwner(payload);
+      const res = await createBusinessEmail(payload);
 
       if (res.isSuccess) {
         openDialog();

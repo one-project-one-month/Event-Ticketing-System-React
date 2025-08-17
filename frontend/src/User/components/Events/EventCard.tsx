@@ -6,12 +6,12 @@ const EventCard = ({
   title,
   location,
   imageUrl,
-  eventcode
+  eventcode,
 }: {
   title: string;
   location: string;
   imageUrl: string;
-  eventcode:string;
+  eventcode: string;
 }) => {
   return (
     <div className="relative flex h-[500px] flex-col items-center justify-center overflow-auto rounded-md font-['figtree'] shadow-gray-800 transition-shadow hover:shadow-md dark:border">
@@ -31,7 +31,7 @@ const EventCard = ({
           </p>
           <NavLink
             to={`/events/eventinfo/${eventcode}`}
-            className="rounded-[5px] border border-black bg-white p-1 text-black transition-colors hover:bg-[#071739] hover:text-white"
+            className="rounded-[5px] border border-black bg-white p-1 py-2 whitespace-nowrap text-black transition-colors hover:bg-[#071739] hover:text-white"
           >
             View Details
           </NavLink>

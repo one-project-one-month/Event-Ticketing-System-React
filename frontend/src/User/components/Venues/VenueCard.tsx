@@ -35,7 +35,7 @@ const VenueCard = ({
             <p>{address}</p>
           </div>
         </div>
-        <div className="absolute right-4 bottom-8 w-fit">
+        <div className="absolute right-4 bottom-6 w-fit">
           <a
             className="float-right cursor-pointer rounded bg-white px-2.5 py-1.5 text-black transition-colors duration-300 hover:bg-[#103263] hover:text-white"
             href={`/venue/venuedetails/${venuecode}`}

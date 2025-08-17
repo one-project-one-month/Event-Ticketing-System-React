@@ -44,13 +44,20 @@ export default function VenueInformation({
       </div>
 
       {/* Further Details */}
-      <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue="item-1"
+      >
         {/* Venue Information */}
         <AccordionItem
           className="mb-14 border-0 bg-[#FAFAFA] px-6 py-5"
           value="item-1"
         >
-          <AccordionTrigger className="text-xl">Venue Information</AccordionTrigger>
+          <AccordionTrigger className="text-xl">
+            Venue Information
+          </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] text-lg text-balance">
             <p>{description || ""}</p>
           </AccordionContent>
@@ -61,13 +68,25 @@ export default function VenueInformation({
           className="mb-14 border-0 bg-[#FAFAFA] px-6 py-5"
           value="item-2"
         >
-          <AccordionTrigger className="text-xl">Facilities & Services</AccordionTrigger>
+          <AccordionTrigger className="text-xl">
+            Facilities & Services
+          </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] pt-3 text-lg text-balance">
-            <ul className="list-disc pl-6 leading-relaxed">
-              <li>
-                <strong>{facilities || ""}</strong>
-              </li>
-            </ul>
+            {facilities ? (
+              <ul className="list-disc pl-6 leading-relaxed">
+                {facilities
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter((item) => item.length > 0)
+                  .map((item, idx) => (
+                    <li key={idx}>
+                      <strong>{item}</strong>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p>No facilities listed.</p>
+            )}
           </AccordionContent>
         </AccordionItem>
 
@@ -76,7 +95,9 @@ export default function VenueInformation({
           className="mb-14 border-0 bg-[#FAFAFA] px-6 py-5"
           value="item-3"
         >
-          <AccordionTrigger className="text-xl">Additional Amenities</AccordionTrigger>
+          <AccordionTrigger className="text-xl">
+            Additional Amenities
+          </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4 border-t-2 border-[#e4e0e0] pt-3 text-lg text-balance">
             {addons?.length > 0 ? (
               <ul className="list-disc pl-6 leading-relaxed">
