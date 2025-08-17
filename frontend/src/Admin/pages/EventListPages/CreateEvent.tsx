@@ -16,6 +16,7 @@ import { getBusinessOwners } from "@/services/BusinessOwnerServices";
 import { Checkbox } from "@/Admin/components/ui/Checkbox";
 import type { VenueData } from "@/Admin/DataTypes/VenueDataTypes";
 import { getVenues } from "@/services/VenueService";
+import ErrorMessage from "@/Admin/components/Layouts/ErrorMessage.tsx";
 
 export default function CreateEvent() {
   const navigate = useNavigate();
@@ -100,6 +101,16 @@ export default function CreateEvent() {
 
   const handleSave = async () => {
     setError("");
+
+    if (form.startdate > form.enddate) {
+      setError("Start date cannot be later than end date.");
+      return;
+    }
+    if (form.enddate < form.startdate) {
+      setError("End date cannot be earlier than start date.");
+      return;
+    }
+
     try {
       const res = await createEvent(form);
       if (res && res.isSuccess) {
@@ -227,7 +238,7 @@ export default function CreateEvent() {
         </div>
       </div>
 
-      {error && <p className="mt-4 text-red-500">{error}</p>}
+      {error && <ErrorMessage text={error} />}
 
       <div className="mt-8 flex justify-end gap-[20px]">
         <PurpleOutlineButton text="Cancel" onClick={() => navigate(-1)} />
