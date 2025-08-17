@@ -1,7 +1,5 @@
 import { getUserEventByCode } from "@/services/UserEventServices";
-import type {
-  UserEventDataByCode,
-} from "@/User/DataTypes/Event";
+import type { UserEventDataByCode } from "@/User/DataTypes/Event";
 import {
   Calendar,
   MapPinned,
@@ -83,7 +81,7 @@ const TicketInfo = () => {
               <h2 className="flex items-center justify-start gap-5 place-self-start text-3xl font-semibold">
                 <Ticket size={40} /> Ticket Information
               </h2>
-              <div className="flex justify-end gap-5">
+              <div className="flex w-full justify-start gap-5">
                 {data?.ticketTypes.map((type) => (
                   <div
                     key={type.tickettypecode}
@@ -94,14 +92,21 @@ const TicketInfo = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex w-fit items-center justify-end gap-3 rounded-full bg-[#FF4D4D] px-3 py-2">
+              <div className="mt-8 flex w-fit items-center justify-end gap-3 rounded-full bg-[#FF4D4D] px-3 py-2">
                 <MessageCircleWarning size={40} />{" "}
-                <p className="text-xl">No refunds after August 15.</p>
+                <p className="text-xl">
+                  No refunds after{" "}
+                  {data?.startdate &&
+                    new Date(data?.startdate).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                    })}
+                </p>
               </div>
               <div className="w-full">
                 <NavLink
                   to={`/events/ticketdetails/${data?.eventcode}`}
-                  className="float-end rounded-full bg-gradient-to-r from-[#3985F3] via-[#2DB5DE] to-[#2066C9] px-8 py-5 text-4xl font-semibold"
+                  className="float-end rounded-full bg-gradient-to-r from-[#3985F3] via-[#2DB5DE] to-[#2066C9] px-8 py-5 text-3xl font-semibold"
                 >
                   Get Your Ticket Now
                 </NavLink>
@@ -110,7 +115,7 @@ const TicketInfo = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-[1fr_600px] gap-4 px-8 py-5">
+      <div className="grid grid-cols-[1fr_500px] gap-4 px-12 py-5">
         <div className="">
           <h2 className="text-3xl font-bold">ABOUT EVENT</h2>
           <p className="py-5 ps-2 text-2xl font-semibold">

@@ -25,8 +25,7 @@ const TicketDetail = () => {
   const [type, setType] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
-
-  if (!eventcode) return null;
+  const selectedTicket = ticketTypes.find((t) => t.tickettypecode === type);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -41,10 +40,11 @@ const TicketDetail = () => {
       console.log("User events: ", res.data);
       setTicketTypes(res.data.ticketTypes);
       setEventName(res.data.eventname);
-      res.data.ticketTypes.length > 0 &&
+      if (res.data.ticketTypes.length > 0) {
         setType(res.data.ticketTypes[0].tickettypecode);
+      }
     } else {
-      console.log("Userevent error: ", res.message);
+      console.log("User Event error: ", res.message);
       setTicketTypes([]);
     }
   };
@@ -76,13 +76,15 @@ const TicketDetail = () => {
     fetchUserEventByCode(eventcode as string);
   }, []);
 
+  if (!eventcode) return null;
+
   return (
     <div className="relative flex items-center justify-center py-10">
       <div className="grid w-[75%] grid-cols-2 rounded-sm border bg-[url('/yw-event-img/detail-bg.png')] bg-cover bg-center shadow-sm">
         <div className="items-left flex flex-col justify-end ps-20 pb-20 text-8xl font-extrabold text-white text-shadow-2xs">
           <h2>{eventName}</h2>
         </div>
-        <div className="items-left flex flex-col justify-evenly gap-3 bg-white/10 p-20 text-white backdrop-blur-sm">
+        <div className="items-left flex flex-col justify-evenly gap-5 bg-black/10 p-20 text-white backdrop-blur-md">
           <div className="flex flex-col">
             <label htmlFor="name" className="text-xl font-semibold">
               Full Name
@@ -168,42 +170,31 @@ const TicketDetail = () => {
             <label htmlFor="ticketType" className="text-xl font-semibold">
               Ticket Type
             </label>
-            <div className="mt-2">
-              <select
-                id="ticketType"
-                className="w-full rounded-[10px] border bg-white p-3 text-center text-black"
-                value={transaction.ticketTypeCode}
-                onChange={(e) => {
-                  const selectedCode = e.target.value;
-                  setTransaction((prev) => ({
-                    ...prev,
-                    ticketTypeCode: selectedCode,
-                  }));
-                  setType(selectedCode);
-                }}
-              >
-                <option value="">--- Select Ticket Type ---</option>
-                {ticketTypes.map((ticketType) => (
-                  <option
-                    key={ticketType.tickettypecode}
-                    value={ticketType.tickettypecode}
+            <div className="flex w-full justify-start gap-5">
+              {ticketTypes.map((t) => {
+                const isSelected = t.tickettypecode === type;
+                return (
+                  <div
+                    key={t.tickettypecode}
+                    className={`w-fit cursor-pointer rounded-sm px-4 py-3 text-center ${
+                      isSelected
+                        ? "bg-[#103263] text-white"
+                        : "bg-white text-[#103263]"
+                    }`}
+                    onClick={() => {
+                      setType(t.tickettypecode);
+                      setTransaction((prev) => ({
+                        ...prev,
+                        ticketTypeCode: t.tickettypecode,
+                      }));
+                    }}
                   >
-                    {ticketType.tickettypename}
-                  </option>
-                ))}
-              </select>
+                    <h3 className="font-semibold">{t.tickettypename}</h3>
+                    <p>{t.ticketprice.toLocaleString()} MMK</p>
+                  </div>
+                );
+              })}
             </div>
-
-            {type && (
-              <p className="mt-2 text-lg font-semibold">
-                Price:{" "}
-                {
-                  ticketTypes.find((t) => t.tickettypecode === type)
-                    ?.ticketprice
-                }{" "}
-                ks
-              </p>
-            )}
           </div>
 
           <div>
@@ -212,11 +203,12 @@ const TicketDetail = () => {
               <Button
                 className="cursor-pointer"
                 onClick={() => {
-                  transaction.ticketQuantity > 1 &&
+                  if (transaction.ticketQuantity > 1) {
                     setTransaction((prev) => ({
                       ...prev,
                       ticketQuantity: prev.ticketQuantity - 1,
                     }));
+                  }
                 }}
               >
                 <Minus />
@@ -244,11 +236,23 @@ const TicketDetail = () => {
                 <Plus />
               </Button>
             </div>
+            {selectedTicket && (
+              <p className="mt-5 text-lg font-semibold">
+                Total Cost:{" "}
+                {(
+                  Number(selectedTicket.ticketprice) *
+                  transaction.ticketQuantity
+                ).toLocaleString()}{" "}
+                ks
+              </p>
+            )}
           </div>
-          <p className="h-3 text-center text-xl font-semibold text-red-500">
-            {error && error}
-          </p>
-          <div className="flex justify-end py-5">
+          {error && (
+            <p className="h-3 text-center text-xl font-semibold text-red-500">
+              {error}
+            </p>
+          )}
+          <div className="flex justify-end pb-5">
             <Button
               onClick={handleConfirm}
               className="w-full cursor-pointer rounded-md bg-[#071739] p-8 text-2xl text-white hover:bg-white hover:text-[#071739]"

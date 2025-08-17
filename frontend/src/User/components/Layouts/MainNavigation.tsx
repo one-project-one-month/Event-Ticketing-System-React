@@ -21,7 +21,6 @@ interface MainNavigationProps {
 }
 
 const MainNavigation = ({ items }: MainNavigationProps) => {
-
   return (
     <div className={`hidden w-full items-center justify-between gap-6 lg:flex`}>
       <Link to="/" className="ml-5 flex items-center space-x-4">
@@ -47,23 +46,25 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
                           "rounded-none border-b-2 border-transparent hover:border-white",
                           "px-3 py-5",
                           "transition-colors duration-200",
-                        )}>
+                        )}
+                      >
                         {item.icon && (
                           <item.icon
                             className="size-4 text-white"
-                            aria-hidden="true"/>
+                            aria-hidden="true"
+                          />
                         )}
                         <span className="sr-only">Search</span>
                       </button>
                     </DialogTrigger>
                     <DialogContent
-                      className="p-0 sm:max-w-4xl w-full h-[80vh] max-h-[90vh] overflow-y-auto 
-                                bg-transparent border-none shadow-none flex items-center justify-center"
-                      showCloseButton={false}>
-                    <SearchFormOverlay />
-                </DialogContent>
-                </Dialog>
-              </NavigationMenuItem>
+                      className="flex h-56 max-h-[90vh] w-full overflow-y-auto border-none bg-transparent p-0 shadow-none sm:max-w-4xl"
+                      showCloseButton={false}
+                    >
+                      <SearchFormOverlay />
+                    </DialogContent>
+                  </Dialog>
+                </NavigationMenuItem>
               );
             }
             return (
