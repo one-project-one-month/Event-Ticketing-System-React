@@ -4,7 +4,7 @@ export interface QRInfo {
   qrString: string;
   eventName: string;
   eventCode: string;
-  eventdate: string;
+  eventDate: string;
   eventTimeFrom: string;
   eventTimeTo: string;
   gateOpenTime: string;

@@ -1,11 +1,13 @@
 import AdminTitle from "@/Admin/components/Layouts/AdminTitle.tsx";
 import AdminInputLabel from "@/Admin/components/Layouts/AdminInputLabel.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminActionDialog from "@/Admin/components/Layouts/AdminActionDialog.tsx";
 import AddonsInputGroup from "@/Admin/components/pages/venue/AddonInputGroup.tsx";
 import VenueImageUpload from "@/Admin/components/pages/venue/VenueImageUpload.tsx";
 import type { CreateVenueParams } from "@/Admin/DataTypes/VenueDataTypes";
 import { createVenue } from "@/services/VenueService";
+import { getVenueTypes } from "@/services/VenueTypeService.ts";
+import type { VenueTypeData } from "@/Admin/DataTypes/VenueType.ts";
 
 export default function CreateVenuePage() {
   const [venueName, setVenueName] = useState("");
@@ -18,6 +20,23 @@ export default function CreateVenuePage() {
   const [addons, setAddons] = useState<string[]>([]);
   const [images, setImages] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [venueTypes, setVenueTypes] = useState<VenueTypeData[]>([]);
+
+  useEffect(() => {
+    const fetchVenueTypes = async () => {
+      try {
+        const res = await getVenueTypes();
+        if (res.isSuccess) {
+          setVenueTypes(res.data!.venueTypeList);
+        } else {
+          console.error("Failed to load venue types:", res.message);
+        }
+      } catch (e) {
+        console.error("Error fetching venue types", e);
+      }
+    };
+    fetchVenueTypes();
+  }, []);
 
   const handleSubmit = async () => {
     if (!venueName.trim() || !venueTypeCode.trim()) {
@@ -81,15 +100,24 @@ export default function CreateVenuePage() {
             placeholder="Enter Venue Name"
             required={true}
           />
-          <AdminInputLabel
-            label="Venue Type Code"
-            value={venueTypeCode}
-            name="venueTypeCode"
-            type="text"
-            onChange={(v) => setVenueTypeCode(v)}
-            placeholder="Enter Type Code"
-            required={true}
-          />
+          {/* Select Box for Venue Type */}
+          <div className="flex w-96 flex-col gap-2">
+            <label className="text-xl text-[#615CB8]">
+              Venue Type <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={venueTypeCode}
+              onChange={(e) => setVenueTypeCode(e.target.value)}
+              className="rounded-[10px] border border-gray-300 p-2 text-center focus:border-purple-500 focus:ring-purple-500"
+            >
+              <option value="">-- Select Venue Type --</option>
+              {venueTypes.map((type) => (
+                <option key={type.venueTypeCode} value={type.venueTypeCode}>
+                  {type.venueTypename}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="flex justify-between">

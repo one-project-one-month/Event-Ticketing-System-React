@@ -41,7 +41,14 @@ const CheckQr = () => {
 
     const result = await validateQR(file);
     if (result.valid && result.data) {
-      setQrInfo(result.data);
+      const decodedData: QRInfo = Object.fromEntries(
+        Object.entries(result.data).map(([key, value]) => [
+          key,
+          typeof value === "string" ? decodeURIComponent(value) : value,
+        ]),
+      ) as QRInfo;
+
+      setQrInfo(decodedData);
       setStep("complete");
       setTimeout(() => setStep("show"), 1000);
     } else {
@@ -51,7 +58,7 @@ const CheckQr = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between bg-[#e6e6e6] px-0 py-0">
+    <div className="flex flex-col items-center justify-between bg-[#e6e6e6] px-0 py-0">
       <div className="w-full max-w-3xl space-y-6 text-center">
         {step === "initial" && (
           <Dropzone

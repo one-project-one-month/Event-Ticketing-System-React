@@ -11,20 +11,22 @@ import { useMemo } from "react";
 import type { DashboardTicketSale } from "@/Admin/DataTypes/Dashboard.ts";
 
 function generateEvenTicks(data: DashboardTicketSale[], steps = 4) {
-  if (!data || data.length === 0) return [0];
+  if (!data || data.length === 0) return [0, 1]; // default
+
   const max = Math.max(...data.map((d) => d.totalCount));
-  const roundedMax = Math.ceil(max / 100) * 100;
 
-  // FIX: Handle the case where all data values are zero
-  if (roundedMax === 0) {
-    return [0, 100]; // Return a default scale to avoid duplicate [0, 0, 0] keys
-  }
+  if (max === 0) return [0, 1]; // avoid [0,0,0]
 
-  const step = Math.ceil(roundedMax / steps);
+  // Decide a nice step
+  const step = Math.ceil(max / steps) || 1; // at least 1
   const ticks = [];
   for (let i = 0; i <= steps; i++) {
     ticks.push(i * step);
   }
+
+  // Ensure the last tick is at least max
+  if (ticks[ticks.length - 1] < max) ticks.push(max);
+
   return ticks;
 }
 
@@ -58,7 +60,7 @@ export default function TicketSaleChart({ data }: TicketSaleChartProps) {
           <YAxis
             axisLine={false}
             tickLine={false}
-            domain={[0, "dataMax + 100"]}
+            domain={[0, Math.max(...ticks)]}
             ticks={ticks}
           />
           <Tooltip />

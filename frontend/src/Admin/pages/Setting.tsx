@@ -120,7 +120,11 @@ const Setting = () => {
       <div className="mx-[210px] max-w-lg p-6">
         <div className="rounded-lg bg-red-100 p-4 text-red-500">
           <img
-            src={`${baseURL}/${adminData?.profileImage}` || avatar}
+            src={
+              adminData?.profileImage != null
+                ? `${baseURL}/${adminData?.profileImage}`
+                : avatar
+            }
             alt="profile image"
             className="h-20 w-32 rounded-md border object-cover"
           />
@@ -158,11 +162,23 @@ const Setting = () => {
         <div className="flex items-center justify-between gap-5">
           <div className="mr-10 flex flex-row">
             <div className="relative size-25 overflow-hidden rounded-full border-2 border-gray-200">
-              <img
-                src={`${baseURL.replace(/\/$/, "")}/${adminData?.profileImage}`}
-                alt="Profile"
-                className="size-full object-cover"
-              />
+              {selectedImage == null ? (
+                <img
+                  src={
+                    adminData?.profileImage != null
+                      ? `${baseURL.replace(/\/$/, "")}/${adminData?.profileImage}`
+                      : avatar
+                  }
+                  alt="Profile"
+                  className="size-full object-cover"
+                />
+              ) : (
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Profile"
+                  className="size-full object-cover"
+                />
+              )}
 
               {isEditing && (
                 <>

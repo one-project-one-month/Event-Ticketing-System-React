@@ -57,13 +57,17 @@ export default function AdminNavBar() {
         <div className="mt-2">
           <ModeToggle />
         </div>
-        <Button className="relative mt-2 bg-transparent text-[#43319A] shadow-none hover:cursor-pointer hover:bg-transparent dark:text-[#E6E0FF]">
+        <Button className="relative mt-2 hidden bg-transparent text-[#43319A] shadow-none hover:cursor-pointer hover:bg-transparent dark:text-[#E6E0FF]">
           <BellIcon className="size-7" />
         </Button>{" "}
         <Link to="/admin/setting">
           <div className="flex items-center gap-x-4 hover:cursor-pointer">
             <img
-              src={`${baseURL}/${admin?.profileImage}` || avatar}
+              src={
+                admin?.profileImage
+                  ? `${baseURL}/${admin?.profileImage}`
+                  : avatar
+              }
               alt="avatar"
               className="h-[50px] w-[50px] rounded-full border"
             />

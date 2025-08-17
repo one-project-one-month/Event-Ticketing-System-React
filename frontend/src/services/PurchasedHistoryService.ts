@@ -11,5 +11,5 @@ export const getPurchasedHistoryList = () =>
 
 export const getTransactionDetailByCode = (code: string) =>
   apiGet<TransactionDetailResponse["data"]>(
-    `api/Transaction/GetTransactionHistoryList/${code}`,
+    `api/Transaction/GetTransactionHistoryDetail/${code}`,
   );

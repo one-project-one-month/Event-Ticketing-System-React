@@ -19,43 +19,46 @@ export default function VenueImageUpload({
   initialUrls = [],
 }: VenueImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const isReplacingAll = images.length > 0;
 
   const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if (readonly) return;
+    if (!e.target.files) return;
 
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files);
-      const validFiles: File[] = [];
+    const filesArray = Array.from(e.target.files);
+    const validFiles: File[] = [];
 
-      filesArray.forEach((file) => {
-        if (file.size > 5 * 1024 * 1024) {
-          alert(`${file.name} is larger than 5MB and will not be added.`);
-        } else {
-          validFiles.push(file);
-        }
-      });
-
-      if (validFiles.length > 0) {
-        setImages((prev) => [...prev, ...validFiles]);
+    filesArray.forEach((file) => {
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`${file.name} is larger than 5MB and will not be added.`);
+      } else {
+        validFiles.push(file);
       }
+    });
+
+    if (validFiles.length > 0) {
+      setImages((prev) => [...prev, ...validFiles]);
     }
   };
 
-  const handleRemove = (index: number) => {
+  const handleRemoveNew = (index: number) => {
     if (readonly) return;
     setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveExisting = () => {
+    if (readonly || isReplacingAll) return;
+  };
+
+  const clearNewUploads = () => {
+    setImages([]);
   };
 
   const openFileDialog = () => {
     if (readonly) return;
     inputRef.current?.click();
   };
-
-  // Build all preview URLs: backend URLs first, then local object URLs
-  const previews = [
-    ...initialUrls,
-    ...images.map((f) => URL.createObjectURL(f)),
-  ];
 
   return (
     <div className="mt-6 w-96">
@@ -74,46 +77,124 @@ export default function VenueImageUpload({
         />
       )}
 
-      {previews.length === 0 ? (
-        !readonly && (
-          <button
-            onClick={openFileDialog}
-            className="mt-3 flex w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-md bg-[#615CB8] py-4 text-white hover:text-gray-400"
-          >
-            <img src="/icons/Upload.svg" alt="Upload Icon" />
-            Upload Image
-          </button>
-        )
-      ) : (
-        <div
-          className={`mt-3 flex w-96 flex-wrap justify-center gap-5 rounded border border-gray-400 p-3 ${
-            !readonly ? "cursor-pointer" : ""
-          }`}
-          onClick={openFileDialog}
-        >
-          {previews.map((url, index) => (
-            <div
-              key={index}
-              className="relative border border-dashed border-gray-500 p-2"
-            >
-              <img
-                src={url}
-                alt={`Image ${index + 1}`}
-                className="h-24 w-24 rounded object-cover"
-              />
-              {!readonly && index >= initialUrls.length && (
+      {/* Existing images */}
+      <div className="mt-3 rounded border border-gray-300 p-3">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-medium text-gray-700">Existing Images</p>
+          {!readonly && isReplacingAll && (
+            <span className="text-xs text-gray-500">
+              These will be <b>replaced</b> when you save.
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-4">
+          {initialUrls.length === 0 ? (
+            <p className="text-sm text-gray-500">No existing images.</p>
+          ) : (
+            initialUrls.map((url, idx) => (
+              <div
+                key={`exist-${idx}`}
+                className={`relative border border-dashed border-gray-500 p-2 ${
+                  isReplacingAll ? "opacity-50" : ""
+                }`}
+                title={isReplacingAll ? "Will be replaced on save" : ""}
+              >
+                <img
+                  src={`${baseUrl}/${url}`}
+                  alt={`Existing ${idx + 1}`}
+                  className="h-24 w-24 rounded object-cover"
+                />
+                {!readonly && !isReplacingAll && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveExisting();
+                    }}
+                    className="absolute top-1 right-1 cursor-pointer rounded bg-red-500 px-1 text-xs text-white"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* New images (replacement) */}
+      <div className="mt-3 rounded border border-gray-300 p-3">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-medium text-gray-700">New Uploads</p>
+          {!readonly && (
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={openFileDialog}
+                className="rounded bg-[#615CB8] px-3 py-1 text-sm text-white hover:opacity-90"
+              >
+                Upload Image(s)
+              </button>
+              {isReplacingAll && (
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRemove(index - initialUrls.length);
-                  }}
-                  className="absolute top-1 right-1 cursor-pointer rounded bg-red-500 px-1 text-xs text-white"
+                  type="button"
+                  onClick={clearNewUploads}
+                  className="rounded border px-3 py-1 text-sm text-gray-700 hover:bg-gray-50"
                 >
-                  ✕
+                  Clear
                 </button>
               )}
             </div>
-          ))}
+          )}
+        </div>
+
+        {images.length === 0 ? (
+          <p className="text-sm text-gray-500">
+            {readonly
+              ? "No new uploads."
+              : "You can upload images here. If you upload any, all existing images will be replaced when you save."}
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-4">
+            {images.map((file, index) => (
+              <div
+                key={`new-${index}`}
+                className="relative border border-dashed border-gray-500 p-2"
+              >
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`New ${index + 1}`}
+                  className="h-24 w-24 rounded object-cover"
+                />
+                {!readonly && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveNew(index);
+                    }}
+                    className="absolute top-1 right-1 cursor-pointer rounded bg-red-500 px-1 text-xs text-white"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Warnings */}
+      {!readonly && (
+        <div className="mt-2 space-y-1 text-xs text-gray-500">
+          <p>• Max file size 5MB per image.</p>
+          {isReplacingAll ? (
+            <p>
+              • You added new image(s):{" "}
+              <b>all existing images will be replaced</b> after saving.
+            </p>
+          ) : (
+            <p>• Removing an existing image deletes it after saving.</p>
+          )}
         </div>
       )}
     </div>

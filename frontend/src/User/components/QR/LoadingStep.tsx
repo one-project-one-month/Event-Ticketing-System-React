@@ -5,7 +5,10 @@ interface LoadingStepProps {
   onCancel: () => void;
 }
 
-export const LoadingStep: React.FC<LoadingStepProps> = ({ progress, onCancel }) => {
+export const LoadingStep: React.FC<LoadingStepProps> = ({
+  progress,
+  onCancel,
+}) => {
   const size = 160;
   const strokeWidth = 12;
   const radius = (size - strokeWidth) / 2;
@@ -13,7 +16,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({ progress, onCancel }) 
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[360px] mt-16 border-2 border-dashed border-black rounded-lg bg-[#e6e6e6]">
+    <div className="my-16 flex h-[360px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-black bg-[#e6e6e6]">
       <svg width={size} height={size} className="mb-4">
         <circle
           className="text-gray-300"
@@ -57,11 +60,13 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({ progress, onCancel }) 
         </text>
       </svg>
 
-      <div className="text-[#233b75ff] text-sm font-medium mb-3">Uploading...</div>
+      <div className="mb-3 text-sm font-medium text-[#233b75ff]">
+        Uploading...
+      </div>
 
       <button
         onClick={onCancel}
-        className="border border-black text-black px-6 py-2 rounded-[4px] hover:bg-muted transition"
+        className="hover:bg-muted rounded-[4px] border border-black px-6 py-2 text-black transition"
       >
         Cancel
       </button>

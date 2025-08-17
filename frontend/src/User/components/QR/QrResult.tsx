@@ -40,6 +40,56 @@ export default function QrResult({ onClose, info }: QrResultProps) {
     }
   };
 
+  function formatDateString(dateStr: string): string {
+    const [day, month, year] = dateStr.split("/").map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  function parseDateTime(str: string): Date {
+    const [datePart, timePart, meridiem] = str.split(" ");
+    const [day, month, year] = datePart.split("/").map(Number);
+    let [hour, minute, second] = timePart.split(":").map(Number);
+
+    if (meridiem.toUpperCase() === "PM" && hour < 12) hour += 12;
+    if (meridiem.toUpperCase() === "AM" && hour === 12) hour = 0;
+
+    return new Date(year, month - 1, day, hour, minute, second);
+  }
+
+  function formatEventTimeRange(startStr: string, endStr: string): string {
+    const startDate = parseDateTime(startStr);
+    const endDate = parseDateTime(endStr);
+
+    const startTime = startDate.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    const endTime = endDate.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+
+    // Same day → just show times
+    if (
+      startDate.getDate() === endDate.getDate() &&
+      startDate.getMonth() === endDate.getMonth() &&
+      startDate.getFullYear() === endDate.getFullYear()
+    ) {
+      return `${startTime} - ${endTime}`;
+    } else {
+      // Different day → show end date after time
+      // const endDateStr = formatDateString(
+      //   `${endDate.getDate()}/${endDate.getMonth() + 1}/${endDate.getFullYear()}`,
+      // );
+      return `${startTime} - ${endTime}`;
+    }
+  }
+
   return (
     <div className="mt-10 flex w-full flex-col items-center">
       {/* This container is NOT inside printRef — so it won't be captured */}
@@ -98,10 +148,13 @@ export default function QrResult({ onClose, info }: QrResultProps) {
               Time
             </div>
             <div className="space-y-1">
-              <InfoRow label="Date:" value={info.eventdate} />
+              <InfoRow label="Date:" value={formatDateString(info.eventDate)} />
               <InfoRow
                 label="Time:"
-                value={`${info.eventTimeFrom} - ${info.eventTimeTo}`}
+                value={formatEventTimeRange(
+                  info.eventTimeFrom,
+                  info.eventTimeTo,
+                )}
               />
               <InfoRow label="Gate open:" value={info.gateOpenTime} />
             </div>
