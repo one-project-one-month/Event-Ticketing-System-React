@@ -4,6 +4,11 @@ import VenueDataList from "@/Admin/components/pages/venue/VenueDataList.tsx";
 import { useEffect, useState } from "react";
 import { getVenues } from "@/services/VenueService.ts";
 import type { VenueData } from "@/Admin/DataTypes/VenueDataTypes.ts";
+import {
+  exportToCSV,
+  exportToExcel,
+  exportToPDF,
+} from "@/Admin/utils/exportUtils.ts";
 
 const VenueList = () => {
   const [venues, setVenues] = useState<VenueData[]>([]);
@@ -28,24 +33,32 @@ const VenueList = () => {
     venue.venueName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleExport = () => {
-    const headers = ["Venue Code", "Venue Name", "Type", "Capacity"];
-    const rows = venues.map((v) => [
-      v.venueCode,
-      v.venueName,
-      v.venueTypeCode,
-      v.capacity,
-    ]);
+  const handleExport = (format: string) => {
+    if (filteredVenues.length === 0) {
+      alert("No data to export.");
+      return;
+    }
 
-    const csvContent = [headers, ...rows].map((e) => e.join(",")).join("\n");
+    const exportData = filteredVenues.map((v) => ({
+      "Venue Code": v.venueCode,
+      "Venue Name": v.venueName,
+      "Venue Type": v.venueTypeCode,
+      Capacity: v.capacity ?? "Not provided",
+    }));
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", "venues.csv");
-    link.click();
+    switch (format) {
+      case "csv":
+        exportToCSV(exportData, "venues.csv");
+        break;
+      case "xlsx":
+        exportToExcel(exportData, "venues.xlsx");
+        break;
+      case "pdf":
+        exportToPDF(exportData, "venues.pdf");
+        break;
+      default:
+        alert("Invalid export format selected.");
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
