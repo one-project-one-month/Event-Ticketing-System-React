@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp, Settings, LogOutIcon } from "lucide-react";
 import { adminSiteConfig } from "@/Admin/config/site.ts";
 import type { AdminNavItem } from "@/types";
 import LogoutConfirmation from "@/Admin/pages/Auth/LogoutConfirm";
-import {clearTokens} from '@/Admin/utils/authTokenUtils';
+import { clearTokens } from "@/Admin/utils/authTokenUtils";
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export default function AdminSidebar() {
                         onClick={() => navigate(child.href)}
                       >
                         <div
-                          className={`my-3 ml-3 flex cursor-pointer gap-x-6 rounded-s-3xl px-3 py-1 transition-all duration-200 ease-in-out hover:bg-[#F8F8FF] hover:text-[#030812] ${location.pathname === child.href ? "bg-[#F8F8FF] text-[#030812]" : ""} `}
+                          className={`my-3 ml-3 flex cursor-pointer gap-x-6 rounded-s-3xl px-3 py-1 whitespace-nowrap transition-all duration-200 ease-in-out hover:bg-[#F8F8FF] hover:text-[#030812] ${location.pathname === child.href ? "bg-[#F8F8FF] text-[#030812]" : ""} `}
                         >
                           {child.icon && <child.icon className="size-5" />}
                           {child.title}

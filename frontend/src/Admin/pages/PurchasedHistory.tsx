@@ -16,8 +16,8 @@ import {
 const PurchasedHistory = () => {
   const [transactions, setTransactions] = useState<TransactionHistory[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState("");
 
   // --- Fetch Data ---
   useEffect(() => {
@@ -27,13 +27,14 @@ const PurchasedHistory = () => {
         if (res.isSuccess && Array.isArray(res.data?.transactionList)) {
           setTransactions(res.data.transactionList);
         } else {
-          setError(res.message || "Failed to fetch purchased history.");
+          // setError(res.message || "Failed to fetch purchased history.");
+          console.error("Error Fetching purchased history: ", res.message);
         }
       } catch (err) {
         console.error(err);
-        setError("Error fetching purchased history.");
+        // setError("Error fetching purchased history.");
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
     fetchTransactions();
@@ -86,11 +87,8 @@ const PurchasedHistory = () => {
     }
   };
 
-  if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
-  if (error) return <p className="p-6 text-red-600">{error}</p>;
-
   return (
-    <section className="mx-auto w-[70rem]">
+    <section className="figtreef mx-10">
       {/* Search Bar */}
       <ToolBar
         addNewPath=""

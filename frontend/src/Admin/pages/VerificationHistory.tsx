@@ -16,8 +16,8 @@ import { getVerificationCodeList } from "@/services/VerificationCodeService.ts";
 export const VerificationHistory = () => {
   const [codes, setCodes] = useState<VerificationCodeData[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState("");
+  // const [loading, setLoading] = useState(true);
 
   const verificationColumns = [
     { key: "email", label: "Email" },
@@ -38,13 +38,14 @@ export const VerificationHistory = () => {
         if (res.isSuccess && Array.isArray(res.data?.verificationCodes)) {
           setCodes(res.data.verificationCodes);
         } else {
-          setError(res.message || "Failed to fetch verification codes.");
+          // setError(res.message || "Failed to fetch verification codes.");
+          console.error("Error Fetching Verification codes: ", res.message);
         }
       } catch (err) {
         console.error(err);
-        setError("Error fetching verification codes.");
+        // setError("Error fetching verification codes.");
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -82,11 +83,8 @@ export const VerificationHistory = () => {
     }
   };
 
-  if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
-  if (error) return <p className="p-6 text-red-600">Error: {error}</p>;
-
   return (
-    <section className="mx-auto w-[70rem]">
+    <section className="figtreef mx-10">
       {/* Search Bar */}
       <ToolBar
         addNewPath=""

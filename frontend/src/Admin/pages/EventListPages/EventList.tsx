@@ -2,8 +2,8 @@ import { Button } from "@/User/components/ui/button";
 import Toolbar from "@/Admin/components/ui/ToolBar";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@/Admin/components/ui/Pagination";
-import type {EventData} from "@/Admin/DataTypes/Event";
-import {getEvents,deleteEvent} from '@/services/EventServices';
+import type { EventData } from "@/Admin/DataTypes/Event";
+import { getEvents, deleteEvent } from "@/services/EventServices";
 import {
   exportToCSV,
   exportToExcel,
@@ -18,29 +18,31 @@ const EventList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        const res = await getEvents();
-  
-        if (res.isSuccess && Array.isArray(res.data?.eventList)) {
-          setData(res.data.eventList);
-        } else {
-          console.error("Failed to fetch Events:", res.message);
-          setData([]);
-        }
-      };
-  
-      fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getEvents();
 
-const handleDelete = async (eventCode: string) => {
-  const confirmed = window.confirm("Are you sure you want to delete this event category?");
-  if (!confirmed) return;
+      if (res.isSuccess && Array.isArray(res.data?.eventList)) {
+        setData(res.data.eventList);
+      } else {
+        console.error("Failed to fetch Events:", res.message);
+        setData([]);
+      }
+    };
 
-  try {
+    fetchData();
+  }, []);
+
+  const handleDelete = async (eventCode: string) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event category?",
+    );
+    if (!confirmed) return;
+
+    try {
       const res = await deleteEvent(eventCode);
       if (res.isSuccess) {
-        setData(prev => prev.filter(e => e.eventcode !== eventCode));
+        setData((prev) => prev.filter((e) => e.eventcode !== eventCode));
       } else {
         alert(res.message || "Failed to delete event.");
       }
@@ -50,17 +52,15 @@ const handleDelete = async (eventCode: string) => {
     }
   };
 
-
-  const filteredEvents = data.filter(
-    (event) =>
-      event.eventname?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredEvents = data.filter((event) =>
+    event.eventname?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleExport = (format: string) => {
     if (filteredEvents.length === 0) return alert("No data to export.");
 
     const exportData = filteredEvents.map((e) => ({
-      "Event Code" : e.eventcode,
+      "Event Code": e.eventcode,
       "Event Name": e.eventname,
       "Event Unique Name": e.uniquename,
       "Business Owner Name": e.businessownername,
@@ -88,7 +88,7 @@ const handleDelete = async (eventCode: string) => {
 
   return (
     <div className="flex justify-center px-[15px] py-[10px]">
-      <div className="flex w-full max-w-[1057px] flex-col gap-[20px]">
+      <div className="figtreef mx-10 flex w-full flex-col gap-[20px]">
         <Toolbar
           onSearch={(val) => setSearchTerm(val)}
           onExport={handleExport}
@@ -122,10 +122,7 @@ const handleDelete = async (eventCode: string) => {
 
             <tbody className="divide-y divide-gray-100 bg-white dark:bg-[#1E293B]">
               {currentEvents.map((event, index) => (
-                <tr
-                  key={event.eventcode}
-                  className="hover:dark:bg-gray-50"
-                >
+                <tr key={event.eventcode} className="hover:dark:bg-gray-50">
                   <td className="px-[20px] py-[10px] text-center text-lg whitespace-nowrap">
                     {indexOfFirstItem + index + 1}
                   </td>
@@ -167,9 +164,7 @@ const handleDelete = async (eventCode: string) => {
                       size="icon"
                       variant="ghost"
                       onClick={() =>
-                        navigate(
-                          `/admin/event/list/${event.eventcode}/edit`,
-                        )
+                        navigate(`/admin/event/list/${event.eventcode}/edit`)
                       }
                     >
                       <img

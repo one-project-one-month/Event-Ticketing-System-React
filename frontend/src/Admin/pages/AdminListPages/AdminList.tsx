@@ -68,7 +68,7 @@ const AdminList = () => {
 
   return (
     <div className="flex justify-center px-[15px] py-[10px]">
-      <div className="flex w-full max-w-[1057px] flex-col gap-[20px]">
+      <div className="figtreef mx-10 flex w-full flex-col gap-[20px]">
         <Toolbar
           onSearch={(val) => setSearchTerm(val)}
           onExport={handleExport}
