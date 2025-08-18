@@ -1,5 +1,6 @@
 import { type ApiResponse } from "@/types/ApiResponse";
 import Api from "@/types/Api";
+import type { AxiosError } from "axios";
 
 export async function apiGet<T>(endpoint: string): Promise<ApiResponse<T>> {
   try {
@@ -28,7 +29,7 @@ export async function apiPost<T>(
     return {
       isSuccess: false,
       isError: true,
-      message: "An error occurred during POST.",
+      message: error.response.data.message || "An error occurred during POST.",
       data: null,
     };
   }
