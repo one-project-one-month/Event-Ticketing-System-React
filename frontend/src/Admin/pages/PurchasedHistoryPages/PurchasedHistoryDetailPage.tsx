@@ -55,7 +55,8 @@ export default function PurchasedHistoryDetailPage() {
   if (!transaction) return <div>Transaction Not Found!</div>;
 
   return (
-    <div className="float-end mr-10 w-[60rem] rounded-lg bg-white p-12 shadow">
+  <div className="flex min-h-screen items-center justify-center bg-transparent">
+    <div className="w-[60rem] rounded-lg bg-white p-12 shadow">
       <h1 className="mb-6 text-2xl font-semibold">Purchased History Detail</h1>
 
       <div className="grid grid-cols-[auto_17rem] gap-y-7">
@@ -116,12 +117,15 @@ export default function PurchasedHistoryDetailPage() {
         </div>
       </div>
 
-      <button
-        onClick={() => navigate(-1)}
-        className="float-end mt-10 h-12 w-32 cursor-pointer rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300"
-      >
-        Back
-      </button>
+      <div className="mt-10 flex justify-end">
+        <button
+          onClick={() => navigate(-1)}
+          className="h-12 w-32 cursor-pointer rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300"
+        >
+          Back
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
 }
