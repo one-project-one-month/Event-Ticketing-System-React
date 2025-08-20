@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import type { VerificationCodeData } from "@/Admin/DataTypes/VerificationCode.ts";
 import { getVerificationCodeByCode } from "@/services/VerificationCodeService.ts";
 
-export default function VerificationCodeDetail() {
+export default function VerificationCodeDetailPage() {
   const { verificationCode } = useParams<{ verificationCode: string }>();
+  const navigate = useNavigate();
   const [verification, setVerification] = useState<VerificationCodeData | null>(
     null,
   );
@@ -14,7 +15,7 @@ export default function VerificationCodeDetail() {
   useEffect(() => {
     const fetchVerification = async () => {
       if (!verificationCode) {
-        setError("Verification code not provided.");
+        setError("Invalid verification code.");
         setLoading(false);
         return;
       }
@@ -38,8 +39,20 @@ export default function VerificationCodeDetail() {
   }, [verificationCode]);
 
   if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
-  if (error) return <p className="p-6 text-red-600">{error}</p>;
-  if (!verification) return null;
+  if (error)
+    return (
+      <div className="p-6 text-red-600">
+        <p>{error}</p>
+        <button
+          onClick={() => navigate(-1)}
+          className="mt-4 h-12 w-32 rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300"
+        >
+          Back
+        </button>
+      </div>
+    );
+
+  if (!verification) return <div>Verification Not Found!</div>;
 
   const formattedCreatedAt = new Date(
     verification.createdat,
@@ -53,46 +66,51 @@ export default function VerificationCodeDetail() {
   });
 
   return (
-    <div className="float-end mr-10 w-[60rem] rounded-lg bg-white p-12 shadow">
-      <h1 className="mb-6 text-2xl font-semibold">Verification History</h1>
+    <div className="flex min-h-screen items-center justify-center bg-transparent">
+      <div className="w-[60rem] rounded-lg bg-white p-12 shadow">
+        <h1 className="mb-6 text-2xl font-semibold">Verification History Detail</h1>
 
-      <div className="grid grid-cols-[auto_17rem] gap-y-7">
-        <div>
-          <p className="mb-3 text-sm text-gray-500">Email</p>
-          <p className="font-medium text-gray-900">{verification.email}</p>
+        <div className="grid grid-cols-[auto_17rem] gap-y-7">
+          {/* Email, Verification Code */}
+          <div>
+            <p className="mb-3 text-sm text-gray-500">Email</p>
+            <p className="font-medium text-gray-900">{verification.email}</p>
+          </div>
+          <div>
+            <p className="mb-3 text-sm text-gray-500">Verification Code</p>
+            <p className="font-medium text-gray-900">
+              {verification.verificationCode}
+            </p>
+          </div>
+
+          {/* Created Date, Expired Time */}
+          <div>
+            <p className="mb-3 text-sm text-gray-500">Create Date</p>
+            <p className="font-medium text-gray-900">{formattedCreatedAt}</p>
+          </div>
+          <div>
+            <p className="mb-3 text-sm text-gray-500">Expired Time</p>
+            <p className="font-medium text-gray-900">{formattedExpiredTime}</p>
+          </div>
+
+          {/* Status */}
+          <div>
+            <p className="mb-3 text-sm text-gray-500">Status</p>
+            <p className="font-medium text-gray-900">
+              {verification.isused ? "✅" : "❌"}
+            </p>
+          </div>
         </div>
 
-        <div>
-          <p className="mb-3 text-sm text-gray-500">Verification Code</p>
-          <p className="font-medium text-gray-900">
-            {verification.verificationCode}
-          </p>
-        </div>
-
-        <div>
-          <p className="mb-3 text-sm text-gray-500">Create Date</p>
-          <p className="font-medium text-gray-900">{formattedCreatedAt}</p>
-        </div>
-
-        <div>
-          <p className="mb-3 text-sm text-gray-500">Expired Time</p>
-          <p className="font-medium text-gray-900">{formattedExpiredTime}</p>
-        </div>
-
-        <div>
-          <p className="mb-3 text-sm text-gray-500">Status</p>
-          <p className="text-xl font-medium text-gray-900">
-            {verification.isused ? "✅" : "❌"}
-          </p>
+        <div className="mt-10 flex justify-end">
+          <button
+            onClick={() => navigate(-1)}
+            className="h-12 w-32 cursor-pointer rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300"
+          >
+            Back
+          </button>
         </div>
       </div>
-
-      <button
-        onClick={() => window.history.back()}
-        className="float-end mt-10 h-12 w-32 cursor-pointer rounded-md bg-[#D8DFEC] text-[#615CB8] hover:text-purple-300"
-      >
-        Back
-      </button>
     </div>
   );
 }
