@@ -41,7 +41,7 @@ export default function QrResult({ onClose, info }: QrResultProps) {
   };
 
   function formatDateString(dateStr: string): string {
-    const [day, month, year] = dateStr.split("/").map(Number);
+    const [month, day, year] = dateStr.split("/").map(Number);
     const date = new Date(year, month - 1, day);
     return date.toLocaleDateString("en-US", {
       month: "short",
@@ -51,15 +51,15 @@ export default function QrResult({ onClose, info }: QrResultProps) {
   }
 
   function parseDateTime(str: string): Date {
-    const [datePart, timePart, meridiem] = str.split(" ");
-    const [day, month, year] = datePart.split("/").map(Number);
-    let [hour, minute, second] = timePart.split(":").map(Number);
+  const [datePart, timePart, meridiem] = str.split(" ");
+  const [month, day, year] = datePart.split("/").map(Number); // <-- MM/DD/YYYY
+  let [hour, minute, second] = timePart.split(":").map(Number);
 
-    if (meridiem.toUpperCase() === "PM" && hour < 12) hour += 12;
-    if (meridiem.toUpperCase() === "AM" && hour === 12) hour = 0;
+  if (meridiem.toUpperCase() === "PM" && hour < 12) hour += 12;
+  if (meridiem.toUpperCase() === "AM" && hour === 12) hour = 0;
 
-    return new Date(year, month - 1, day, hour, minute, second);
-  }
+  return new Date(year, month - 1, day, hour, minute, second);
+}
 
   function formatEventTimeRange(startStr: string, endStr: string): string {
     const startDate = parseDateTime(startStr);
