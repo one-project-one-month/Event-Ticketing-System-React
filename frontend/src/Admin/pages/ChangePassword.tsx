@@ -121,12 +121,11 @@ export default function ResetPasswordPage() {
           </div>
 
           <div>
-            <Button onClick={() => navigate(-1)} variant="ghost" size="lg">
+            <Button type="button" onClick={() => navigate('/admin/setting')} variant="ghost" size="lg">
               Cancel
             </Button>
             <Button
               type="submit"
-              onClick={handleSubmit}
               disabled={!Object.values(validation).every((v) => v)}
               className={`mt-3 w-full rounded px-4 py-2 ${
                 Object.values(validation).every((v) => v)
