@@ -95,6 +95,8 @@ const Setting = () => {
         if (imgRes?.isError) throw new Error(imgRes?.message);
       }
 
+      window.dispatchEvent(new Event("profileUpdated"));
+
       showSuccessToast();
       setIsEditing(false);
     } catch (err) {

@@ -30,7 +30,6 @@ export default function AdminNavBar() {
         if (!token) throw new Error("No authentication token found");
 
         const decoded = jwtDecode<JwtPayload>(token);
-        console.log(decoded);
         const adminCode = decoded.sub;
 
         const res = await getAdminDataByCode(adminCode);
@@ -45,6 +44,13 @@ export default function AdminNavBar() {
     };
 
     fetchAdminData();
+
+    const handleProfileUpdate = () => fetchAdminData();
+    window.addEventListener("profileUpdated", handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener("profileUpdated", handleProfileUpdate);
+    };
   }, []);
 
   return (

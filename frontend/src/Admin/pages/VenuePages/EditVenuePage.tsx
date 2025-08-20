@@ -115,7 +115,7 @@ export default function EditVenuePage() {
             required
           />
           <AdminInputLabel
-            label="Venue Type Code"
+            label="Venue Type Name"
             value={venueTypeCode}
             name="venueTypeCode"
             readonly
