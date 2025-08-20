@@ -58,7 +58,7 @@ const CheckQr = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between bg-[#e6e6e6] px-0 py-0">
+    <div className="flex flex-col items-center justify-between bg-[#e6e6e6] mb-10 px-0 py-0">
       <div className="w-full max-w-3xl space-y-6 text-center">
         {step === "initial" && (
           <Dropzone
