@@ -26,8 +26,7 @@ export default function AdminLoginPage() {
           response.data.token,
           response.data.tokenExpiresAt,
           response.data.refreshToken,
-          response.data.refreshTokenExpiresAt,
-          response.data.requirePasswordChange
+          response.data.refreshTokenExpiresAt
         );
         if(response.data.requirePasswordChange == true){
           navigate("/admin/reset-password")

@@ -18,7 +18,6 @@ export function useAdminAuth() {
     tokenExpiresAt: string,
     refreshToken: string,
     refreshTokenExpiresAt: string,
-    _requirePasswordChange: boolean,
   ) => {
     saveTokens(
       token,
