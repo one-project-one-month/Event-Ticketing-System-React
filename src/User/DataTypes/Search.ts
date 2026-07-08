@@ -5,7 +5,7 @@ export interface SearchEventData{
     eventcode: string,
     eventname: string,
     address : string,
-    venueimage : string
+    venueimage : string[]
 }
 
 export interface SearchVenueData{

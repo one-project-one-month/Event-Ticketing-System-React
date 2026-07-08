@@ -40,7 +40,9 @@ const TicketDetail = () => {
       setTicketTypes(res.data.ticketTypes);
       setEventName(res.data.eventname);
       if (res.data.ticketTypes.length > 0) {
-        setType(res.data.ticketTypes[0].tickettypecode);
+        const firstTicketType = res.data.ticketTypes[0].tickettypecode;
+        setType(firstTicketType);
+        setTransaction((prev) => ({ ...prev, ticketTypeCode: firstTicketType }));
       }
     } else {
       console.log("User Event error: ", res.message);
