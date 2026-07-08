@@ -14,7 +14,6 @@ interface IOverviewList {
 export default function OverviewList({
   title,
   viewLink,
-  fetchLink,
   type,
   response
 }: IOverviewList) {

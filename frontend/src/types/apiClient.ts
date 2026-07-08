@@ -26,10 +26,12 @@ export async function apiPost<T>(
     return response.data;
   } catch (error) {
     console.error("POST error:", error);
+    const axiosError = error as AxiosError<{ message?: string }>;
     return {
       isSuccess: false,
       isError: true,
-      message: error.response.data.message || "An error occurred during POST.",
+      message:
+        axiosError.response?.data?.message || "An error occurred during POST.",
       data: null,
     };
   }

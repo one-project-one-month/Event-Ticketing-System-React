@@ -8,7 +8,6 @@ export type Event = {
 
 const EventPostList = ({
   events,
-  eventPerPage,
 }: {
   events: UserEventData[];
   eventPerPage: number;

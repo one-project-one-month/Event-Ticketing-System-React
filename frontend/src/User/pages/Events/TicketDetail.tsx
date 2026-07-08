@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 
 const TicketDetail = () => {
   const { eventcode } = useParams<{ eventcode: string }>();
-  const [quantity, setQuantity] = useState<number>(1);
   const [transaction, setTransaction] = useState<ProcessTransactionPayload>({
     eventCode: eventcode as string,
     fullName: "",
@@ -18,7 +17,7 @@ const TicketDetail = () => {
     email: "",
     gender: "",
     ticketTypeCode: "",
-    ticketQuantity: quantity,
+    ticketQuantity: 1,
   });
   const [showVerifyDialog, setShowVerifyDialog] = useState<boolean>(false);
   const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
